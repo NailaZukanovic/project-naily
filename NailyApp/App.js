@@ -7,229 +7,74 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  FlatList,
-  Image,
-} from 'react-native';
-import {COLORS, SIZES, FONTS} from './constants/index';
+import {Text, useColorScheme, View} from 'react-native';
+
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements';
-import {registerCustomIconType} from 'react-native-elements';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
-import {reservations, discoverySalons} from './dummy/index';
-
-registerCustomIconType('fa5', FontAwesome5);
+import Home from './screens/index';
+import {COLORS} from './constants';
 
 const App = () => {
-  const renderReservationItem = ({item}) => (
-    <View
-      style={{
-        ...styles.shadow,
-        backgroundColor: COLORS.primary,
-        padding: SIZES.padding * 2,
-        borderRadius: SIZES.borderRadius,
-        marginHorizontal: SIZES.margin5,
-        flexWrap: 'wrap',
-      }}>
-      <Text style={{...FONTS.h3, color: COLORS.secondary}}> {item.salon} </Text>
-      <Text style={{...FONTS.body3, color: COLORS.secondary}}>
-        {' '}
-        {item.worker}
-      </Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-        <Icon
-          name="calendar-check-o"
-          type="font-awesome"
-          size={20}
-          color={COLORS.secondary}
-        />
-        <Text style={{...FONTS.body4, color: COLORS.secondary}}>
-          {item.date} @ {item.time}
-        </Text>
-      </View>
+  const FindScreen = () => (
+    <View>
+      <Text>Home Screen here</Text>
     </View>
   );
 
-  const renderReservationList = reservationData => {
-    return (
-      <FlatList
-        style={{
-          flexWrap: 'wrap',
-        }}
-        horizontal={true}
-        data={reservationData}
-        renderItem={renderReservationItem}
-        keyExtractor={item => item.id}
-      />
-    );
-  };
-
-  const renderDiscoveryItem = ({item}) => (
-    <View
-      style={{
-        ...styles.shadow,
-        margin: SIZES.margin5,
-        borderRadius: SIZES.borderRadius,
-        backgroundColor: COLORS.white,
-        paddingBottom: SIZES.padding,
-      }}>
-      <Image
-        style={{width: '100%', height: 200}}
-        source={item.image}
-        resizeMode="cover"
-      />
-      <View
-        style={{paddingHorizontal: SIZES.padding, paddingTop: SIZES.padding}}>
-        <Text style={{...FONTS.h3}}>{item.salon}</Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingHorizontal: SIZES.padding,
-        }}>
-        <Icon name="location-pin" color={COLORS.black} size={18} />
-        <Text
-          style={{
-            paddingStart: SIZES.padding,
-          }}>
-          {item.address}
-        </Text>
-      </View>
-    </View>
-  );
-
-  const renderDiscoveryList = discoveryData => {
-    return (
-      <FlatList
-        style={{
-          paddingBottom: SIZES.margin15,
-        }}
-        data={discoveryData}
-        renderItem={renderDiscoveryItem}
-        keyExtractor={item => item.id}
-      />
-    );
-  };
+  const tabNav = createBottomTabNavigator();
 
   return (
-    <SafeAreaView
-      style={{
-        ...styles.container,
-      }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          backgroundColor: COLORS.darkPrimary,
-          justifyContent: 'space-between',
-          alignItems: 'center',
+    <NavigationContainer>
+      <tabNav.Navigator
+        screenOptions={{}}
+        tabBarOptions={{
+          activeTintColor: COLORS.darkPrimary,
+          inactiveTintColor: COLORS.primary,
         }}>
-        <View
-          style={{
-            padding: SIZES.padding * 2,
-          }}>
-          <View>
-            <Text style={{...FONTS.h1, color: COLORS.secondary}}>
-              {' '}
-              GOOD MORNING,
-            </Text>
-            <Text style={{...FONTS.h1, color: COLORS.secondary}}> NGUYEN</Text>
-          </View>
-          <View
-            style={{
-              ...styles.shadow,
-              flexDirection: 'row',
-              marginTop: SIZES.margin10,
-            }}>
-            <Icon
-              name="calendar"
-              type="font-awesome"
-              size={20}
-              color={COLORS.secondary}
-            />
-            <View
-              style={{
-                borderRadius: SIZES.borderRadius,
-                backgroundColor: COLORS.primary,
-                paddingHorizontal: SIZES.padding,
-                marginStart: SIZES.margin10,
-              }}>
-              <Text style={{...FONTS.body4, color: COLORS.secondary}}>
-                Nov 15
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{
-            ...styles.shadow,
-            paddingEnd: SIZES.padding * 2,
-          }}>
-          <Image
-            source={require('./dummy/images/person1.jpeg')}
-            style={{
-              width: 100,
-              height: 100,
-              borderRadius: 50,
-              backgroundColor: COLORS.secondary,
-            }}
-          />
-        </View>
-      </View>
-      <View style={styles.body}>
-        <View>
-          <View
-            style={{
-              margin: SIZES.margin10,
-            }}>
-            <Text style={{...FONTS.h3}}> Next Reservation</Text>
-
-            {renderReservationList(reservations)}
-          </View>
-
-          {/* discovery section */}
-        </View>
-
-        <View
-          style={{
-            margin: SIZES.margin10,
-          }}>
-          <Text style={{...FONTS.h3}}> Discovery</Text>
-          {renderDiscoveryList(discoverySalons)}
-        </View>
-      </View>
-    </SafeAreaView>
+        <tabNav.Screen
+          name="Home"
+          options={{
+            tabBarIcon: ({focused}) => (
+              <Icon name="home" type="font-awesome" color={COLORS.primary} />
+            ),
+          }}
+          component={Home}
+        />
+        <tabNav.Screen
+          name="Find"
+          component={FindScreen}
+          options={{
+            tabBarIcon: ({focused}) => (
+              <Icon name="search" type="font-awesome" color={COLORS.primary} />
+            ),
+          }}
+        />
+        <tabNav.Screen
+          name="Reservation"
+          component={FindScreen}
+          options={{
+            tabBarIcon: ({focused}) => (
+              <Icon
+                name="calendar"
+                type="font-awesome"
+                color={COLORS.primary}
+              />
+            ),
+          }}
+        />
+        <tabNav.Screen
+          name="Settings"
+          component={FindScreen}
+          options={{
+            tabBarIcon: ({focused}) => (
+              <Icon name="settings" type="feather" color={COLORS.primary} />
+            ),
+          }}
+        />
+      </tabNav.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 32,
-    flex: 1,
-    paddingHorizontal: 24,
-  },
-  body: {
-    flex: 1,
-  },
-  shadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    elevation: 15,
-    shadowOpacity: 0.25,
-    shadowRadius: 5,
-  },
-});
 
 export default App;

@@ -6,6 +6,7 @@ import {
   FlatList,
   Image,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import {COLORS, SIZES, FONTS} from '../constants/index';
 import {Icon} from 'react-native-elements';
@@ -77,7 +78,7 @@ const Home = () => {
         paddingBottom: SIZES.padding,
       }}>
       <Image
-        style={{width: '100%', height: 200}}
+        style={{width: '100%', height: 200, borderRadius: SIZES.borderRadius}}
         source={item.image}
         resizeMode="cover"
       />
@@ -85,9 +86,6 @@ const Home = () => {
         style={{
           paddingHorizontal: SIZES.padding,
           paddingTop: SIZES.padding,
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          flexDirection: 'row',
         }}>
         <Text style={{...FONTS.h3}}>{item.salon}</Text>
         <View style={{flexDirection: 'row'}}>
@@ -160,10 +158,11 @@ const Home = () => {
         style={{
           paddingBottom: SIZES.margin15,
         }}
+        horizontal
         data={discoveryData}
         renderItem={renderDiscoveryItem}
         keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
       />
     );
   };
@@ -232,28 +231,30 @@ const Home = () => {
           />
         </View>
       </View>
-      <View style={styles.body}>
-        <View>
+      <ScrollView>
+        <View style={styles.body}>
+          <View>
+            <View
+              style={{
+                margin: SIZES.margin10,
+              }}>
+              <Text style={{...FONTS.h3}}> Next Reservation</Text>
+
+              {renderReservationList(reservations)}
+            </View>
+
+            {/* discovery section */}
+          </View>
+
           <View
             style={{
               margin: SIZES.margin10,
             }}>
-            <Text style={{...FONTS.h3}}> Next Reservation</Text>
-
-            {renderReservationList(reservations)}
+            <Text style={{...FONTS.h3}}> Discovery</Text>
+            {renderDiscoveryList(discoverySalons)}
           </View>
-
-          {/* discovery section */}
         </View>
-
-        <View
-          style={{
-            margin: SIZES.margin10,
-          }}>
-          <Text style={{...FONTS.h3}}> Discovery</Text>
-          {renderDiscoveryList(discoverySalons)}
-        </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

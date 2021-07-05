@@ -13,7 +13,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements';
 import Home from './screens/index';
-import {COLORS} from './constants';
+import {COLORS, FONTS, SIZES} from './constants';
 
 const App = () => {
   const FindScreen = () => (
@@ -27,16 +27,20 @@ const App = () => {
   return (
     <NavigationContainer>
       <tabNav.Navigator
-        screenOptions={{}}
         tabBarOptions={{
           activeTintColor: COLORS.darkPrimary,
-          inactiveTintColor: COLORS.primary,
+          inactiveTintColor: COLORS.gray,
+          labelStyle: FONTS.body5,
+          style: {
+            paddingVertical: SIZES.padding * 2,
+            height: 100,
+          },
         }}>
         <tabNav.Screen
           name="Home"
           options={{
-            tabBarIcon: ({focused}) => (
-              <Icon name="home" type="font-awesome" color={COLORS.primary} />
+            tabBarIcon: ({focused, color, size}) => (
+              <Icon name="home" type="font-awesome" color={color} />
             ),
           }}
           component={Home}
@@ -45,8 +49,8 @@ const App = () => {
           name="Find"
           component={FindScreen}
           options={{
-            tabBarIcon: ({focused}) => (
-              <Icon name="search" type="font-awesome" color={COLORS.primary} />
+            tabBarIcon: ({focused, color, size}) => (
+              <Icon name="search" type="font-awesome" color={color} />
             ),
           }}
         />
@@ -54,12 +58,8 @@ const App = () => {
           name="Reservation"
           component={FindScreen}
           options={{
-            tabBarIcon: ({focused}) => (
-              <Icon
-                name="calendar"
-                type="font-awesome"
-                color={COLORS.primary}
-              />
+            tabBarIcon: ({focused, color, size}) => (
+              <Icon name="calendar" type="font-awesome" color={color} />
             ),
           }}
         />
@@ -67,8 +67,8 @@ const App = () => {
           name="Settings"
           component={FindScreen}
           options={{
-            tabBarIcon: ({focused}) => (
-              <Icon name="settings" type="feather" color={COLORS.primary} />
+            tabBarIcon: ({focused, color, size}) => (
+              <Icon name="settings" type="feather" color={color} />
             ),
           }}
         />

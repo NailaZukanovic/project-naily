@@ -21,7 +21,7 @@ import {Icon} from 'react-native-elements';
 import {registerCustomIconType} from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-import {reservations} from './dummy/index';
+import {reservations, discoverySalons} from './dummy/index';
 
 registerCustomIconType('fa5', FontAwesome5);
 
@@ -64,7 +64,7 @@ const App = () => {
     return (
       <FlatList
         style={{
-          paddingBottom: SIZES.margin15,
+          flexWrap: 'wrap',
         }}
         horizontal={true}
         data={reservationData}
@@ -74,8 +74,58 @@ const App = () => {
     );
   };
 
+  const renderDiscoveryItem = ({item}) => (
+    <View
+      style={{
+        ...styles.shadow,
+        margin: SIZES.margin5,
+        borderRadius: SIZES.borderRadius,
+        backgroundColor: COLORS.white,
+        paddingBottom: SIZES.padding,
+      }}>
+      <Image
+        style={{width: '100%', height: 200}}
+        source={item.image}
+        resizeMode="cover"
+      />
+      <View
+        style={{paddingHorizontal: SIZES.padding, paddingTop: SIZES.padding}}>
+        <Text style={{...FONTS.h3}}>{item.salon}</Text>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          paddingHorizontal: SIZES.padding,
+        }}>
+        <Icon name="location-pin" color={COLORS.black} size={18} />
+        <Text
+          style={{
+            paddingStart: SIZES.padding,
+          }}>
+          {item.address}
+        </Text>
+      </View>
+    </View>
+  );
+
+  const renderDiscoveryList = discoveryData => {
+    return (
+      <FlatList
+        style={{
+          paddingBottom: SIZES.margin15,
+        }}
+        data={discoveryData}
+        renderItem={renderDiscoveryItem}
+        keyExtractor={item => item.id}
+      />
+    );
+  };
+
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{
+        ...styles.container,
+      }}>
       <View
         style={{
           flexDirection: 'row',
@@ -135,30 +185,27 @@ const App = () => {
           />
         </View>
       </View>
+      <View style={styles.body}>
+        <View>
+          <View
+            style={{
+              margin: SIZES.margin10,
+            }}>
+            <Text style={{...FONTS.h3}}> Next Reservation</Text>
 
-      {/* <View
-        style={{
-          width: '100%',
-          height: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <TouchableOpacity style={{heigh: 50, flexDirection: 'row'}}>
-          <Icon name="arrow-left" type="font-awesome" color={COLORS.black} />
-        </TouchableOpacity>
-        <Text>Something </Text>
-      </View> */}
+            {renderReservationList(reservations)}
+          </View>
 
-      {/* body */}
+          {/* discovery section */}
+        </View>
 
-      <View
-        style={{
-          margin: SIZES.margin10,
-        }}>
-        <Text style={{...FONTS.h3}}> Next Reservation</Text>
-
-        {/* {re{renderReservationList(reservations)}nderReservationItem()} */}
-        {renderReservationList(reservations)}
+        <View
+          style={{
+            margin: SIZES.margin10,
+          }}>
+          <Text style={{...FONTS.h3}}> Discovery</Text>
+          {renderDiscoveryList(discoverySalons)}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -167,7 +214,11 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 32,
+    flex: 1,
     paddingHorizontal: 24,
+  },
+  body: {
+    flex: 1,
   },
   shadow: {
     shadowColor: '#000',

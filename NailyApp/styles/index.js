@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 5,
     },
     elevation: 15,
     shadowOpacity: 0.25,
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default {styles};
+export default styles;

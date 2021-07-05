@@ -1,10 +1,16 @@
 import React from 'react';
-import {SafeAreaView, Text, View, FlatList, Image} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  View,
+  FlatList,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import {COLORS, SIZES, FONTS} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {registerCustomIconType} from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-
 import styles from '../styles/index';
 
 import {reservations, discoverySalons} from '../dummy/index';
@@ -50,12 +56,13 @@ const Home = () => {
     return (
       <FlatList
         style={{
-          flexWrap: 'wrap',
+          paddingBottom: SIZES.padding * 2,
         }}
         horizontal={true}
         data={reservationData}
         renderItem={renderReservationItem}
         keyExtractor={item => item.id}
+        showsHorizontalScrollIndicator={false}
       />
     );
   };
@@ -75,15 +82,48 @@ const Home = () => {
         resizeMode="cover"
       />
       <View
-        style={{paddingHorizontal: SIZES.padding, paddingTop: SIZES.padding}}>
+        style={{
+          paddingHorizontal: SIZES.padding,
+          paddingTop: SIZES.padding,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexDirection: 'row',
+        }}>
         <Text style={{...FONTS.h3}}>{item.salon}</Text>
+        <View style={{flexDirection: 'row'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Icon
+              name="heart"
+              type="ant-design"
+              size={20}
+              color={COLORS.roseRed}
+            />
+            <Text style={{margin: SIZES.margin5}}>1.2k</Text>
+          </View>
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon name="comment" size={20} color={COLORS.lightViolet} />
+              <Text style={{margin: SIZES.margin5}}>1.2k</Text>
+            </View>
+          </View>
+        </View>
       </View>
       <View
         style={{
           flexDirection: 'row',
           paddingHorizontal: SIZES.padding,
         }}>
-        <Icon name="location-pin" color={COLORS.black} size={18} />
+        <Icon name="location-pin" color={COLORS.orange} size={18} />
         <Text
           style={{
             paddingStart: SIZES.padding,
@@ -91,6 +131,26 @@ const Home = () => {
           {item.address}
         </Text>
       </View>
+      {item.isReserved ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: SIZES.padding,
+          }}>
+          <Icon
+            name="circle"
+            type="font-awesome"
+            color={COLORS.orange}
+            size={15}
+          />
+          <Text style={{...FONTS.body4, paddingStart: SIZES.padding}}>
+            Reserved
+          </Text>
+        </View>
+      ) : (
+        <Text />
+      )}
     </View>
   );
 
@@ -103,6 +163,7 @@ const Home = () => {
         data={discoveryData}
         renderItem={renderDiscoveryItem}
         keyExtractor={item => item.id}
+        showsVerticalScrollIndicator={false}
       />
     );
   };

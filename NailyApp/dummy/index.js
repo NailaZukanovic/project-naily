@@ -38,14 +38,14 @@ const discoverySalons = [
     salon: 'ProNail',
     likes: 123456,
     comments: 1123,
-    isReserved: 0,
+    isReserved: 1,
     address: '1234 Bixby Drive, Houston, TX',
     image: require('./salon_images/salon1.jpeg'),
   },
   {
     // id: uuid.v4(),
     id: 2,
-    salon: 'ProNail',
+    salon: 'Happy Nail',
     likes: 123456,
     comments: 1123,
     isReserved: 0,
@@ -55,7 +55,7 @@ const discoverySalons = [
   {
     // id: uuid.v4(),
     id: 3,
-    salon: 'ProNail',
+    salon: 'Nail For Life',
     likes: 123456,
     comments: 1123,
     isReserved: 0,
@@ -85,7 +85,7 @@ const discoverySalons = [
   {
     // id: uuid.v4(),
     id: 6,
-    salon: 'ProNail',
+    salon: 'Professional Nail ',
     likes: 123456,
     comments: 1123,
     isReserved: 0,
@@ -105,7 +105,7 @@ const discoverySalons = [
   {
     // id: uuid.v4(),
     id: 8,
-    salon: 'ProNail',
+    salon: 'Beauty Salon',
     likes: 123456,
     comments: 1123,
     isReserved: 0,

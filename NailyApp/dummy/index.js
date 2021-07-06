@@ -48,7 +48,7 @@ const discoverySalons = [
     salon: 'Happy Nail',
     likes: 123456,
     comments: 1123,
-    isReserved: 0,
+    isReserved: 1,
     address: '1234 Bixby Drive, Houston, TX',
     image: require('./salon_images/salon2.jpeg'),
   },

@@ -98,7 +98,7 @@ const Home = () => {
             <Icon
               name="heart"
               type="ant-design"
-              size={20}
+              size={15}
               color={COLORS.roseRed}
             />
             <Text style={{margin: SIZES.margin5}}>1.2k</Text>
@@ -121,7 +121,7 @@ const Home = () => {
           flexDirection: 'row',
           paddingHorizontal: SIZES.padding,
         }}>
-        <Icon name="location-pin" color={COLORS.orange} size={18} />
+        <Icon name="location-pin" color={COLORS.orange} size={15} />
         <Text
           style={{
             paddingStart: SIZES.padding,
@@ -139,7 +139,7 @@ const Home = () => {
           <Icon
             name="circle"
             type="font-awesome"
-            color={COLORS.orange}
+            color={COLORS.primary}
             size={15}
           />
           <Text style={{...FONTS.body4, paddingStart: SIZES.padding}}>

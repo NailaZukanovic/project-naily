@@ -12,16 +12,10 @@ import {Text, useColorScheme, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements';
-import {Home, Search, Reservation} from './screens/index';
+import {Home, Search, Reservation, Settings} from './screens/index';
 import {COLORS, FONTS, SIZES} from './constants';
 
 const App = () => {
-  const FindScreen = () => (
-    <View>
-      <Text>Home Screen here</Text>
-    </View>
-  );
-
   const tabNav = createBottomTabNavigator();
 
   return (
@@ -64,7 +58,7 @@ const App = () => {
         />
         <tabNav.Screen
           name="Settings"
-          component={FindScreen}
+          component={Settings}
           options={{
             tabBarIcon: ({focused, color, size}) => (
               <Icon name="settings" type="feather" color={color} />

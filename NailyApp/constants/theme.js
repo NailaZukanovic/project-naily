@@ -21,8 +21,8 @@ export const COLORS = {
 
   orange: '#FF8500',
   lightOrange: '#FFD8AE',
-
-  lightGray: '#F5F5F6',
+  gray: '#B0B5B3',
+  lightGray: '#F5F5F5',
   lightGray2: '#F6F6F7',
   lightGray3: '#EFEFF1',
   lightGray4: '#F8F8F9',

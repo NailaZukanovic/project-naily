@@ -20,6 +20,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 5,
   },
+  fullContainer: {
+    backgroundColor: COLORS.white,
+    width: '100%',
+    height: '100%',
+  },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -82,4 +87,21 @@ const reservationStyles = StyleSheet.create({
   },
 });
 
-export {styles, searchStyles, reservationStyles};
+const settingsStyles = StyleSheet.create({
+  container: {
+    padding: SIZES.padding,
+  },
+  itemContainer: {
+    padding: SIZES.padding,
+  },
+  item: {
+    paddingVertical: SIZES.padding,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.gray,
+  },
+});
+
+export {styles, searchStyles, reservationStyles, settingsStyles};

@@ -1,20 +1,10 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  View,
-  FlatList,
-  StatusBar,
-  Image,
-} from 'react-native';
+import {SafeAreaView, Text, View, FlatList, Image} from 'react-native';
 import {COLORS, SIZES, FONTS} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {styles, searchStyles, reservationStyles} from '../styles/index';
 
 import {discoverySalons, reservationData} from '../dummy/index';
-
 import ScreenHeader from '../components/ScreenHeader';
 
 const renderReservationItem = ({item}) => (
@@ -63,13 +53,15 @@ const ReservationList = props => (
 
 const Reservation = () => {
   return (
-    <SafeAreaView>
-      <ScreenHeader title="Reservations" />
+    <View style={styles.fullContainer}>
+      <SafeAreaView>
+        <ScreenHeader title="Reservations" />
 
-      <View>
-        <ReservationList reservations={reservationData} />
-      </View>
-    </SafeAreaView>
+        <View>
+          <ReservationList reservations={reservationData} />
+        </View>
+      </SafeAreaView>
+    </View>
   );
 };
 

@@ -1,4 +1,5 @@
 import Home from './Home';
 import Search from './Search';
 import Reservation from './Reservation';
-export {Home, Search, Reservation};
+import Settings from './Settings';
+export {Home, Search, Reservation, Settings};

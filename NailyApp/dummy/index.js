@@ -33,8 +33,8 @@ const reservations = [
 
 const discoverySalons = [
   {
-    // id: uuid.v4(),
-    id: 1,
+    id: uuid.v4(),
+    // id: 1,
     salon: 'ProNail',
     likes: 123456,
     comments: 1123,
@@ -43,8 +43,8 @@ const discoverySalons = [
     image: require('./salon_images/salon1.jpeg'),
   },
   {
-    // id: uuid.v4(),
-    id: 2,
+    id: uuid.v4(),
+    // id: 2,
     salon: 'Happy Nail',
     likes: 123456,
     comments: 1123,
@@ -53,8 +53,8 @@ const discoverySalons = [
     image: require('./salon_images/salon2.jpeg'),
   },
   {
-    // id: uuid.v4(),
-    id: 3,
+    id: uuid.v4(),
+    // id: 3,
     salon: 'Nail For Life',
     likes: 123456,
     comments: 1123,
@@ -63,8 +63,8 @@ const discoverySalons = [
     image: require('./salon_images/salon3.jpeg'),
   },
   {
-    // id: uuid.v4(),
-    id: 4,
+    id: uuid.v4(),
+    // id: 4,
     salon: 'ProNail',
     likes: 123456,
     comments: 1123,
@@ -73,8 +73,8 @@ const discoverySalons = [
     image: require('./salon_images/salon4.jpeg'),
   },
   {
-    // id: uuid.v4(),
-    id: 5,
+    id: uuid.v4(),
+    // id: 5,
     salon: 'ProNail',
     likes: 123456,
     comments: 1123,
@@ -83,8 +83,8 @@ const discoverySalons = [
     image: require('./salon_images/salon5.jpeg'),
   },
   {
-    // id: uuid.v4(),
-    id: 6,
+    id: uuid.v4(),
+    // id: 6,
     salon: 'Professional Nail ',
     likes: 123456,
     comments: 1123,
@@ -93,8 +93,8 @@ const discoverySalons = [
     image: require('./salon_images/salon6.jpeg'),
   },
   {
-    // id: uuid.v4(),
-    id: 7,
+    id: uuid.v4(),
+    // id: 7,
     salon: 'ProNail',
     likes: 123456,
     comments: 1123,
@@ -103,8 +103,8 @@ const discoverySalons = [
     image: require('./salon_images/salon7.jpeg'),
   },
   {
-    // id: uuid.v4(),
-    id: 8,
+    id: uuid.v4(),
+    // id: 8,
     salon: 'Beauty Salon',
     likes: 123456,
     comments: 1123,
@@ -112,5 +112,202 @@ const discoverySalons = [
     address: '1234 Bixby Drive, Houston, TX',
     image: require('./salon_images/salon1.jpeg'),
   },
+  {
+    id: uuid.v4(),
+    // id: 8,
+    salon: 'Beauty Salon and Hair',
+    likes: 123456,
+    comments: 1123,
+    isReserved: 0,
+    address: '1234 Bixby Drive, Houston, TX',
+    image: require('./salon_images/salon1.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    // id: 8,
+    salon: 'Beauty Salon and Hair',
+    likes: 123456,
+    comments: 1123,
+    isReserved: 0,
+    address: '1234 Bixby Drive, Houston, TX',
+    image: require('./salon_images/salon1.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    // id: 8,
+    salon: 'Beauty Salon and Hair',
+    likes: 123456,
+    comments: 1123,
+    isReserved: 0,
+    address: '1234 Bixby Drive, Houston, TX',
+    image: require('./salon_images/salon1.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    // id: 8,
+    salon: 'Beauty Salon and Hair',
+    likes: 123456,
+    comments: 1123,
+    isReserved: 0,
+    address: '1234 Bixby Drive, Houston, TX',
+    image: require('./salon_images/salon1.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    // id: 8,
+    salon: 'Beauty Salon and Hair',
+    likes: 123456,
+    comments: 1123,
+    isReserved: 0,
+    address: '1234 Bixby Drive, Houston, TX',
+    image: require('./salon_images/salon1.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    // id: 8,
+    salon: 'Beauty Salon and Hair',
+    likes: 123456,
+    comments: 1123,
+    isReserved: 0,
+    address: '1234 Bixby Drive, Houston, TX',
+    image: require('./salon_images/salon1.jpeg'),
+  },
 ];
-export {reservations, discoverySalons};
+
+const reservationData = [
+  {
+    id: uuid.v4(),
+    date: 'Nov 13, 2021',
+    time: '11:30am',
+    status: {
+      message: 'Confirmed',
+      code: 0,
+    },
+    salon: {
+      id: uuid.v4(),
+      name: 'ProNail',
+      address: '1234 Bixby Road, Houston, TX',
+    },
+    worker: {
+      id: uuid.v4(),
+      name: 'The Rock',
+      avatar: require('./images/person1.jpeg'),
+    },
+  },
+  {
+    id: uuid.v4(),
+    date: 'Nov 13, 2021',
+    time: '11:30am',
+    status: {
+      message: 'Pending',
+      code: 1,
+    },
+    salon: {
+      id: uuid.v4(),
+      name: 'ProNail',
+      address: '1234 Bixby Road, Houston, TX',
+    },
+    worker: {
+      id: uuid.v4(),
+      name: 'The Rock',
+      avatar: require('./images/person2.jpeg'),
+    },
+  },
+  {
+    id: uuid.v4(),
+    date: 'Nov 13, 2021',
+    time: '11:30am',
+    status: {
+      message: 'Pending',
+      code: 1,
+    },
+    salon: {
+      id: uuid.v4(),
+      name: 'ProNail',
+      address: '1234 Bixby Road, Houston, TX',
+    },
+    worker: {
+      id: uuid.v4(),
+      name: 'The Rock',
+      avatar: require('./images/person3.jpeg'),
+    },
+  },
+  {
+    id: uuid.v4(),
+    date: 'Nov 13, 2021',
+    time: '11:30am',
+    status: {
+      message: 'Confirmed',
+      code: 0,
+    },
+    salon: {
+      id: uuid.v4(),
+      name: 'ProNail',
+      address: '1234 Bixby Road, Houston, TX',
+    },
+    worker: {
+      id: uuid.v4(),
+      name: 'The Rock',
+      avatar: require('./images/person4.jpeg'),
+    },
+  },
+  {
+    id: uuid.v4(),
+    date: 'Nov 13, 2021',
+    time: '11:30am',
+    status: {
+      message: 'Canceled',
+      code: 2,
+    },
+    salon: {
+      id: uuid.v4(),
+      name: 'ProNail',
+      address: '1234 Bixby Road, Houston, TX',
+    },
+    worker: {
+      id: uuid.v4(),
+      name: 'The Rock',
+      avatar: require('./images/person5.jpeg'),
+    },
+  },
+  {
+    id: uuid.v4(),
+    date: 'Nov 13, 2021',
+    time: '11:30am',
+    status: {
+      message: 'Confirmed',
+      code: 0,
+    },
+    salon: {
+      id: uuid.v4(),
+      name: 'ProNail',
+      address: '1234 Bixby Road, Houston, TX',
+    },
+    worker: {
+      id: uuid.v4(),
+      name: 'The Rock',
+      avatar: require('./images/person6.jpeg'),
+    },
+  },
+  {
+    id: uuid.v4(),
+    date: 'Nov 13, 2021',
+    time: '11:30am',
+    status: {
+      message: 'Confirmed',
+      code: 0,
+    },
+    salon: {
+      id: uuid.v4(),
+      name: 'ProNail',
+      address: '1234 Bixby Road, Houston, TX',
+    },
+    worker: {
+      id: uuid.v4(),
+      name: 'The Rock',
+      avatar: require('./images/person7.jpeg'),
+    },
+  },
+];
+
+export {reservations, discoverySalons, reservationData};

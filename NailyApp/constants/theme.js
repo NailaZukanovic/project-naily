@@ -17,6 +17,8 @@ export const COLORS = {
 
   roseRed: '#F72585',
 
+  green: '#52B788',
+
   orange: '#FF8500',
   lightOrange: '#FFD8AE',
 
@@ -33,6 +35,7 @@ export const SIZES = {
   base: 8,
   font: 14,
   radius: 30,
+  smallPadding: 8,
   padding: 10,
   padding2: 12,
   margin5: 5,
@@ -55,8 +58,11 @@ export const SIZES = {
   width,
   height,
 
-  // border raidu
+  // border radius
   borderRadius: 15,
+
+  // Flatlist padding bottom to prevent overflows
+  flatListPaddingBottom: 200,
 };
 
 export const FONTS = {
@@ -74,6 +80,11 @@ export const FONTS = {
   body3: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body3, lineHeight: 22},
   body4: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body4, lineHeight: 22},
   body5: {fontFamily: 'Roboto-Regular', fontSize: SIZES.body5, lineHeight: 22},
+  medium1: {fontFamily: 'Roboto-Medium', fontSize: SIZES.body1, lineHeight: 36},
+  medium2: {fontFamily: 'Roboto-Medium', fontSize: SIZES.body2, lineHeight: 30},
+  medium3: {fontFamily: 'Roboto-Medium', fontSize: SIZES.body3, lineHeight: 22},
+  medium4: {fontFamily: 'Roboto-Medium', fontSize: SIZES.body4, lineHeight: 22},
+  medium5: {fontFamily: 'Roboto-Medium', fontSize: SIZES.body5, lineHeight: 20},
 };
 
 const appTheme = {COLORS, SIZES, FONTS};

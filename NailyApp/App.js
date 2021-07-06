@@ -12,7 +12,7 @@ import {Text, useColorScheme, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'react-native-elements';
-import Home from './screens/index';
+import {Home, Search, Reservation} from './screens/index';
 import {COLORS, FONTS, SIZES} from './constants';
 
 const App = () => {
@@ -32,8 +32,7 @@ const App = () => {
           inactiveTintColor: COLORS.gray,
           labelStyle: FONTS.body5,
           style: {
-            paddingVertical: SIZES.padding * 2,
-            height: 100,
+            height: 80,
           },
         }}>
         <tabNav.Screen
@@ -46,8 +45,8 @@ const App = () => {
           component={Home}
         />
         <tabNav.Screen
-          name="Find"
-          component={FindScreen}
+          name="Search"
+          component={Search}
           options={{
             tabBarIcon: ({focused, color, size}) => (
               <Icon name="search" type="font-awesome" color={color} />
@@ -55,8 +54,8 @@ const App = () => {
           }}
         />
         <tabNav.Screen
-          name="Reservation"
-          component={FindScreen}
+          name="Reservations"
+          component={Reservation}
           options={{
             tabBarIcon: ({focused, color, size}) => (
               <Icon name="calendar" type="font-awesome" color={color} />

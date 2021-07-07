@@ -7,28 +7,44 @@ import {
   View,
   FlatList,
   StatusBar,
+  Image,
 } from 'react-native';
 import {COLORS, SIZES, FONTS} from '../constants/index';
 import {Icon} from 'react-native-elements';
-import {searchStyles} from '../styles/index';
+import {styles, searchStyles} from '../styles/index';
 
 import {discoverySalons} from '../dummy/index';
+import {SafeAreaInsetsContext} from 'react-native-safe-area-context';
 
 const renderSearchResultItem = ({item}) => (
   <View style={searchStyles.searchResultItemContainer}>
-    <View style={{...searchStyles.searchTitleContainer}}>
-      <Text style={{...FONTS.h4}}>{item.salon}</Text>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Icon name="heart" type="ant-design" size={15} color={COLORS.roseRed} />
-        <Text style={{margin: SIZES.margin5}}>1.2k</Text>
-      </View>
+    <View style={styles.shadow}>
+      <Image
+        style={{width: 60, height: 60, borderRadius: 30}}
+        source={item.image}
+        resizeMode="cover"
+      />
     </View>
-    <Text>{item.address}</Text>
+    <View style={{flex: 1, paddingStart: SIZES.padding}}>
+      <View style={{...searchStyles.searchTitleContainer}}>
+        <Text style={{...FONTS.h4}}>{item.salon}</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Icon
+            name="heart"
+            type="ant-design"
+            size={15}
+            color={COLORS.roseRed}
+          />
+          <Text style={{margin: SIZES.margin5}}>1.2k</Text>
+        </View>
+      </View>
+      <Text>{item.address}</Text>
+    </View>
   </View>
 );
 

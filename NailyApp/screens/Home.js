@@ -13,7 +13,7 @@ import {COLORS, SIZES, FONTS} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {registerCustomIconType} from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {styles} from '../styles/index';
+import {searchStyles, styles} from '../styles/index';
 
 import {reservations, discoverySalons} from '../dummy/index';
 
@@ -72,17 +72,24 @@ const Home = () => {
   const renderDiscoveryItem = ({item}) => (
     <View
       style={{
-        ...styles.shadow,
+        // ...styles.shadow,
         margin: SIZES.margin5,
         borderRadius: SIZES.borderRadius,
         backgroundColor: COLORS.white,
         paddingBottom: SIZES.padding,
       }}>
-      <Image
-        style={{width: '100%', height: 180, borderRadius: SIZES.borderRadius}}
-        source={item.image}
-        resizeMode="cover"
-      />
+      <View style={styles.shadow}>
+        <Image
+          style={{
+            width: '100%',
+            height: 180,
+            borderRadius: SIZES.borderRadius,
+            ...styles.shadow,
+          }}
+          source={item.image}
+          resizeMode="cover"
+        />
+      </View>
       <View
         style={{
           paddingHorizontal: SIZES.padding,
@@ -122,7 +129,6 @@ const Home = () => {
       <View
         style={{
           flexDirection: 'row',
-          paddingHorizontal: SIZES.padding,
         }}>
         <Text
           style={{
@@ -136,7 +142,6 @@ const Home = () => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            paddingHorizontal: SIZES.padding,
           }}>
           <Text
             style={{
@@ -163,7 +168,7 @@ const Home = () => {
         data={discoveryData}
         renderItem={renderDiscoveryItem}
         keyExtractor={item => item.id}
-        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
       />
     );
   };
@@ -187,7 +192,6 @@ const Home = () => {
       style={{
         margin: SIZES.margin10,
       }}>
-      <Text style={{...FONTS.h3}}>Explore</Text>
       {renderDiscoveryList(discoverySalons)}
     </View>
   );
@@ -195,9 +199,7 @@ const Home = () => {
   return (
     <View
       style={{
-        width: '100%',
-        height: '100%',
-        backgroundColor: COLORS.darkPrimary,
+        backgroundColor: COLORS.white,
       }}>
       <SafeAreaView
         style={{
@@ -210,68 +212,10 @@ const Home = () => {
 
         <View
           style={{
-            flexDirection: 'row',
-            backgroundColor: COLORS.darkPrimary,
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            backgroundColor: COLORS.white,
+            paddingBottom: SIZES.flatListPaddingBottom,
           }}>
-          <View
-            style={{
-              padding: SIZES.padding * 2,
-            }}>
-            <View>
-              <Text style={{...FONTS.h1, color: COLORS.secondary}}>
-                {' '}
-                GOOD MORNING,
-              </Text>
-              <Text style={{...FONTS.h1, color: COLORS.secondary}}>
-                {' '}
-                NGUYEN
-              </Text>
-            </View>
-            <View
-              style={{
-                ...styles.shadow,
-                flexDirection: 'row',
-                marginTop: SIZES.margin10,
-              }}>
-              <Icon
-                name="calendar"
-                type="font-awesome"
-                size={20}
-                color={COLORS.secondary}
-              />
-              <View
-                style={{
-                  borderRadius: SIZES.borderRadius,
-                  backgroundColor: COLORS.primary,
-                  paddingHorizontal: SIZES.padding,
-                  marginStart: SIZES.margin10,
-                }}>
-                <Text style={{...FONTS.body4, color: COLORS.secondary}}>
-                  Nov 15
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View
-            style={{
-              ...styles.shadow,
-              paddingEnd: SIZES.padding * 2,
-            }}>
-            <Image
-              source={require('../dummy/images/person1.jpeg')}
-              style={{
-                width: 100,
-                height: 100,
-                borderRadius: 50,
-                backgroundColor: COLORS.secondary,
-              }}
-            />
-          </View>
-        </View>
-
-        <View style={{backgroundColor: COLORS.white, paddingBottom: 200}}>
+          <Text style={{...FONTS.h1}}>Explore</Text>
           <ExploreList />
         </View>
       </SafeAreaView>

@@ -17,7 +17,7 @@ import {discoverySalons, reservationData} from '../dummy/index';
 
 const ScreenHeader = props => (
   <View style={{...styles.header}}>
-    <Text style={{...FONTS.h2}}>{props.title}</Text>
+    <Text style={{...FONTS.h1}}>{props.title}</Text>
   </View>
 );
 

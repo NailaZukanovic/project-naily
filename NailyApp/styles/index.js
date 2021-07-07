@@ -4,7 +4,6 @@ import {COLORS, SIZES, FONTS} from '../constants/index';
 const styles = StyleSheet.create({
   container: {
     marginTop: 32,
-    flex: 1,
     paddingHorizontal: 24,
   },
   body: {
@@ -24,11 +23,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     width: '100%',
     height: '100%',
+    paddingBottom: 100,
+    flex: 1,
   },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: SIZES.padding,
   },
 });
 
@@ -61,6 +61,9 @@ const searchStyles = StyleSheet.create({
   searchResultItemContainer: {
     paddingVertical: SIZES.smallPadding,
     paddingHorizontal: SIZES.padding,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
   },
 });
 
@@ -70,7 +73,6 @@ const reservationStyles = StyleSheet.create({
     alignItems: 'center',
     margin: SIZES.margin5,
     backgroundColor: COLORS.white,
-    ...styles.shadow,
     flex: 1,
   },
   workerImage: {

@@ -62,7 +62,7 @@ export const SIZES = {
   borderRadius: 15,
 
   // Flatlist padding bottom to prevent overflows
-  flatListPaddingBottom: 200,
+  flatListPaddingBottom: 100,
 };
 
 export const FONTS = {

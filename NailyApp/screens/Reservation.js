@@ -9,11 +9,13 @@ import ScreenHeader from '../components/ScreenHeader';
 
 const renderReservationItem = ({item}) => (
   <View style={reservationStyles.itemContainer}>
-    <Image
-      source={item.worker.avatar}
-      style={reservationStyles.workerImage}
-      resizeMode="cover"
-    />
+    <View style={{...styles.shadow}}>
+      <Image
+        source={item.worker.avatar}
+        style={reservationStyles.workerImage}
+        resizeMode="cover"
+      />
+    </View>
     <View style={{paddingVertical: SIZES.padding, flex: 2}}>
       <Text style={{...FONTS.h4}}>{item.worker.name}</Text>
       <Text style={{...FONTS.h4}} numberOfLines={1}>
@@ -56,7 +58,6 @@ const Reservation = () => {
     <View style={styles.fullContainer}>
       <SafeAreaView>
         <ScreenHeader title="Reservations" />
-
         <View>
           <ReservationList reservations={reservationData} />
         </View>

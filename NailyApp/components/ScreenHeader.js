@@ -1,24 +1,50 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  TouchableOpacity,
-  Text,
-  TextInput,
-  View,
-  FlatList,
-  StatusBar,
-  Image,
-} from 'react-native';
-import {COLORS, SIZES, FONTS} from '../constants/index';
+import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
+import {FONTS} from '../constants/index';
 import {Icon} from 'react-native-elements';
-import {styles, searchStyles, reservationStyles} from '../styles/index';
 
-import {discoverySalons, reservationData} from '../dummy/index';
+const ScreenHeader = props => {
+  let backArrowButton = props.shownBackArrow ? (
+    <TouchableOpacity style={styles.button}>
+      <Icon name="arrow-left" type="font-awesome" />
+    </TouchableOpacity>
+  ) : (
+    <View style={styles.button} />
+  );
 
-const ScreenHeader = props => (
-  <View style={{...styles.header}}>
-    <Text style={{...FONTS.h1}}>{props.title}</Text>
-  </View>
-);
+  let optionButton = props.optionButton ? (
+    <TouchableOpacity style={styles.button} onPress={() => props.onPress}>
+      {props.optionButtonIcon}
+    </TouchableOpacity>
+  ) : (
+    <View style={styles.button} />
+  );
+
+  return (
+    <View style={styles.container}>
+      {backArrowButton}
+      <Text style={styles.title}>{props.title}</Text>
+      {optionButton}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  button: {
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+  },
+  title: {
+    ...FONTS.h1,
+    flex: 1,
+    textAlign: 'center',
+  },
+});
 
 export default ScreenHeader;

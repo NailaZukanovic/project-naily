@@ -14,10 +14,11 @@ import {Icon} from 'react-native-elements';
 import {styles, searchStyles} from '../styles/index';
 
 import {discoverySalons} from '../dummy/index';
-import {SafeAreaInsetsContext} from 'react-native-safe-area-context';
 
-const renderSearchResultItem = ({item}) => (
-  <View style={searchStyles.searchResultItemContainer}>
+const renderSearchResultItem = (item, navigation) => (
+  <TouchableOpacity
+    style={searchStyles.searchResultItemContainer}
+    onPress={() => navigation.navigate('SalonDetail')}>
     <View style={styles.shadow}>
       <Image
         style={{width: 60, height: 60, borderRadius: 30}}
@@ -45,14 +46,14 @@ const renderSearchResultItem = ({item}) => (
       </View>
       <Text>{item.address}</Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 const SearchResultList = props => {
   return (
     <FlatList
       data={props.results}
-      renderItem={renderSearchResultItem}
+      renderItem={({item}) => renderSearchResultItem(item, props.navigation)}
       keyExtractor={item => item.id}
       showsHorizontalScrollIndicator={false}
       style={{
@@ -62,7 +63,7 @@ const SearchResultList = props => {
   );
 };
 
-const Search = () => {
+const Search = ({navigation}) => {
   return (
     <SafeAreaView>
       <StatusBar
@@ -87,7 +88,7 @@ const Search = () => {
       </View>
 
       <View style={{paddingBottom: 100}}>
-        <SearchResultList results={discoverySalons} />
+        <SearchResultList results={discoverySalons} navigation={navigation} />
       </View>
     </SafeAreaView>
   );

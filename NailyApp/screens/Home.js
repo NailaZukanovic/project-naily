@@ -84,7 +84,6 @@ const Home = () => {
             width: '100%',
             height: 180,
             borderRadius: SIZES.borderRadius,
-            ...styles.shadow,
           }}
           source={item.image}
           resizeMode="cover"

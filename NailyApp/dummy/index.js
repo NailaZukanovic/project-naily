@@ -310,4 +310,12 @@ const reservationData = [
   },
 ];
 
-export {reservations, discoverySalons, reservationData};
+const salonImages = {
+  salon1: require('./salon_images/salon1.jpeg'),
+  salon2: require('./salon_images/salon2.jpeg'),
+  salon3: require('./salon_images/salon3.jpeg'),
+  salon4: require('./salon_images/salon4.jpeg'),
+  salon5: require('./salon_images/salon5.jpeg'),
+};
+
+export {reservations, discoverySalons, reservationData, salonImages};

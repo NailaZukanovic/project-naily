@@ -11,9 +11,25 @@ import {Text, useColorScheme, View} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+
 import {Icon} from 'react-native-elements';
-import {Home, Search, Reservation, Settings} from './screens/index';
+import {
+  Home,
+  Search,
+  Reservation,
+  Settings,
+  SalonDetail,
+} from './screens/index';
 import {COLORS, FONTS, SIZES} from './constants';
+
+const SearchStack = createStackNavigator();
+const SearchStackScreen = () => (
+  <SearchStack.Navigator headerMode={'none'}>
+    <SearchStack.Screen name="Search" component={Search} />
+    <SearchStack.Screen name="SalonDetail" component={SalonDetail} />
+  </SearchStack.Navigator>
+);
 
 const App = () => {
   const tabNav = createBottomTabNavigator();
@@ -40,7 +56,7 @@ const App = () => {
         />
         <tabNav.Screen
           name="Search"
-          component={Search}
+          component={SearchStackScreen}
           options={{
             tabBarIcon: ({focused, color, size}) => (
               <Icon name="search" type="font-awesome" color={color} />

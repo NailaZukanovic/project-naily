@@ -6,7 +6,7 @@ import {ScreenHeader} from '../components/index';
 import Swiper from 'react-native-swiper';
 import {salonImages} from '../dummy/index';
 import {Icon} from 'react-native-elements';
-import {TabView, SceneMap} from 'react-native-tab-view';
+import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 
 const ProductTab = () => (
   <View>
@@ -32,13 +32,29 @@ const ReservationTab = () => (
   </View>
 );
 
+const CustomTabBar = props => (
+  <TabBar
+    {...props}
+    indicatorStyle={{backgroundColor: COLORS.primary}}
+    style={{backgroundColor: COLORS.black}}
+  />
+);
+
+const renderLabel = ({route, focused, color}) => (
+  <View>
+    <Text style={focused ? styles.activeTabTitle : styles.inActiveTabTitle}>
+      {route.title}
+    </Text>
+  </View>
+);
+
 const SalonDetail = ({navigation}) => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     {key: 'product', title: 'Product'},
     {key: 'reviews', title: 'Reviews'},
     {key: 'workers', title: 'Workers'},
-    {key: 'reservations', title: 'Reservations'},
+    {key: 'reservations', title: 'Appointments'},
   ]);
   const renderScene = SceneMap({
     product: ProductTab,
@@ -48,7 +64,7 @@ const SalonDetail = ({navigation}) => {
   });
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScreenHeader
         title="Salon Detail"
         shownBackArrow={true}
@@ -87,14 +103,22 @@ const SalonDetail = ({navigation}) => {
           />
         </Swiper>
       </View>
-      <View>
-        <Text>Something here is very awesome, check it out</Text>
-
+      <View style={{flex: 2}}>
         <TabView
           navigationState={{index, routes}}
           renderScene={renderScene}
           onIndexChange={setIndex}
           initialLayout={{width: '100%'}}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              scrollEnabled
+              style={styles.tabBar}
+              indicatorStyle={{backgroundColor: COLORS.darkPrimary, height: 2}}
+              renderLabel={renderLabel}
+            />
+          )}
+          style={{backgroundColor: COLORS.white}}
         />
       </View>
     </SafeAreaView>
@@ -105,6 +129,7 @@ const styles = StyleSheet.create({
   container: {
     height: '50%',
     marginBottom: SIZES.margin10 * 2,
+    flex: 1,
   },
   slide1: {
     flex: 1,
@@ -146,6 +171,17 @@ const styles = StyleSheet.create({
     marginRight: 3,
     marginTop: 3,
     marginBottom: 3,
+  },
+  tabBar: {
+    backgroundColor: COLORS.white,
+  },
+  activeTabTitle: {
+    ...FONTS.body3,
+    color: COLORS.black,
+  },
+  inActiveTabTitle: {
+    ...FONTS.body3,
+    color: COLORS.black,
   },
 });
 

@@ -4,15 +4,44 @@ import {SafeAreaView, StyleSheet, Text, View, Image} from 'react-native';
 import {COLORS, SIZES, FONTS} from '../constants/index';
 import {ScreenHeader} from '../components/index';
 import Swiper from 'react-native-swiper';
-import {salonImages} from '../dummy/index';
+import {salonImages, products} from '../dummy/index';
 import {Icon} from 'react-native-elements';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
+import {FlatList} from 'react-native-gesture-handler';
 
-const ProductTab = () => (
-  <View>
-    <Text> Product Tab</Text>
-  </View>
-);
+const ProductTab = () => {
+  const renderItem = ({item}) => (
+    <View style={styles.productItem}>
+      <Image
+        source={item.image}
+        style={styles.productImage}
+        resizeMode="cover"
+      />
+      <Text style={{...FONTS.h4}}>{item.title}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Icon
+          name="heart"
+          type="font-awesome"
+          size={15}
+          color={COLORS.roseRed}
+        />
+        <Text style={{paddingStart: SIZES.padding, ...FONTS.body4}}>1.2k</Text>
+      </View>
+    </View>
+  );
+  return (
+    <View style={styles.productListContainer}>
+      <FlatList
+        style={styles.productList}
+        data={products}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        numColumns={2}
+        columnWrapperStyle={{justifyContent: 'space-between'}}
+      />
+    </View>
+  );
+};
 
 const WorkersTab = () => (
   <View>
@@ -26,20 +55,21 @@ const ReviewsTab = () => (
   </View>
 );
 
-const ReservationTab = () => (
+const ApoointmentTab = () => (
   <View>
-    <Text> Reservation Tab</Text>
+    <Text> Appointment Tab</Text>
   </View>
 );
 
-const CustomTabBar = props => (
+const CustomTabBar = ({props}) => (
   <TabBar
     {...props}
-    indicatorStyle={{backgroundColor: COLORS.primary}}
-    style={{backgroundColor: COLORS.black}}
+    scrollEnabled
+    style={styles.tabBar}
+    indicatorStyle={{backgroundColor: COLORS.darkPrimary, height: 2}}
+    renderLabel={renderLabel}
   />
 );
-
 const renderLabel = ({route, focused, color}) => (
   <View>
     <Text style={focused ? styles.activeTabTitle : styles.inActiveTabTitle}>
@@ -60,7 +90,7 @@ const SalonDetail = ({navigation}) => {
     product: ProductTab,
     reviews: ReviewsTab,
     workers: WorkersTab,
-    reservations: ReservationTab,
+    reservations: ApoointmentTab,
   });
 
   return (
@@ -76,31 +106,9 @@ const SalonDetail = ({navigation}) => {
           paginationStyle={{bottom: -20}}
           dot={<View style={styles.inActiveDot} />}
           activeDot={<View style={styles.activeDot} />}>
-          <Image
-            source={salonImages.salon1}
-            style={styles.image}
-            resizeMode="cover"
-          />
-          <Image
-            source={salonImages.salon2}
-            style={styles.image}
-            resizeMode="cover"
-          />
-          <Image
-            source={salonImages.salon3}
-            style={styles.image}
-            resizeMode="cover"
-          />
-          <Image
-            source={salonImages.salon4}
-            style={styles.image}
-            resizeMode="cover"
-          />
-          <Image
-            source={salonImages.salon5}
-            style={styles.image}
-            resizeMode="cover"
-          />
+          {salonImages.map(item => (
+            <Image source={item} style={styles.image} resizeMode="cover" />
+          ))}
         </Swiper>
       </View>
       <View style={{flex: 2}}>
@@ -109,15 +117,7 @@ const SalonDetail = ({navigation}) => {
           renderScene={renderScene}
           onIndexChange={setIndex}
           initialLayout={{width: '100%'}}
-          renderTabBar={props => (
-            <TabBar
-              {...props}
-              scrollEnabled
-              style={styles.tabBar}
-              indicatorStyle={{backgroundColor: COLORS.darkPrimary, height: 2}}
-              renderLabel={renderLabel}
-            />
-          )}
+          renderTabBar={props => <CustomTabBar props={props} />}
           style={{backgroundColor: COLORS.white}}
         />
       </View>
@@ -182,6 +182,21 @@ const styles = StyleSheet.create({
   inActiveTabTitle: {
     ...FONTS.body3,
     color: COLORS.black,
+  },
+  productListContainer: {
+    flex: 1,
+  },
+  productList: {
+    paddingHorizontal: SIZES.padding,
+  },
+  productItem: {
+    padding: SIZES.padding,
+    flex: 1,
+  },
+  productImage: {
+    flex: 1,
+    width: SIZES.width / 2 - 30,
+    height: SIZES.width / 2,
   },
 });
 

@@ -40,7 +40,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 1,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon1.jpeg'),
+    image: require('./images/salon1.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -50,7 +50,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 1,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon2.jpeg'),
+    image: require('./images/salon2.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -60,7 +60,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon3.jpeg'),
+    image: require('./images/salon3.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -70,7 +70,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon4.jpeg'),
+    image: require('./images/salon4.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -80,7 +80,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon5.jpeg'),
+    image: require('./images/salon5.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -90,7 +90,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon6.jpeg'),
+    image: require('./images/salon6.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -100,7 +100,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon7.jpeg'),
+    image: require('./images/salon7.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -110,7 +110,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon1.jpeg'),
+    image: require('./images/salon1.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -120,7 +120,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon1.jpeg'),
+    image: require('./images/salon1.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -130,7 +130,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon1.jpeg'),
+    image: require('./images/salon1.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -140,7 +140,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon1.jpeg'),
+    image: require('./images/salon1.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -150,7 +150,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon1.jpeg'),
+    image: require('./images/salon1.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -160,7 +160,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon1.jpeg'),
+    image: require('./images/salon1.jpeg'),
   },
   {
     id: uuid.v4(),
@@ -170,7 +170,7 @@ const discoverySalons = [
     comments: 1123,
     isReserved: 0,
     address: '1234 Bixby Drive, Houston, TX',
-    image: require('./salon_images/salon1.jpeg'),
+    image: require('./images/salon1.jpeg'),
   },
 ];
 
@@ -310,12 +310,75 @@ const reservationData = [
   },
 ];
 
-const salonImages = {
-  salon1: require('./salon_images/salon1.jpeg'),
-  salon2: require('./salon_images/salon2.jpeg'),
-  salon3: require('./salon_images/salon3.jpeg'),
-  salon4: require('./salon_images/salon4.jpeg'),
-  salon5: require('./salon_images/salon5.jpeg'),
-};
+const salonImages = [
+  require('./images/salon1.jpeg'),
+  require('./images/salon2.jpeg'),
+  require('./images/salon3.jpeg'),
+  require('./images/salon4.jpeg'),
+  require('./images/salon5.jpeg'),
+];
 
-export {reservations, discoverySalons, reservationData, salonImages};
+const products = [
+  {
+    id: uuid.v4(),
+    title: 'Demon Slayer',
+    likes: 1234,
+    image: require('./images/nail1.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    title: 'Nail for Life',
+    likes: 1234,
+    image: require('./images/nail2.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    title: 'Something Else',
+    likes: 1234,
+    image: require('./images/nail3.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    title: 'Cool Nail',
+    likes: 1234,
+    image: require('./images/nail4.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    title: 'Not So Cool nail',
+    likes: 1234,
+    image: require('./images/nail5.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    title: 'Laughing Nail',
+    likes: 1234,
+    image: require('./images/nail6.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    title: 'Happy Nail Baby',
+    likes: 1234,
+    image: require('./images/nail7.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    title: 'Golden Nail',
+    likes: 1234,
+    image: require('./images/nail8.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    title: 'The Demon Seducer',
+    likes: 1234,
+    image: require('./images/nail9.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    title: 'The Doomsday',
+    likes: 1234,
+    image: require('./images/nail10.jpeg'),
+  },
+];
+
+export {reservations, discoverySalons, reservationData, salonImages, products};

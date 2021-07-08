@@ -19,6 +19,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 5,
   },
+  lightShadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    elevation: 10,
+    shadowOpacity: 0.15,
+    shadowRadius: 5,
+  },
   fullContainer: {
     backgroundColor: COLORS.white,
     width: '100%',

@@ -35,12 +35,16 @@ export const SIZES = {
   base: 8,
   font: 14,
   radius: 30,
-  smallPadding: 8,
+  smallPadding: 5,
   padding: 10,
   padding2: 12,
   margin5: 5,
   margin10: 10,
   margin15: 15,
+
+  margin: 15,
+  smallMargin: 10,
+  tinyMargin: 5,
 
   // font sizes
   largeTitle: 50,
@@ -60,6 +64,8 @@ export const SIZES = {
 
   // border radius
   borderRadius: 15,
+  smallBorderRadius: 10,
+  tinyBorderRadius: 5,
 
   // Flatlist padding bottom to prevent overflows
   flatListPaddingBottom: 100,

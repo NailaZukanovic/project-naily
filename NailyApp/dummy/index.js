@@ -323,12 +323,14 @@ const products = [
     id: uuid.v4(),
     title: 'Demon Slayer',
     likes: 1234,
+    comments: 1234,
     image: require('./images/nail1.jpeg'),
   },
   {
     id: uuid.v4(),
     title: 'Nail for Life',
     likes: 1234,
+    comments: 1234,
     image: require('./images/nail2.jpeg'),
   },
   {
@@ -336,6 +338,7 @@ const products = [
     title: 'Something Else',
     likes: 1234,
     image: require('./images/nail3.jpeg'),
+    comments: 1234,
   },
   {
     id: uuid.v4(),
@@ -379,6 +382,62 @@ const products = [
     likes: 1234,
     image: require('./images/nail10.jpeg'),
   },
+  {
+    id: uuid.v4(),
+    title: 'The Doomsday',
+    likes: 1234,
+    image: require('./images/nail10.jpeg'),
+  },
 ];
 
-export {reservations, discoverySalons, reservationData, salonImages, products};
+const workers = [
+  {
+    id: uuid.v4(),
+    name: 'The Rock',
+    likes: 1234,
+    skills: ['Master of Nail', 'Cool Manager', 'Mr Smiley Face'],
+    features: ['Manager', 'Super Star'],
+    image: require('./images/person1.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    name: 'Johnson',
+    likes: 9876,
+    skills: ['Master of Nail', 'Diamond Nail', 'Friendly'],
+    features: ['Super Star'],
+    image: require('./images/person2.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    name: 'Johnson',
+    likes: 9876,
+    skills: ['Master of Nail', 'Diamond Nail', 'Friendly'],
+    features: ['Super Star'],
+    image: require('./images/person3.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    name: 'Johnson',
+    likes: 9876,
+    skills: ['Master of Nail', 'Diamond Nail', 'Friendly'],
+    features: ['Super Star'],
+    image: require('./images/person4.jpeg'),
+  },
+  {
+    id: uuid.v4(),
+    name: 'Johnson',
+    likes: 9876,
+    skills: ['Master of Nail', 'Diamond Nail', 'Friendly'],
+    features: ['Super Star'],
+    image: require('./images/person5.jpeg'),
+  },
+];
+
+export {
+  reservations,
+  discoverySalons,
+  reservationData,
+  salonImages,
+  products,
+  workers,
+};

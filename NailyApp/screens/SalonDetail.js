@@ -20,9 +20,38 @@ import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {styles} from '../styles/index';
 
 const LikesGroup = ({likes}) => (
-  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-    <Icon name="heart" type="font-awesome" size={15} color={COLORS.roseRed} />
+  <View
+    style={{
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: SIZES.smallPadding,
+    }}>
+    <Icon
+      name="heart"
+      type="font-awesome"
+      size={SIZES.smallIconSize}
+      color={COLORS.roseRed}
+    />
     <Text style={{paddingStart: SIZES.padding, ...FONTS.body4}}>{likes}</Text>
+  </View>
+);
+
+const DislikesGroup = ({dislikes}) => (
+  <View
+    style={{
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: SIZES.smallPadding,
+    }}>
+    <Icon
+      name="thumbs-o-down"
+      type="font-awesome"
+      size={SIZES.smallIconSize}
+      color={COLORS.darkBlue}
+    />
+    <Text style={{paddingStart: SIZES.padding, ...FONTS.body4}}>
+      {dislikes}
+    </Text>
   </View>
 );
 
@@ -73,10 +102,10 @@ const WorkersTab = () => {
       <View style={mainStyle.workerDataContainer}>
         <View>
           <Text style={{...FONTS.h4}}>{item.name}</Text>
-          <LikesGroup likes={item.likes} />
           {item.features.map(feature => (
             <Text>{feature}</Text>
           ))}
+          <LikesGroup likes={item.likes} />
         </View>
         <View style={{justifyContent: 'space-around', alignItems: 'center'}}>
           {item.skills.map(skill => (
@@ -113,10 +142,26 @@ const ReviewsTab = () => {
       <View style={{backgroundColor: COLORS.secondary, padding: SIZES.padding}}>
         <Text>{`"${item.content}"`}</Text>
       </View>
-      <Text
-        style={{
-          textAlign: 'right',
-        }}>{`-${item.commenter}-`}</Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity>
+              <LikesGroup likes={item.likes} />
+            </TouchableOpacity>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity>
+              <DislikesGroup dislikes={item.dislikes} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <Text
+          style={{
+            textAlign: 'right',
+            ...FONTS.body4,
+            flex: 2,
+          }}>{`- ${item.commenter} -`}</Text>
+      </View>
     </View>
   );
   return (
@@ -131,7 +176,7 @@ const ReviewsTab = () => {
             width: SIZES.width,
             padding: SIZES.padding,
           }}>
-          <Text style={{...FONTS.h4, textAlign: 'right'}}>1344 more...</Text>
+          <Text style={{...FONTS.body2, textAlign: 'right'}}>1344 more...</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -143,6 +188,8 @@ const ApoointmentTab = () => (
     <Text> Appointment Tab</Text>
   </View>
 );
+
+const ContactTab = () => <View />;
 
 const CustomTabBar = ({props}) => (
   <TabBar
@@ -169,12 +216,14 @@ const SalonDetail = ({navigation}) => {
     {key: 'workers', title: 'Workers'},
     {key: 'reviews', title: 'Reviews'},
     {key: 'reservations', title: 'Appointments'},
+    {key: 'contact', title: 'Contact'},
   ]);
   const renderScene = SceneMap({
     product: ProductTab,
     reviews: ReviewsTab,
     workers: WorkersTab,
     reservations: ApoointmentTab,
+    contact: ContactTab,
   });
 
   return (
@@ -183,8 +232,10 @@ const SalonDetail = ({navigation}) => {
         title="Salon Detail"
         shownBackArrow={true}
         optionButton
-        optionButtonIcon={<Icon name="phone" type="entypo" />}
+        optionButtonIcon={<Icon name="heart-o" type="font-awesome" />}
+        onPressLeftButton={() => navigation.goBack()}
       />
+
       <View style={mainStyle.container}>
         <Swiper
           paginationStyle={{bottom: -20}}

@@ -71,6 +71,11 @@ export const SIZES = {
 
   // Flatlist padding bottom to prevent overflows
   flatListPaddingBottom: 100,
+
+  iconSize: 26,
+  smallIconSize: 20,
+  tinyIconSize: 15,
+  superTinyIconSize: 10,
 };
 
 export const FONTS = {

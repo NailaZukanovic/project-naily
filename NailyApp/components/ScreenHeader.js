@@ -5,7 +5,10 @@ import {Icon} from 'react-native-elements';
 
 const ScreenHeader = props => {
   let backArrowButton = props.shownBackArrow ? (
-    <TouchableOpacity style={styles.button}>
+    <TouchableOpacity
+      style={styles.button}
+      // onPress={() => props.navigation.goBack()}>
+      onPress={props.onPressLeftButton}>
       <Icon name="arrow-left" type="font-awesome" />
     </TouchableOpacity>
   ) : (
@@ -13,7 +16,7 @@ const ScreenHeader = props => {
   );
 
   let optionButton = props.optionButton ? (
-    <TouchableOpacity style={styles.button} onPress={() => props.onPress}>
+    <TouchableOpacity style={styles.button} onPress={props.rightButtonOnPress}>
       {props.optionButtonIcon}
     </TouchableOpacity>
   ) : (

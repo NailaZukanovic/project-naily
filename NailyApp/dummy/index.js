@@ -439,6 +439,7 @@ const comments = [
     content: 'Had my nail done for graduation and it’s wonder full',
     commenter: 'Reiley Joanna',
     likes: 1234,
+    dislikes: 2345,
   },
   {
     id: uuid.v4(),
@@ -446,6 +447,7 @@ const comments = [
       'Had my nail done for graduation and it’s wonder full, Had my nail done for graduation and it’s wonder full',
     commenter: 'Reiley Joanna',
     likes: 1234,
+    dislikes: 2345,
   },
   {
     id: uuid.v4(),
@@ -453,6 +455,7 @@ const comments = [
       'Had my nail done for graduation and it’s wonder full Had my nail done for graduation and it’s wonder full Had my nail done for graduation and it’s wonder full Had my nail done for graduation and it’s wonder full',
     commenter: 'Reiley Joanna The Angry',
     likes: 1234,
+    dislikes: 2345,
   },
   {
     id: uuid.v4(),
@@ -460,6 +463,7 @@ const comments = [
       'Had my nail done for graduation and it’s wonder full Had my nail done for graduation and it’s wonder full Had my nail done for graduation and it’s wonder full Had my nail done for graduation and it’s wonder full',
     commenter: 'Karen the Kraken Sea Monster',
     likes: 1234,
+    dislikes: 2345,
   },
 ];
 

@@ -17,7 +17,7 @@ import {Icon} from 'react-native-elements';
 import {
   Home,
   Search,
-  Reservation,
+  Appointments,
   Settings,
   SalonDetail,
 } from './screens/index';
@@ -64,8 +64,8 @@ const App = () => {
           }}
         />
         <tabNav.Screen
-          name="Reservations"
-          component={Reservation}
+          name="Appointments"
+          component={Appointments}
           options={{
             tabBarIcon: ({focused, color, size}) => (
               <Icon name="calendar" type="font-awesome" color={color} />

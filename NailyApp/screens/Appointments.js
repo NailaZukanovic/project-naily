@@ -53,11 +53,11 @@ const ReservationList = props => (
   />
 );
 
-const Reservation = () => {
+const Appointments = () => {
   return (
     <View style={styles.fullContainer}>
       <SafeAreaView>
-        <ScreenHeader title="Reservations" />
+        <ScreenHeader title="Appointments" />
         <View>
           <ReservationList reservations={reservationData} />
         </View>
@@ -66,4 +66,4 @@ const Reservation = () => {
   );
 };
 
-export default Reservation;
+export default Appointments;

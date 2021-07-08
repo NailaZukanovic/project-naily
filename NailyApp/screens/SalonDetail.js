@@ -1,13 +1,22 @@
 import React from 'react';
 import {useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, View, Image} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  SCrollView,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {COLORS, SIZES, FONTS} from '../constants/index';
 import {ScreenHeader} from '../components/index';
 import Swiper from 'react-native-swiper';
-import {salonImages, products, workers} from '../dummy/index';
+import {salonImages, products, workers, comments} from '../dummy/index';
 import {Icon} from 'react-native-elements';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import {FlatList} from 'react-native-gesture-handler';
 import {styles} from '../styles/index';
 
 const LikesGroup = ({likes}) => (
@@ -50,6 +59,7 @@ const ProductTab = () => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={2}
+        showsVerticalScrollIndicator={false}
         columnWrapperStyle={{justifyContent: 'space-between'}}
       />
     </View>
@@ -91,16 +101,42 @@ const WorkersTab = () => {
         data={workers}
         renderItem={renderItem}
         keyExtractor={item => item.id}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
 };
 
-const ReviewsTab = () => (
-  <View>
-    <Text> Reviews Tab</Text>
-  </View>
-);
+const ReviewsTab = () => {
+  const renderItem = item => (
+    <View style={mainStyle.reviewItem}>
+      <View style={{backgroundColor: COLORS.secondary, padding: SIZES.padding}}>
+        <Text>{`"${item.content}"`}</Text>
+      </View>
+      <Text
+        style={{
+          textAlign: 'right',
+        }}>{`-${item.commenter}-`}</Text>
+    </View>
+  );
+  return (
+    <View style={mainStyle.listContainer}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {comments.map(comment => (
+          <View>{renderItem(comment)}</View>
+        ))}
+
+        <TouchableOpacity
+          style={{
+            width: SIZES.width,
+            padding: SIZES.padding,
+          }}>
+          <Text style={{...FONTS.h4, textAlign: 'right'}}>1344 more...</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+};
 
 const ApoointmentTab = () => (
   <View>
@@ -262,6 +298,11 @@ const mainStyle = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: SIZES.smallBorderRadius,
+  },
+  reviewItem: {
+    marginVertical: SIZES.smallMargin,
+    paddingHorizontal: SIZES.padding,
+    flex: 1,
   },
 });
 

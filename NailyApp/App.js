@@ -24,6 +24,13 @@ import {
 import {COLORS, FONTS, SIZES} from './constants';
 
 const SearchStack = createStackNavigator();
+const HomeStackScreen = () => (
+  <SearchStack.Navigator headerMode={'none'}>
+    <SearchStack.Screen name="Home" component={Home} />
+    <SearchStack.Screen name="SalonDetail" component={SalonDetail} />
+  </SearchStack.Navigator>
+);
+
 const SearchStackScreen = () => (
   <SearchStack.Navigator headerMode={'none'}>
     <SearchStack.Screen name="Search" component={Search} />
@@ -52,7 +59,7 @@ const App = () => {
               <Icon name="home" type="font-awesome" color={color} />
             ),
           }}
-          component={Home}
+          component={HomeStackScreen}
         />
         <tabNav.Screen
           name="Search"

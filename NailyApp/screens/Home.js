@@ -8,6 +8,7 @@ import {
   StatusBar,
   ScrollView,
   useColorScheme,
+  TouchableOpacity,
 } from 'react-native';
 import {COLORS, SIZES, FONTS} from '../constants/index';
 import {Icon} from 'react-native-elements';
@@ -19,7 +20,7 @@ import {reservations, discoverySalons} from '../dummy/index';
 
 registerCustomIconType('fa5', FontAwesome5);
 
-const Home = () => {
+const Home = ({navigation}) => {
   const renderReservationItem = ({item}) => (
     <View
       style={{
@@ -70,91 +71,93 @@ const Home = () => {
   };
 
   const renderDiscoveryItem = ({item}) => (
-    <View
-      style={{
-        // ...styles.shadow,
-        margin: SIZES.margin5,
-        borderRadius: SIZES.borderRadius,
-        backgroundColor: COLORS.white,
-        paddingBottom: SIZES.padding,
-      }}>
-      <View style={styles.shadow}>
-        <Image
-          style={{
-            width: '100%',
-            height: 180,
-            borderRadius: SIZES.borderRadius,
-          }}
-          source={item.image}
-          resizeMode="cover"
-        />
-      </View>
+    <TouchableOpacity onPress={() => navigation.navigate('SalonDetail')}>
       <View
         style={{
-          paddingHorizontal: SIZES.padding,
-          paddingTop: SIZES.padding,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+          // ...styles.shadow,
+          margin: SIZES.margin5,
+          borderRadius: SIZES.borderRadius,
+          backgroundColor: COLORS.white,
+          paddingBottom: SIZES.padding,
         }}>
-        <Text style={{...FONTS.h3}}>{item.salon}</Text>
-        <View style={{flexDirection: 'row'}}>
-          <View
+        <View style={styles.shadow}>
+          <Image
             style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Icon
-              name="heart"
-              type="ant-design"
-              size={15}
-              color={COLORS.roseRed}
-            />
-            <Text style={{margin: SIZES.margin5}}>1.2k</Text>
-          </View>
-          <View>
+              width: '100%',
+              height: 180,
+              borderRadius: SIZES.borderRadius,
+            }}
+            source={item.image}
+            resizeMode="cover"
+          />
+        </View>
+        <View
+          style={{
+            paddingHorizontal: SIZES.padding,
+            paddingTop: SIZES.padding,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+          }}>
+          <Text style={{...FONTS.h3}}>{item.salon}</Text>
+          <View style={{flexDirection: 'row'}}>
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Icon name="comment" size={20} color={COLORS.lightViolet} />
+              <Icon
+                name="heart"
+                type="ant-design"
+                size={15}
+                color={COLORS.roseRed}
+              />
               <Text style={{margin: SIZES.margin5}}>1.2k</Text>
+            </View>
+            <View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Icon name="comment" size={20} color={COLORS.lightViolet} />
+                <Text style={{margin: SIZES.margin5}}>1.2k</Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-        }}>
-        <Text
-          style={{
-            paddingStart: SIZES.padding,
-          }}>
-          {item.address}
-        </Text>
-      </View>
-      {item.isReserved ? (
         <View
           style={{
             flexDirection: 'row',
-            alignItems: 'center',
           }}>
           <Text
             style={{
-              ...FONTS.medium3,
               paddingStart: SIZES.padding,
-              color: COLORS.green,
             }}>
-            Reserved
+            {item.address}
           </Text>
         </View>
-      ) : (
-        <Text />
-      )}
-    </View>
+        {item.isReserved ? (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}>
+            <Text
+              style={{
+                ...FONTS.medium3,
+                paddingStart: SIZES.padding,
+                color: COLORS.green,
+              }}>
+              3 appointments
+            </Text>
+          </View>
+        ) : (
+          <Text />
+        )}
+      </View>
+    </TouchableOpacity>
   );
 
   const renderDiscoveryList = discoveryData => {

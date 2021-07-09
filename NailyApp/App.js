@@ -7,7 +7,6 @@
  */
 
 import React from 'react';
-import {Text, useColorScheme, View} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -20,21 +19,46 @@ import {
   Appointments,
   Settings,
   SalonDetail,
+  ProductDetail,
+  DateTimePicker,
 } from './screens/index';
-import {COLORS, FONTS, SIZES} from './constants';
+import {COLORS, FONTS, SCREEN_NAMES} from './constants/index';
 
 const SearchStack = createStackNavigator();
 const HomeStackScreen = () => (
   <SearchStack.Navigator headerMode={'none'}>
-    <SearchStack.Screen name="Home" component={Home} />
-    <SearchStack.Screen name="SalonDetail" component={SalonDetail} />
+    <SearchStack.Screen name={SCREEN_NAMES.home} component={Home} />
+    <SearchStack.Screen
+      name={SCREEN_NAMES.salon}
+      component={SalonStackScreen}
+    />
   </SearchStack.Navigator>
 );
 
 const SearchStackScreen = () => (
   <SearchStack.Navigator headerMode={'none'}>
-    <SearchStack.Screen name="Search" component={Search} />
-    <SearchStack.Screen name="SalonDetail" component={SalonDetail} />
+    <SearchStack.Screen name={SCREEN_NAMES.search} component={Search} />
+    <SearchStack.Screen
+      name={SCREEN_NAMES.salon}
+      component={SalonStackScreen}
+    />
+  </SearchStack.Navigator>
+);
+
+const SalonStackScreen = () => (
+  <SearchStack.Navigator headerMode={'none'}>
+    <SearchStack.Screen
+      name={SCREEN_NAMES.salonDetail}
+      component={SalonDetail}
+    />
+    <SearchStack.Screen
+      name={SCREEN_NAMES.productDetail}
+      component={ProductDetail}
+    />
+    <SearchStack.Screen
+      name={SCREEN_NAMES.dateTimePicker}
+      component={DateTimePicker}
+    />
   </SearchStack.Navigator>
 );
 
@@ -48,9 +72,6 @@ const App = () => {
           activeTintColor: COLORS.darkPrimary,
           inactiveTintColor: COLORS.gray,
           labelStyle: FONTS.body5,
-          style: {
-            height: 80,
-          },
         }}>
         <tabNav.Screen
           name="Home"

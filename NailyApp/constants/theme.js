@@ -63,6 +63,13 @@ export const SIZES = {
   // app dimensions
   width,
   height,
+  oneHalfWidth: width / 2,
+  oneThirdWidth: width / 3,
+  oneQuarterWidth: width / 4,
+
+  oneHalfHeight: height / 2,
+  oneThirdHeight: height / 3,
+  oneQuarterHeight: height / 4,
 
   // border radius
   borderRadius: 15,

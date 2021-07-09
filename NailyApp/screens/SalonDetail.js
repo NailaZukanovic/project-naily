@@ -6,12 +6,12 @@ import {
   Text,
   View,
   Image,
-  SCrollView,
+  Platform,
   FlatList,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {COLORS, SIZES, FONTS} from '../constants/index';
+import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
 import {ScreenHeader} from '../components/index';
 import Swiper from 'react-native-swiper';
 import {
@@ -24,6 +24,7 @@ import {
 import {Icon} from 'react-native-elements';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {styles} from '../styles/index';
+import {StatusBar} from 'react-native';
 
 const LikesGroup = ({likes}) => (
   <View
@@ -61,9 +62,18 @@ const DislikesGroup = ({dislikes}) => (
   </View>
 );
 
-const ProductTab = () => {
+const ProductTab = ({navigation}) => {
+  const goToProductDetail = item => {};
   const renderItem = ({item}) => (
-    <View style={mainStyle.productItem}>
+    <TouchableOpacity
+      style={mainStyle.productItem}
+      onPress={() =>
+        navigation.navigate(SCREEN_NAMES.productDetail, {
+          title: item.title,
+          likes: item.likes,
+          image: item.image,
+        })
+      }>
       <View style={styles.lightShadow}>
         <Image
           source={item.image}
@@ -84,7 +94,7 @@ const ProductTab = () => {
           {item.likes}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
   return (
     <View style={mainStyle.listContainer}>
@@ -103,7 +113,7 @@ const ProductTab = () => {
 
 const WorkersTab = () => {
   const renderItem = ({item}) => (
-    <View style={mainStyle.workerItemContainer}>
+    <TouchableOpacity style={mainStyle.workerItemContainer}>
       <Image source={item.image} style={mainStyle.workerAvatar} />
       <View style={mainStyle.workerDataContainer}>
         <View>
@@ -127,7 +137,7 @@ const WorkersTab = () => {
           ))}
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -235,24 +245,26 @@ const SalonDetail = ({navigation}) => {
     {key: 'contact', title: 'Contact'},
   ]);
   const renderScene = SceneMap({
-    product: ProductTab,
+    product: () => <ProductTab navigation={navigation} />,
     reviews: ReviewsTab,
     workers: WorkersTab,
     contact: ContactTab,
   });
+
+  let isImageLoop = Platform.OS === 'android' ? false : true;
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScreenHeader
         title="Salon Detail"
         shownBackArrow={true}
-        optionButton
         optionButtonIcon={<Icon name="heart-o" type="font-awesome" />}
         onPressLeftButton={() => navigation.goBack()}
       />
 
       <View style={mainStyle.container}>
         <Swiper
+          loop={isImageLoop}
           paginationStyle={{bottom: -20}}
           dot={<View style={mainStyle.inActiveDot} />}
           activeDot={<View style={mainStyle.activeDot} />}>
@@ -371,7 +383,7 @@ const mainStyle = StyleSheet.create({
     flex: 1,
   },
   contactContainer: {
-    padding: SIZES.padding,
+    padding: SIZES.smallPadding,
   },
   contactItem: {
     flexDirection: 'row',

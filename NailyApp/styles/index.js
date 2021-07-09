@@ -4,7 +4,7 @@ import {COLORS, SIZES, FONTS} from '../constants/index';
 const styles = StyleSheet.create({
   container: {
     marginTop: 32,
-    paddingHorizontal: 24,
+    paddingHorizontal: SIZES.padding,
   },
   body: {
     flex: 1,
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 5,
     },
-    elevation: 15,
+    elevation: 5,
     shadowOpacity: 0.25,
     shadowRadius: 5,
   },
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 3,
     },
-    elevation: 10,
+    elevation: 3,
     shadowOpacity: 0.15,
     shadowRadius: 5,
   },

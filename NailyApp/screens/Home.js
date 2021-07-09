@@ -10,7 +10,7 @@ import {
   useColorScheme,
   TouchableOpacity,
 } from 'react-native';
-import {COLORS, SIZES, FONTS} from '../constants/index';
+import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {registerCustomIconType} from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -71,7 +71,7 @@ const Home = ({navigation}) => {
   };
 
   const renderDiscoveryItem = ({item}) => (
-    <TouchableOpacity onPress={() => navigation.navigate('SalonDetail')}>
+    <TouchableOpacity onPress={() => navigation.navigate(SCREEN_NAMES.salon)}>
       <View
         style={{
           // ...styles.shadow,
@@ -199,29 +199,18 @@ const Home = ({navigation}) => {
   );
 
   return (
-    <View
-      style={{
-        backgroundColor: COLORS.white,
-      }}>
-      <SafeAreaView
-        style={{
-          ...styles.container,
-        }}>
-        <StatusBar
-          barStyle={'light-content'}
-          backgroundColor={COLORS.darkPrimary}
-        />
+    <SafeAreaView>
+      <StatusBar barStyle={'dark-content'} backgroundColor={COLORS.white} />
 
-        <View
-          style={{
-            backgroundColor: COLORS.white,
-            paddingBottom: SIZES.flatListPaddingBottom,
-          }}>
-          <Text style={{...FONTS.h1}}>Explore</Text>
-          <ExploreList />
-        </View>
-      </SafeAreaView>
-    </View>
+      <View
+        style={{
+          backgroundColor: COLORS.white,
+          paddingBottom: SIZES.flatListPaddingBottom,
+        }}>
+        <Text style={{...FONTS.h1}}>Explore</Text>
+        <ExploreList />
+      </View>
+    </SafeAreaView>
   );
 };
 

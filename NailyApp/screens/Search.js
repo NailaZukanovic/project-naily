@@ -9,7 +9,7 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
-import {COLORS, SIZES, FONTS} from '../constants/index';
+import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {styles, searchStyles} from '../styles/index';
 
@@ -18,7 +18,7 @@ import {discoverySalons} from '../dummy/index';
 const renderSearchResultItem = (item, navigation) => (
   <TouchableOpacity
     style={searchStyles.searchResultItemContainer}
-    onPress={() => navigation.navigate('SalonDetail')}>
+    onPress={() => navigation.navigate(SCREEN_NAMES.salon)}>
     <View style={styles.shadow}>
       <Image
         style={{width: 60, height: 60, borderRadius: 30}}
@@ -65,11 +65,7 @@ const SearchResultList = props => {
 
 const Search = ({navigation}) => {
   return (
-    <SafeAreaView>
-      <StatusBar
-        barStyle={'dark-content'}
-        backgroundColor={COLORS.darkPrimary}
-      />
+    <SafeAreaView style={{backgroundColor: COLORS.white}}>
       <View
         style={{
           ...searchStyles.searchContainer,

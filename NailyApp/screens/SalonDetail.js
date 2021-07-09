@@ -14,7 +14,13 @@ import {
 import {COLORS, SIZES, FONTS} from '../constants/index';
 import {ScreenHeader} from '../components/index';
 import Swiper from 'react-native-swiper';
-import {salonImages, products, workers, comments} from '../dummy/index';
+import {
+  salonContact,
+  salonImages,
+  products,
+  workers,
+  comments,
+} from '../dummy/index';
 import {Icon} from 'react-native-elements';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {styles} from '../styles/index';
@@ -183,13 +189,24 @@ const ReviewsTab = () => {
   );
 };
 
-const ApoointmentTab = () => (
-  <View>
-    <Text> Appointment Tab</Text>
+const ContactTab = () => (
+  <View style={mainStyle.contactContainer}>
+    <TouchableOpacity style={mainStyle.contactItem}>
+      <Icon name="location-pin" type="entypo" color={COLORS.primary} />
+      <Text style={mainStyle.contactText}>{salonContact.address}</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={mainStyle.contactItem}>
+      <Icon name="clock-o" type="font-awesome" color={COLORS.primary} />
+      <Text style={mainStyle.contactText}>Monday 8AM - 10PM</Text>
+    </TouchableOpacity>
+
+    <TouchableOpacity style={mainStyle.contactItem}>
+      <Icon name="phone" type="font-awesome" color={COLORS.primary} />
+      <Text style={mainStyle.contactText}>{salonContact.phone}</Text>
+    </TouchableOpacity>
   </View>
 );
-
-const ContactTab = () => <View />;
 
 const CustomTabBar = ({props}) => (
   <TabBar
@@ -215,14 +232,12 @@ const SalonDetail = ({navigation}) => {
     {key: 'product', title: 'Product'},
     {key: 'workers', title: 'Workers'},
     {key: 'reviews', title: 'Reviews'},
-    {key: 'reservations', title: 'Appointments'},
     {key: 'contact', title: 'Contact'},
   ]);
   const renderScene = SceneMap({
     product: ProductTab,
     reviews: ReviewsTab,
     workers: WorkersTab,
-    reservations: ApoointmentTab,
     contact: ContactTab,
   });
 
@@ -354,6 +369,18 @@ const mainStyle = StyleSheet.create({
     marginVertical: SIZES.smallMargin,
     paddingHorizontal: SIZES.padding,
     flex: 1,
+  },
+  contactContainer: {
+    padding: SIZES.padding,
+  },
+  contactItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: SIZES.padding,
+  },
+  contactText: {
+    ...FONTS.body3,
+    paddingStart: SIZES.padding,
   },
 });
 

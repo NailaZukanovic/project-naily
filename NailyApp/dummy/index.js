@@ -1,36 +1,5 @@
 import uuid from 'react-native-uuid';
 
-const reservations = [
-  {
-    id: '1',
-    salon: 'ProNail',
-    worker: 'Jesscia Pham',
-    date: '11.13.2021',
-    time: '11:30am',
-  },
-  {
-    id: '2',
-    salon: 'Happy Nail',
-    worker: 'John Backer',
-    date: '11.13.2021',
-    time: '11:30am',
-  },
-  {
-    id: '3',
-    salon: 'No Nail No Life',
-    worker: 'Lu Nguyen',
-    date: '11.13.2021',
-    time: '11:30am',
-  },
-  {
-    id: '4',
-    salon: 'Nail For Life Boiee',
-    worker: 'The Rock',
-    date: '11.13.2021',
-    time: '11:30am',
-  },
-];
-
 const discoverySalons = [
   {
     id: uuid.v4(),
@@ -467,12 +436,27 @@ const comments = [
   },
 ];
 
+const salonContact = {
+  id: uuid.v4(),
+  address: '1234 Bocky Rd, Alala, NY, 14549',
+  hours: {
+    monday: [6, 22],
+    tuesday: [6, 22],
+    wednesday: [6, 22],
+    thursday: [6, 22],
+    friday: [6, 22],
+    saturday: [8, 22],
+    sunday: [10, 22],
+  },
+  phone: '(858) 429 4400',
+};
+
 export {
-  reservations,
   discoverySalons,
   reservationData,
   salonImages,
   products,
   workers,
   comments,
+  salonContact,
 };

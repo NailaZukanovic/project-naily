@@ -37,10 +37,6 @@ const renderReservationItem = ({item}) => (
         {item.status.message}
       </Text>
     </View>
-
-    <View style={reservationStyles.detailButtonContainer}>
-      <Icon name="right" type="ant-design" />
-    </View>
   </View>
 );
 

@@ -451,6 +451,108 @@ const salonContact = {
   phone: '(858) 429 4400',
 };
 
+const availableTimeSlots = [
+  {
+    time: '8:00',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person1.jpeg'),
+      require('./images/person2.jpeg'),
+      require('./images/person3.jpeg'),
+    ],
+  },
+  {
+    time: '8:15',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person4.jpeg'),
+      require('./images/person5.jpeg'),
+      require('./images/person6.jpeg'),
+    ],
+  },
+  {
+    time: '8:30',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person1.jpeg'),
+      require('./images/person2.jpeg'),
+      require('./images/person3.jpeg'),
+    ],
+  },
+  {
+    time: '8:45',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person1.jpeg'),
+      require('./images/person2.jpeg'),
+      require('./images/person3.jpeg'),
+    ],
+  },
+  {
+    time: '9:00',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person1.jpeg'),
+      require('./images/person2.jpeg'),
+      require('./images/person3.jpeg'),
+    ],
+  },
+  {
+    time: '9:15',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person1.jpeg'),
+      require('./images/person2.jpeg'),
+      require('./images/person3.jpeg'),
+    ],
+  },
+  {
+    time: '9:30',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person1.jpeg'),
+      require('./images/person2.jpeg'),
+      require('./images/person3.jpeg'),
+    ],
+  },
+  {
+    time: '9:45',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person1.jpeg'),
+      require('./images/person2.jpeg'),
+      require('./images/person3.jpeg'),
+    ],
+  },
+  {
+    time: '10:00',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person1.jpeg'),
+      require('./images/person2.jpeg'),
+      require('./images/person3.jpeg'),
+    ],
+  },
+  {
+    time: '10:15',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person1.jpeg'),
+      require('./images/person2.jpeg'),
+      require('./images/person3.jpeg'),
+    ],
+  },
+  {
+    time: '10:30',
+    availableWorkers: 4,
+    avatar: [
+      require('./images/person1.jpeg'),
+      require('./images/person2.jpeg'),
+      require('./images/person3.jpeg'),
+    ],
+  },
+];
+
 export {
   discoverySalons,
   reservationData,
@@ -459,4 +561,5 @@ export {
   workers,
   comments,
   salonContact,
+  availableTimeSlots,
 };

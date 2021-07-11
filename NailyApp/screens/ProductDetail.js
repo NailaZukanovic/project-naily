@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import {COLORS, SIZES, FONTS, names} from '../constants/index';
-import {ScreenHeader} from '../components/index';
+import {ScreenHeader, AvailableTimePicker} from '../components/index';
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 import CalendarPicker from 'react-native-calendar-picker';
@@ -75,11 +75,14 @@ const ProductPage = props => (
   </View>
 );
 
-const renderTimePicker = () => <ScrollView />;
-
 const DateTimePickerPage = props => (
-  <View>
-    <CalendarPicker onDateChange={() => console.log('here')} />
+  <View style={{flex: 1}}>
+    <CalendarPicker
+      onDateChange={() => console.log('here')}
+      style={{flex: 1}}
+    />
+
+    <AvailableTimePicker style={{flex: 1}} title={'Available times'} />
   </View>
 );
 
@@ -94,7 +97,6 @@ const ProductDetail = ({route, navigation}) => {
         onPressLeftButton={() => navigation.goBack()}
         optionButtonIcon={<Icon name="heart-o" type="font-awesome" />}
       />
-
       <Swiper loop={false}>
         <ProductPage image={image} likes={likes} />
         <DateTimePickerPage />

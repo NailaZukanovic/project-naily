@@ -1,3 +1,4 @@
 import ScreenHeader from './ScreenHeader';
+import AvailableTimePicker from './AvailableTimePicker';
 
-export {ScreenHeader};
+export {ScreenHeader, AvailableTimePicker};

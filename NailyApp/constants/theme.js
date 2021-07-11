@@ -66,10 +66,12 @@ export const SIZES = {
   oneHalfWidth: width / 2,
   oneThirdWidth: width / 3,
   oneQuarterWidth: width / 4,
+  oneFifthWidth: width / 5,
 
   oneHalfHeight: height / 2,
   oneThirdHeight: height / 3,
   oneQuarterHeight: height / 4,
+  oneFifthHeight: height / 5,
 
   // border radius
   borderRadius: 15,

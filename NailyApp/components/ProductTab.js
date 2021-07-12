@@ -1,93 +1,62 @@
 import React from 'react';
-import {useState} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
   Image,
-  Platform,
+  FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
-import {ScreenHeader} from '../components/index';
-import Swiper from 'react-native-swiper';
-import {salonContact, salonImages, workers, comments} from '../dummy/index';
+import {products} from '../dummy/index';
 import {Icon} from 'react-native-elements';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {styles} from '../styles/index';
-import {
-  ProductTab,
-  WorkersTab,
-  ReviewsTab,
-  ContactTab,
-} from '../components/index';
 
-const CustomTabBar = ({props}) => (
-  <TabBar
-    {...props}
-    scrollEnabled
-    style={mainStyle.tabBar}
-    indicatorStyle={{backgroundColor: COLORS.darkPrimary, height: 2}}
-    renderLabel={renderLabel}
-  />
-);
-const renderLabel = ({route, focused, color}) => (
-  <View>
-    <Text
-      style={focused ? mainStyle.activeTabTitle : mainStyle.inActiveTabTitle}>
-      {route.title}
-    </Text>
-  </View>
-);
-
-const SalonDetail = ({navigation}) => {
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    {key: 'product', title: 'Product'},
-    {key: 'workers', title: 'Workers'},
-    {key: 'reviews', title: 'Reviews'},
-    {key: 'contact', title: 'Contact'},
-  ]);
-  const renderScene = SceneMap({
-    product: () => <ProductTab navigation={navigation} />,
-    reviews: () => <ReviewsTab comments={comments} />,
-    workers: () => <WorkersTab data={workers} />,
-    contact: () => <ContactTab contact={salonContact} />,
-  });
-
-  let isImageLoop = Platform.OS === 'android' ? false : true;
-
-  return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
-      <ScreenHeader
-        title="Salon Detail"
-        shownBackArrow={true}
-        optionButtonIcon={<Icon name="heart-o" type="font-awesome" />}
-        onPressLeftButton={() => navigation.goBack()}
-      />
-
-      <View style={mainStyle.container}>
-        <Swiper
-          loop={isImageLoop}
-          paginationStyle={{bottom: -20}}
-          dot={<View style={mainStyle.inActiveDot} />}
-          activeDot={<View style={mainStyle.activeDot} />}>
-          {salonImages.map(item => (
-            <Image source={item} style={mainStyle.image} resizeMode="cover" />
-          ))}
-        </Swiper>
-      </View>
-      <View style={{flex: 2}}>
-        <TabView
-          navigationState={{index, routes}}
-          renderScene={renderScene}
-          onIndexChange={setIndex}
-          initialLayout={{width: '100%'}}
-          renderTabBar={props => <CustomTabBar props={props} />}
-          style={{backgroundColor: COLORS.white}}
+const ProductTab = ({navigation}) => {
+  const renderItem = ({item}) => (
+    <TouchableOpacity
+      style={mainStyle.productItem}
+      onPress={() =>
+        navigation.navigate(SCREEN_NAMES.productDetail, {
+          title: item.title,
+          likes: item.likes,
+          image: item.image,
+        })
+      }>
+      <View style={styles.lightShadow}>
+        <Image
+          source={item.image}
+          style={mainStyle.productImage}
+          resizeMode="cover"
         />
       </View>
-    </SafeAreaView>
+
+      <Text style={{...FONTS.h4}}>{item.title}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Icon
+          name="heart"
+          type="font-awesome"
+          size={15}
+          color={COLORS.roseRed}
+        />
+        <Text style={{paddingStart: SIZES.padding, ...FONTS.body4}}>
+          {item.likes}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+  return (
+    <View style={mainStyle.listContainer}>
+      <FlatList
+        style={mainStyle.productList}
+        data={products}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+        columnWrapperStyle={{justifyContent: 'space-between'}}
+      />
+    </View>
   );
 };
 
@@ -208,4 +177,4 @@ const mainStyle = StyleSheet.create({
   },
 });
 
-export default SalonDetail;
+export default ProductTab;

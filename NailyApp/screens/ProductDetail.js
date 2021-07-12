@@ -8,12 +8,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import {COLORS, SIZES, FONTS, names} from '../constants/index';
+import {COLORS, SIZES, FONTS} from '../constants/index';
 import {ScreenHeader, AvailableTimePicker} from '../components/index';
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 import CalendarPicker from 'react-native-calendar-picker';
-import {ScrollView} from 'react-native';
 
 const StatsGroup = props => (
   <View

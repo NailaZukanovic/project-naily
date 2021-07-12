@@ -1,19 +1,6 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
-import Swiper from 'react-native-swiper';
-import {COLORS, SIZES, FONTS, names} from '../constants/index';
-import {ScreenHeader} from '../components/index';
-import {Icon} from 'react-native-elements';
-import {styles} from '../styles/index';
-import CalendarPicker from 'react-native-calendar-picker';
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {SIZES, FONTS} from '../constants/index';
 import {ScrollView} from 'react-native-gesture-handler';
 import {availableTimeSlots} from '../dummy/index';
 

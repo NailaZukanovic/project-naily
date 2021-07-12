@@ -453,7 +453,7 @@ const salonContact = {
 
 const availableTimeSlots = [
   {
-    time: '8:00',
+    time: '8:00 AM',
     availableWorkers: 4,
     avatar: [
       require('./images/person1.jpeg'),
@@ -462,7 +462,7 @@ const availableTimeSlots = [
     ],
   },
   {
-    time: '8:15',
+    time: '8:15 AM',
     availableWorkers: 4,
     avatar: [
       require('./images/person4.jpeg'),
@@ -471,7 +471,7 @@ const availableTimeSlots = [
     ],
   },
   {
-    time: '8:30',
+    time: '8:30 AM',
     availableWorkers: 4,
     avatar: [
       require('./images/person1.jpeg'),
@@ -480,7 +480,7 @@ const availableTimeSlots = [
     ],
   },
   {
-    time: '8:45',
+    time: '8:45 AM',
     availableWorkers: 4,
     avatar: [
       require('./images/person1.jpeg'),
@@ -489,7 +489,7 @@ const availableTimeSlots = [
     ],
   },
   {
-    time: '9:00',
+    time: '9:00 AM',
     availableWorkers: 4,
     avatar: [
       require('./images/person1.jpeg'),
@@ -498,7 +498,7 @@ const availableTimeSlots = [
     ],
   },
   {
-    time: '9:15',
+    time: '9:15 AM',
     availableWorkers: 4,
     avatar: [
       require('./images/person1.jpeg'),
@@ -507,7 +507,7 @@ const availableTimeSlots = [
     ],
   },
   {
-    time: '9:30',
+    time: '9:30 AM',
     availableWorkers: 4,
     avatar: [
       require('./images/person1.jpeg'),
@@ -516,7 +516,7 @@ const availableTimeSlots = [
     ],
   },
   {
-    time: '9:45',
+    time: '9:45 AM',
     availableWorkers: 4,
     avatar: [
       require('./images/person1.jpeg'),
@@ -525,7 +525,7 @@ const availableTimeSlots = [
     ],
   },
   {
-    time: '10:00',
+    time: '10:00 AM',
     availableWorkers: 4,
     avatar: [
       require('./images/person1.jpeg'),
@@ -543,7 +543,7 @@ const availableTimeSlots = [
     ],
   },
   {
-    time: '10:30',
+    time: '10:30 AM',
     availableWorkers: 4,
     avatar: [
       require('./images/person1.jpeg'),

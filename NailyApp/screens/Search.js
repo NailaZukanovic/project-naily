@@ -6,7 +6,7 @@ import {
   TextInput,
   View,
   FlatList,
-  StatusBar,
+  StyleSheet,
   Image,
 } from 'react-native';
 import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
@@ -89,5 +89,40 @@ const Search = ({navigation}) => {
     </SafeAreaView>
   );
 };
+
+const mainStyle = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    paddingVertical: SIZES.padding,
+    paddingHorizontal: SIZES.padding,
+    marginHorizontal: SIZES.margin10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textInput: {
+    borderBottomWidth: 2,
+    borderColor: COLORS.primary,
+    color: COLORS.darkBlue,
+    marginHorizontal: SIZES.margin10,
+    flex: 1,
+    fontSize: SIZES.body2,
+    fontFamily: 'Roboto-Medium',
+  },
+  locationButton: {
+    width: 26,
+    height: 26,
+  },
+  resultItemContainer: {
+    paddingVertical: SIZES.smallPadding,
+    paddingHorizontal: SIZES.padding,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flex: 1,
+  },
+});
 
 export default Search;

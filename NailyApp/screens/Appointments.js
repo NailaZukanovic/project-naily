@@ -1,18 +1,26 @@
 import React from 'react';
-import {SafeAreaView, Text, View, FlatList, Image} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  View,
+  FlatList,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import {COLORS, SIZES, FONTS} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {styles, searchStyles, reservationStyles} from '../styles/index';
 
 import {discoverySalons, reservationData} from '../dummy/index';
 import ScreenHeader from '../components/ScreenHeader';
+import {TouchableOpacity} from 'react-native';
 
 const renderReservationItem = ({item}) => (
-  <View style={reservationStyles.itemContainer}>
+  <TouchableOpacity style={mainStyle.container}>
     <View style={{...styles.shadow}}>
       <Image
         source={item.worker.avatar}
-        style={reservationStyles.workerImage}
+        style={mainStyle.avatar}
         resizeMode="cover"
       />
     </View>
@@ -37,7 +45,10 @@ const renderReservationItem = ({item}) => (
         {item.status.message}
       </Text>
     </View>
-  </View>
+    <View>
+      <Icon name="right" type="ant-design" size={SIZES.iconSize} />
+    </View>
+  </TouchableOpacity>
 );
 
 const ReservationList = props => (
@@ -61,5 +72,28 @@ const Appointments = () => {
     </View>
   );
 };
+
+const mainStyle = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: SIZES.margin5,
+    backgroundColor: COLORS.white,
+    paddingHorizontal: SIZES.padding,
+    flex: 1,
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    marginEnd: SIZES.margin10,
+    borderRadius: SIZES.borderRadius,
+  },
+  detailButton: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: SIZES.padding,
+  },
+});
 
 export default Appointments;

@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TextInput,
   View,
   Image,
   Platform,
@@ -111,7 +112,7 @@ const ProductTab = ({navigation}) => {
   );
 };
 
-const WorkersTab = () => {
+const WorkersTab = props => {
   const renderItem = ({item}) => (
     <TouchableOpacity style={mainStyle.workerItemContainer}>
       <Image source={item.image} style={mainStyle.workerAvatar} />
@@ -143,7 +144,7 @@ const WorkersTab = () => {
   return (
     <View style={mainStyle.listContainer}>
       <FlatList
-        data={workers}
+        data={props.data}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
@@ -192,9 +193,24 @@ const ReviewsTab = () => {
             width: SIZES.width,
             padding: SIZES.padding,
           }}>
-          <Text style={{...FONTS.body2, textAlign: 'right'}}>1344 more...</Text>
+          <Text style={{...FONTS.body3, textAlign: 'right'}}>
+            View 1344 more comments ...
+          </Text>
         </TouchableOpacity>
       </ScrollView>
+
+      {/* TODO: add review text input */}
+      {/* <View style={mainStyle.reviewTextInputContainer}>
+        <TextInput placeholder="Add a review ... " />
+        <TouchableOpacity style={mainStyle.submitButton}>
+          <Icon
+            name="arrow-up"
+            type="font-awesome"
+            size={SIZES.iconSize}
+            color={COLORS.primary}
+          />
+        </TouchableOpacity>
+      </View> */}
     </View>
   );
 };
@@ -247,7 +263,7 @@ const SalonDetail = ({navigation}) => {
   const renderScene = SceneMap({
     product: () => <ProductTab navigation={navigation} />,
     reviews: ReviewsTab,
-    workers: WorkersTab,
+    workers: () => <WorkersTab data={workers} />,
     contact: ContactTab,
   });
 
@@ -394,6 +410,14 @@ const mainStyle = StyleSheet.create({
     ...FONTS.body3,
     paddingStart: SIZES.padding,
   },
+  reviewTextInputContainer: {
+    paddingHorizontal: SIZES.padding,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  submitButton: {
+    padding: SIZES.padding,
+  },
 });
 
-export default SalonDetail;
+export {SalonDetail, ProductTab, WorkersTab, ReviewsTab, ContactTab};

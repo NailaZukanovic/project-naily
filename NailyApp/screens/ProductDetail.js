@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -61,7 +61,9 @@ const ProductPage = props => (
     </View>
 
     <View style={mainStyle.buttonContainer}>
-      <TouchableOpacity style={mainStyle.button}>
+      <TouchableOpacity
+        style={mainStyle.button}
+        onPress={props.nextPageFunction}>
         <Text style={mainStyle.buttonText}>Check Availability</Text>
         <Icon
           name="right"
@@ -82,24 +84,43 @@ const DateTimePickerPage = props => (
       style={{flex: 1}}
     />
 
-    <AvailableTimePicker style={{flex: 1}} title={'Available times'} />
+    <AvailableTimePicker
+      style={{flex: 1}}
+      title={'Available times'}
+      onPress={props.nextPageFunction}
+    />
+  </View>
+);
+
+const AvailableWorkersPage = props => (
+  <View>
+    <Text>Available Workers</Text>
   </View>
 );
 
 const ProductDetail = ({route, navigation}) => {
   const {title, likes, image} = route.params;
+  const swiper = useRef(null);
+  const nextPageFunction = () => {
+    swiper.current.scrollBy(1, true);
+  };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScreenHeader
         title={title}
         shownBackArrow
         onPressLeftButton={() => navigation.goBack()}
         optionButtonIcon={<Icon name="heart-o" type="font-awesome" />}
       />
-      <Swiper loop={false}>
-        <ProductPage image={image} likes={likes} />
-        <DateTimePickerPage />
+      <Swiper loop={false} ref={swiper}>
+        <ProductPage
+          image={image}
+          likes={likes}
+          nextPageFunction={nextPageFunction}
+        />
+        <DateTimePickerPage nextPageFunction={nextPageFunction} />
+        <AvailableWorkersPage />
       </Swiper>
     </SafeAreaView>
   );

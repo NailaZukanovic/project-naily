@@ -21,7 +21,7 @@ const TimeSlot = props => {
   //   let time = props.isAM ? props.time : `${props.time} PM`;
 
   return (
-    <TouchableOpacity style={mainStyle.item}>
+    <TouchableOpacity style={mainStyle.item} onPress={props.onPress}>
       <View style={{flex: 1}}>
         <Text>{props.time}</Text>
       </View>
@@ -44,7 +44,11 @@ const AvailableTimePicker = props => {
       <Text style={{...FONTS.h4}}>{props.title}</Text>
       <ScrollView style={{flex: 1}}>
         {availableTimeSlots.map(slot => (
-          <TimeSlot time={slot.time} avatar={slot.avatar} />
+          <TimeSlot
+            time={slot.time}
+            avatar={slot.avatar}
+            onPress={props.onPress}
+          />
         ))}
       </ScrollView>
     </View>

@@ -13,7 +13,9 @@ import {LikesGroup} from './Common';
 
 const WorkersTab = props => {
   const renderItem = ({item}) => (
-    <TouchableOpacity style={mainStyle.workerItemContainer}>
+    <TouchableOpacity
+      style={mainStyle.workerItemContainer}
+      onPress={props.onPress}>
       <Image source={item.image} style={mainStyle.workerAvatar} />
       <View style={mainStyle.workerDataContainer}>
         <View>

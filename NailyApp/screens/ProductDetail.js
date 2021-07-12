@@ -9,10 +9,15 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import {COLORS, SIZES, FONTS} from '../constants/index';
-import {ScreenHeader, AvailableTimePicker} from '../components/index';
+import {
+  ScreenHeader,
+  AvailableTimePicker,
+  WorkersTab,
+} from '../components/index';
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 import CalendarPicker from 'react-native-calendar-picker';
+import {workers} from '../dummy/index';
 
 const StatsGroup = props => (
   <View
@@ -92,8 +97,27 @@ const DateTimePickerPage = props => (
 );
 
 const AvailableWorkersPage = props => (
+  <View style={{flex: 1, paddingHorizontal: SIZES.padding}}>
+    <Text style={{...FONTS.h4}}>Available workers</Text>
+    <WorkersTab data={workers.slice(0, 3)} onPress={props.nextPageFunction} />
+  </View>
+);
+
+const ConfirmationPage = props => (
   <View>
-    <Text>Available Workers</Text>
+    <Text style={{textAlign: 'center'}}>TODO: Build a confirmation page</Text>
+    <Text style={{textAlign: 'center'}}>TODO: Date and time confirmation</Text>
+    <Text style={{textAlign: 'center'}}>TODO: Worker avatar and name</Text>
+    <Text style={{textAlign: 'center'}}>TODO: Confirmation button</Text>
+    <Text style={{textAlign: 'center'}}>
+      TODO: When user clicks confirm. Take back to the product page
+    </Text>
+
+    <TouchableOpacity
+      style={mainStyle.confirmButton}
+      onPress={props.onConfirmaButtonPressed}>
+      <Text>Confirm</Text>
+    </TouchableOpacity>
   </View>
 );
 
@@ -119,7 +143,8 @@ const ProductDetail = ({route, navigation}) => {
           nextPageFunction={nextPageFunction}
         />
         <DateTimePickerPage nextPageFunction={nextPageFunction} />
-        <AvailableWorkersPage />
+        <AvailableWorkersPage nextPageFunction={nextPageFunction} />
+        <ConfirmationPage onConfirmaButtonPressed={() => navigation.goBack()} />
       </Swiper>
     </SafeAreaView>
   );
@@ -143,6 +168,9 @@ const mainStyle = StyleSheet.create({
   buttonText: {
     ...FONTS.body3,
     color: COLORS.white,
+  },
+  confirmButton: {
+    backgroundColor: COLORS.orange,
   },
 });
 

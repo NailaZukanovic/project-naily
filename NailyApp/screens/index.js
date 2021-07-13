@@ -5,6 +5,7 @@ import Settings from './Settings';
 import SalonDetail from './SalonDetail';
 import ProductDetail from './ProductDetail';
 import DateTimePicker from './DateTimePicker';
+import Worker from './Worker';
 export {
   Home,
   Search,
@@ -13,4 +14,5 @@ export {
   SalonDetail,
   ProductDetail,
   DateTimePicker,
+  Worker,
 };

@@ -51,7 +51,7 @@ const SalonDetail = ({navigation}) => {
   const renderScene = SceneMap({
     product: () => <ProductTab navigation={navigation} />,
     reviews: () => <ReviewsTab comments={comments} />,
-    workers: () => <WorkersTab data={workers} />,
+    workers: () => <WorkersTab data={workers} navigation={navigation} />,
     contact: () => <ContactTab contact={salonContact} />,
   });
 

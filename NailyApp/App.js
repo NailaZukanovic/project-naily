@@ -21,6 +21,7 @@ import {
   SalonDetail,
   ProductDetail,
   DateTimePicker,
+  Worker,
 } from './screens/index';
 import {COLORS, FONTS, SCREEN_NAMES} from './constants/index';
 
@@ -59,6 +60,7 @@ const SalonStackScreen = () => (
       name={SCREEN_NAMES.dateTimePicker}
       component={DateTimePicker}
     />
+    <SearchStack.Screen name={SCREEN_NAMES.worker} component={Worker} />
   </SearchStack.Navigator>
 );
 

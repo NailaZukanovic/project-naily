@@ -7,9 +7,11 @@ import {
   FlatList,
   TouchableOpacity,
 } from 'react-native';
-import {COLORS, SIZES, FONTS} from '../constants/index';
+import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
 import {styles} from '../styles/index';
 import {LikesGroup} from './Common';
+
+const onWorkerPressed = workerId => {};
 
 const WorkersTab = props => {
   const renderItem = ({item}) => (

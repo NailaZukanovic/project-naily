@@ -7,6 +7,7 @@ const SCREEN_NAMES = {
   salonDetail: 'salon-detail',
   productDetail: 'product-detail',
   dateTimePicker: 'date-time-picker',
+  worker: 'worker',
 };
 
 const temp = {};

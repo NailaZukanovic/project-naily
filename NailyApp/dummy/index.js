@@ -162,6 +162,13 @@ const reservationData = [
       name: 'The Rock',
       avatar: require('./images/person1.jpeg'),
     },
+    product: {
+      id: uuid.v4(),
+      name: 'Demon Hunter',
+      requestMessage: 'I want it done lone star style',
+      image: require('../dummy/images/nail1.jpeg'),
+    },
+    requestMessage: 'I want it done lone star style',
   },
   {
     id: uuid.v4(),
@@ -181,6 +188,13 @@ const reservationData = [
       name: 'The Rock',
       avatar: require('./images/person2.jpeg'),
     },
+    product: {
+      id: uuid.v4(),
+      name: 'Demon Hunter',
+      requestMessage: 'I want it done lone star style',
+      image: require('../dummy/images/nail2.jpeg'),
+    },
+    requestMessage: 'I want it done lone star style',
   },
   {
     id: uuid.v4(),
@@ -200,6 +214,13 @@ const reservationData = [
       name: 'The Rock',
       avatar: require('./images/person3.jpeg'),
     },
+    product: {
+      id: uuid.v4(),
+      name: 'Demon Hunter',
+      requestMessage: 'I want it done lone star style',
+      image: require('../dummy/images/nail3.jpeg'),
+    },
+    requestMessage: 'I want it done lone star style',
   },
   {
     id: uuid.v4(),
@@ -219,6 +240,13 @@ const reservationData = [
       name: 'The Rock',
       avatar: require('./images/person4.jpeg'),
     },
+    product: {
+      id: uuid.v4(),
+      name: 'Demon Hunter',
+      requestMessage: 'I want it done lone star style',
+      image: require('../dummy/images/nail4.jpeg'),
+    },
+    requestMessage: 'I want it done lone star style',
   },
   {
     id: uuid.v4(),
@@ -238,6 +266,13 @@ const reservationData = [
       name: 'The Rock',
       avatar: require('./images/person5.jpeg'),
     },
+    product: {
+      id: uuid.v4(),
+      name: 'Demon Hunter',
+      requestMessage: 'I want it done lone star style',
+      image: require('../dummy/images/nail5.jpeg'),
+    },
+    requestMessage: 'I want it done lone star style',
   },
   {
     id: uuid.v4(),
@@ -257,6 +292,13 @@ const reservationData = [
       name: 'The Rock',
       avatar: require('./images/person6.jpeg'),
     },
+    product: {
+      id: uuid.v4(),
+      name: 'Demon Hunter',
+      requestMessage: 'I want it done lone star style',
+      image: require('../dummy/images/nail6.jpeg'),
+    },
+    requestMessage: 'I want it done lone star style',
   },
   {
     id: uuid.v4(),
@@ -276,6 +318,12 @@ const reservationData = [
       name: 'The Rock',
       avatar: require('./images/person7.jpeg'),
     },
+    product: {
+      id: uuid.v4(),
+      name: 'Demon Hunter',
+      image: require('../dummy/images/nail7.jpeg'),
+    },
+    requestMessage: 'I want it done lone star style',
   },
 ];
 

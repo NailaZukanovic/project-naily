@@ -11,7 +11,9 @@ import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
 import {styles} from '../styles/index';
 import {LikesGroup} from './Common';
 
-const onWorkerPressed = workerId => {};
+const onWorkerPressed = workerId => {
+  //TODO: make API call to retrieve worker data
+};
 
 const WorkersTab = props => {
   const renderItem = ({item}) => (

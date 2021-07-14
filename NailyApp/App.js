@@ -17,6 +17,7 @@ import {
   Home,
   Search,
   Appointments,
+  AppointmentDetail,
   Settings,
   SalonDetail,
   ProductDetail,
@@ -25,43 +26,57 @@ import {
 } from './screens/index';
 import {COLORS, FONTS, SCREEN_NAMES} from './constants/index';
 
-const SearchStack = createStackNavigator();
+const NavigationStack = createStackNavigator();
+
 const HomeStackScreen = () => (
-  <SearchStack.Navigator headerMode={'none'}>
-    <SearchStack.Screen name={SCREEN_NAMES.home} component={Home} />
-    <SearchStack.Screen
+  <NavigationStack.Navigator headerMode={'none'}>
+    <NavigationStack.Screen name={SCREEN_NAMES.home} component={Home} />
+    <NavigationStack.Screen
       name={SCREEN_NAMES.salon}
       component={SalonStackScreen}
     />
-  </SearchStack.Navigator>
+  </NavigationStack.Navigator>
 );
 
 const SearchStackScreen = () => (
-  <SearchStack.Navigator headerMode={'none'}>
-    <SearchStack.Screen name={SCREEN_NAMES.search} component={Search} />
-    <SearchStack.Screen
+  <NavigationStack.Navigator headerMode={'none'}>
+    <NavigationStack.Screen name={SCREEN_NAMES.search} component={Search} />
+    <NavigationStack.Screen
       name={SCREEN_NAMES.salon}
       component={SalonStackScreen}
     />
-  </SearchStack.Navigator>
+  </NavigationStack.Navigator>
 );
 
 const SalonStackScreen = () => (
-  <SearchStack.Navigator headerMode={'none'}>
-    <SearchStack.Screen
+  <NavigationStack.Navigator headerMode={'none'}>
+    <NavigationStack.Screen
       name={SCREEN_NAMES.salonDetail}
       component={SalonDetail}
     />
-    <SearchStack.Screen
+    <NavigationStack.Screen
       name={SCREEN_NAMES.productDetail}
       component={ProductDetail}
     />
-    <SearchStack.Screen
+    <NavigationStack.Screen
       name={SCREEN_NAMES.dateTimePicker}
       component={DateTimePicker}
     />
-    <SearchStack.Screen name={SCREEN_NAMES.worker} component={Worker} />
-  </SearchStack.Navigator>
+    <NavigationStack.Screen name={SCREEN_NAMES.worker} component={Worker} />
+  </NavigationStack.Navigator>
+);
+
+const AppointmentStackScreen = () => (
+  <NavigationStack.Navigator headerMode={'none'}>
+    <NavigationStack.Screen
+      name={SCREEN_NAMES.appointment}
+      component={Appointments}
+    />
+    <NavigationStack.Screen
+      name={SCREEN_NAMES.appointmentDetail}
+      component={AppointmentDetail}
+    />
+  </NavigationStack.Navigator>
 );
 
 const App = () => {
@@ -95,7 +110,7 @@ const App = () => {
         />
         <tabNav.Screen
           name="Appointments"
-          component={Appointments}
+          component={AppointmentStackScreen}
           options={{
             tabBarIcon: ({focused, color, size}) => (
               <Icon name="calendar" type="font-awesome" color={color} />

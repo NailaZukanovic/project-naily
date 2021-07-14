@@ -6,6 +6,7 @@ import SalonDetail from './SalonDetail';
 import ProductDetail from './ProductDetail';
 import DateTimePicker from './DateTimePicker';
 import Worker from './Worker';
+import AppointmentDetail from './AppointmentDetail';
 export {
   Home,
   Search,
@@ -15,4 +16,5 @@ export {
   ProductDetail,
   DateTimePicker,
   Worker,
+  AppointmentDetail,
 };

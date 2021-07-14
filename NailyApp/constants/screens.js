@@ -3,6 +3,7 @@ const SCREEN_NAMES = {
   salon: 'salon',
   search: 'search',
   appointment: 'appointment',
+  appointmentDetail: 'appointment-detail',
   settings: 'settings',
   salonDetail: 'salon-detail',
   productDetail: 'product-detail',

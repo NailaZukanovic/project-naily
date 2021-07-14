@@ -12,21 +12,24 @@ import {
 import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {styles, searchStyles} from '../styles/index';
+import {ScreenHeader} from '../components/index';
 
 import {discoverySalons} from '../dummy/index';
 
-const WorkerDetail = () => {
+const WorkerDetail = ({route, navigation}) => {
+  const {date, time, status, salon, worker} = route.params;
+
   return (
-    <View style={mainStyle.container}>
-      <Text>Worker Screen</Text>
-    </View>
+    <SafeAreaView>
+      <View>
+        <Text>Worker Detail</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const mainStyle = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: {},
 });
 
 export default WorkerDetail;

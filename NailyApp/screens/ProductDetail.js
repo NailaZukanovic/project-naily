@@ -108,6 +108,7 @@ const ConfirmationPage = props => (
     <Text style={{textAlign: 'center'}}>TODO: Build a confirmation page</Text>
     <Text style={{textAlign: 'center'}}>TODO: Date and time confirmation</Text>
     <Text style={{textAlign: 'center'}}>TODO: Worker avatar and name</Text>
+    <Text style={{textAlign: 'center'}}>TODO: Request Message</Text>
     <Text style={{textAlign: 'center'}}>TODO: Confirmation button</Text>
     <Text style={{textAlign: 'center'}}>
       TODO: When user clicks confirm. Take back to the product page

@@ -1,8 +1,18 @@
 const functions = require("firebase-functions");
 const {app} = require("./utils/firebase");
-const {healthCheck, signup, signin} = require("./routes/user/auth");
-const {createProfile, updateProfile} = require("./routes/user/profile");
-const {tokenAuth} = require("./middlewares/firebaseAuth");
+const {
+  healthCheck,
+  signUp,
+  signIn,
+  updatePassword,
+  signOut,
+} = require("./routes/user/auth");
+const {
+  createProfile,
+  updateProfile,
+  fetchProfile,
+} = require("./routes/user/profile");
+const {isSignedIn} = require("./middlewares/firebaseAuth");
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -13,12 +23,15 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 });
 
 app.get("/healthCheck", healthCheck);
-app.post("/signup", signup);
-app.post("/signin", signin);
-app.get("/test", tokenAuth, (req, res)=>{
-  return res.status(200).json({message: "SUCCESS"});
-});
-app.post("/createProfile", tokenAuth, createProfile);
-app.post("/updateProfile", tokenAuth, updateProfile);
+// User authentication
+app.post("/signUp", signUp);
+app.post("/signIn", signIn);
+app.post("/signOut", signOut);
+app.post("/updatePassword", updatePassword);
+
+// Profile
+app.post("/createProfile", isSignedIn, createProfile);
+app.get("/fetchProfile", isSignedIn, fetchProfile);
+app.post("/updateProfile", isSignedIn, updateProfile);
 
 exports.api = functions.https.onRequest(app);

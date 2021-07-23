@@ -4,7 +4,7 @@ exports.healthCheck = (req, res)=>{
   res.status(200).json("HEALTHY AS FUCK");
 };
 
-exports.signup = (req, res)=>{
+exports.signUp = (req, res)=>{
   const newUser = {
     email: req.body.email,
     password: req.body.password,
@@ -17,11 +17,11 @@ exports.signup = (req, res)=>{
         console.log(data);
         res.status(200).json(`user-id: ${data.user.uid}`);
       }).catch((error) => {
-        res.status(500).json(`SERVER ERRRO: ${error.mesasge}`);
+        res.status(500).json(`SERVER ERROR: ${error}`);
       });
 };
 
-exports.signin = (req, res)=>{
+exports.signIn = (req, res)=>{
   const user = {
     email: req.body.email,
     password: req.body.password,
@@ -39,3 +39,29 @@ exports.signin = (req, res)=>{
         res.status(501).json(`${error}`);
       });
 };
+
+exports.signOut = (req, res)=>{
+  firebase.auth().signOut().then(()=>{
+    return res.status(200).json({message: "Signed out"});
+  }).catch((err)=>{
+    return res.status(500).json({message: err});
+  });
+};
+
+exports.updatePassword = (req, res)=>{
+  const newPassword = req.body.newPassword;
+  const currentUser = firebase.auth().currentUser;
+
+  if (currentUser) {
+    currentUser.updatePassword(newPassword)
+        .then(()=>{
+          return res.status(200).json({message: "Updated password"});
+        })
+        .catch((err)=>{
+          return res.status(403).json({message: err});
+        });
+  } else {
+    return res.status(403).json({message: "Unauthorized password update"});
+  }
+};
+

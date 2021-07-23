@@ -1,0 +1,2 @@
+exports.profileCollection = "profiles";
+

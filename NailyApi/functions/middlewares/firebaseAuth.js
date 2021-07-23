@@ -1,4 +1,14 @@
-const {admin} = require("../utils/firebase");
+const {admin, firebase} = require("../utils/firebase");
+
+exports.isSignedIn = (req, res, next)=>{
+  const currentUser = firebase.auth().currentUser;
+  if (currentUser==null) {
+    return res.status(403)
+        .json({message: "Unauthorized. Please sign in first"});
+  } else {
+    return next();
+  }
+};
 
 exports.tokenAuth = (req, res, next) => {
   let idToken;

@@ -1,6 +1,5 @@
 const assert = require("assert");
 const firebase = require("@firebase/testing");
-const config = require('../utils/config')
 
 const PROJECT_ID = "naily-c16f5";
 const FIREBASE_AUTH_EMULATOR = "http://localhost:4000/auth"
@@ -35,5 +34,4 @@ const getFireStore = firebase => {
 
 
 //TESTS
-
 

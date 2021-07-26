@@ -1,5 +1,5 @@
 const {firestore, firebase} = require("../../utils/firebase");
-const {profileCollection} = require("../../migrations/collections");
+const {profileCollection} = require("../../db/collections");
 
 exports.createProfile = (req, res)=>{
   const currentUser = firebase.auth().currentUser;

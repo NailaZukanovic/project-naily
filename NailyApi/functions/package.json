@@ -6,6 +6,8 @@
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
+    "test-report": "mocha --reporter spec",
+    "test": "mocha --exit",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },

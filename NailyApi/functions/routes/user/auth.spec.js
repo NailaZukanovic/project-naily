@@ -7,7 +7,7 @@ const FAKE_API_KEY = "naily-c16f5"
 const FIREBASE_AUTH_EMULATOR = "http://localhost:9099"
 
 const mockUser = {
-  email: 'abc@gmail.com',
+  email: 'auth.spec.js@gmail.com',
   password: "123456"
 }
 
@@ -36,20 +36,20 @@ const initFireBase = () => {
   auth = getAuth(fb)
 }
 
-const clearUserRecords = () => {
-  axios.delete(`http://localhost:9099/emulator/v1/projects/${PROJECT_ID}/accounts`).then(response => {
+const clearUserRecords = async () => {
+  await axios.delete(`${FIREBASE_AUTH_EMULATOR}/emulator/v1/projects/${PROJECT_ID}/accounts`).then(response => {
   })
 }
 
 beforeAll(()=>{
-  initFireBase()
   clearUserRecords()
+  initFireBase()
 })
 
 //TESTS
 describe("Testing auth  routes ... ", () => {
   
-    it("Sign up user", async ()=>{
+    test("Sign up user", async ()=>{
       await auth.createUserWithEmailAndPassword(mockUser.email, mockUser.password)
       .then(data=>{
         assert.ok('success')
@@ -58,7 +58,15 @@ describe("Testing auth  routes ... ", () => {
       })
     })
 
-    it("Sign in user", async () => {
+    test("Sign out user", async () =>{
+      await auth.signOut().then(data=>{
+        assert.ok('success')
+      }).catch(err=>{
+        assert.fail(err)
+      })
+    })
+
+    test("Sign in user", async () => {
       await auth.signInWithEmailAndPassword(mockUser.email, mockUser.password)
       .then(data=>{
         assert.ok('success')

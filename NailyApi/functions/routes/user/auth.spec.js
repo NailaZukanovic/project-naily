@@ -41,7 +41,7 @@ const clearUserRecords = () => {
   })
 }
 
-before(()=>{
+beforeAll(()=>{
   initFireBase()
   clearUserRecords()
 })
@@ -68,6 +68,6 @@ describe("Testing auth  routes ... ", () => {
     })
 })
 
-after(()=>{
+afterAll(()=>{
   clearUserRecords()
 })

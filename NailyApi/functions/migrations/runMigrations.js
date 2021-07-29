@@ -30,21 +30,46 @@ const createProfile = (uid, profile) => {
 
 const createSalon = (salon) => {
   firestore.collection(salonCollection).add({
-    name: "NewSalon1",
-    address: "1234 Abc Road, Alala, State, 14549",
-    phonenumber: "123456789",
+    name: salon.name,
+    address: salon.address,
+    phonenumber: salon.phonenumber,
+    imageUrls: salon.imageUrls,
+    followingUserIds: salon.followingUserIds,
+    workerSnapShots: salon.workerSnapShots
   }).then(doc=>{
-    firestore.collection(salonCollection)
-    .doc(doc.id)
-    .collection('reviews')
-    .add({title: "new review"})
-  })
-}
 
+    for(review of salon.reviews){
+      firestore.doc(`${salonCollection}/${doc.id}`)
+      .collection('reviews')
+      .add(review)
+      .catch(err=>console.log(err))
+    }
+
+    for(product of salon.products){
+      const {reviews, ...productInfo} = product
+      firestore.doc(`${salonCollection}/${doc.id}`)
+      .collection('products')
+      .add(productInfo)
+      .then(productDoc=>{
+        for(review of reviews){
+          firestore.doc(`${salonCollection}/${doc.id}/products/${productDoc.id}`)
+          .collection('reviews')
+          .add(review)
+          .catch(err=>console.log(err))
+        }
+      })
+      .catch(err=>console.log(err))
+    }
+  })
+  .catch(err=>console.log(err))
+}
 
 module.exports = async () => {
   // Create dummy accounts
   console.log(JSON.stringify(dummySalons, null, '\t'))
+  for(salon of dummySalons){
+    createSalon(salon)
+  }
 
   return
 

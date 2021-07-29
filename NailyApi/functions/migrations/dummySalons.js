@@ -69,7 +69,7 @@ const randomProducts = (salonName) => {
   return products
 }
 
-const generateDummySalon = (count, followingUserIds = [], workerSnapShots = []) => {
+const generateDummySalon = (count, followingUserIds = [], workerSnapShots = [], imageUrls = []) => {
   salons = []
   for (var i = 0; i < count; i++) {
     salons.push({
@@ -79,7 +79,8 @@ const generateDummySalon = (count, followingUserIds = [], workerSnapShots = []) 
       products: randomProducts(`NewwSalonInTown${count}`),
       reviews: randomReviews(),
       followingUserIds: followingUserIds,
-      workerSnapShots:workerSnapShots 
+      workerSnapShots:workerSnapShots,
+      imageUrls: imageUrls
       })
   }
   return salons

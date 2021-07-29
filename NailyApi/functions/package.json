@@ -5,6 +5,7 @@
     "lint": "eslint .",
     "serve": "firebase emulators:start",
     "serve:auth": "firebase emulators:start --only auth",
+    "serve:shutdown":"lsof -ti tcp:8080 | xargs kill",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
     "test": "jest --verbose",

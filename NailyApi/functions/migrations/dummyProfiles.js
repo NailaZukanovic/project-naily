@@ -1,66 +1,20 @@
-module.exports = [
-  {
-    username: "user1",
-    firstname: "FirstNameOfUser1",
-    lastname: "LastNameOfUser1",
-    phonenumber: "123456789",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    username: "user2",
-    firstname: "FirstNameOfUser2",
-    lastname: "LastNameOfUser2",
-    phonenumber: "123456789",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    username: "user3",
-    firstname: "FirstNameOfUser3",
-    lastname: "LastNameOfUser3",
-    phonenumber: "123456789",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    username: "user3",
-    firstname: "FirstNameOfUser3",
-    lastname: "LastNameOfUser3",
-    phonenumber: "123456789",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    username: "user4",
-    firstname: "FirstNameOfUser4",
-    lastname: "LastNameOfUser4",
-    phonenumber: "123456789",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    username: "user5",
-    firstname: "FirstNameOfUser5",
-    lastname: "LastNameOfUser5",
-    phonenumber: "123456789",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    username: "user6",
-    firstname: "FirstNameOfUser6",
-    lastname: "LastNameOfUser6",
-    phonenumber: "123456789",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    username: "user7",
-    firstname: "FirstNameOfUser7",
-    lastname: "LastNameOfUser7",
-    phonenumber: "123456789",
-    createdAt: new Date().toISOString(),
-  },
-  {
-    username: "user1",
-    firstname: "FirstNameOfUser1",
-    lastname: "LastNameOfUser1",
-    phonenumber: "123456789",
-    createdAt: new Date().toISOString(),
-  },
-];
+
+const randomPhoneNumber = () => {
+  return Math.random().toString().slice(2,11); 
+}
+
+const dummyProfileGenerator = count =>{ 
+  profiles = []
+  for(var i = 0;i<count;i++){
+    profiles.push({
+      username: `username${i}`,
+      firstname: `FirstNameOfUser${i}`,
+      lastname: `LastNameOfUser${i}`,
+      phonenumber: randomPhoneNumber() 
+    })
+  }
+  return profiles
+}
+
+module.exports = dummyProfileGenerator(20)
 

@@ -29,7 +29,6 @@ beforeAll(() => {
   clearFireStore()
 })
 
-
 describe("Profile creation and testing", () => {
 
   const { createProfile, fetchProfile, updateProfile } = require("./profile");

@@ -24,7 +24,7 @@ exports.createProfile = (req, res)=>{
       .then((_)=>{
         firestore.collection(profileCollection).doc(currentUser.uid)
             .set(userProfile).then((response)=>{
-              return res.status(200).json({message: "SUCCESS"});
+              return res.status(200).json({message: "success", ...userProfile});
             }).catch((err)=>{
               return res.status(500).json({message: err});
             });
@@ -39,7 +39,6 @@ exports.fetchProfile = (req, res)=>{
 
   firestore.collection(profileCollection).doc(currentUser.uid).get()
       .then((doc)=>{
-        console.log(doc.data());
         return res.status(200).json(doc.data());
       })
       .catch((err)=>{
@@ -48,16 +47,17 @@ exports.fetchProfile = (req, res)=>{
 };
 
 exports.updateProfile = (req, res)=>{
+  const currentUser = req.currentUser
+
   const userProfile = {
     username: req.body.username,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     phonenumber: req.body.phonenumber,
   };
-  firestore.collection(profileCollection).doc(userProfile.username)
+  firestore.collection(profileCollection).doc(currentUser.uid)
       .update(userProfile).then((response)=>{
-        console.log(response);
-        return res.status(200).json({message: "SUCCESS"});
+        return res.status(200).json({message: "success", ...userProfile});
       }).catch((err)=>{
         console.log(err);
         return res.status(500).json({message: err});

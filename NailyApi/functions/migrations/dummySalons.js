@@ -85,4 +85,4 @@ const generateDummySalon = (count, followingUserIds = [], workerSnapShots = [], 
   }
   return salons
 }
-module.exports = generateDummySalon(1)
+module.exports = generateDummySalon(20)

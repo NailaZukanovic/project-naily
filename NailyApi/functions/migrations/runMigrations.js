@@ -65,13 +65,7 @@ const createSalon = (salon) => {
 }
 
 module.exports = async () => {
-  // Create dummy accounts
-  console.log(JSON.stringify(dummySalons, null, '\t'))
-  for(salon of dummySalons){
-    createSalon(salon)
-  }
 
-  return
 
   console.info("#######################")
   console.info("RUNNING DATA MIGRATION")
@@ -102,7 +96,10 @@ module.exports = async () => {
   }
 
   //Create dummy salons data
-  // createSalon()
+  console.log(JSON.stringify(dummySalons, null, '\t'))
+  for(salon of dummySalons){
+    createSalon(salon)
+  }
 
 
 };

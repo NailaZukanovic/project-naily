@@ -25,7 +25,7 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 });
 
 // Run data migrations. RUN IT ONCE WHEN THE COLLECTIONS ARE TEMPTy
-runMigration();
+// runMigration();
 
 app.get("/healthCheck", healthCheck);
 // User authentication

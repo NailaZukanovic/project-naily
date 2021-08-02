@@ -12,9 +12,15 @@ const {
   updateProfile,
   fetchProfile,
 } = require("./routes/user/profile");
+const {
+  fetchSalons,
+  fetchSalonById
+} = require('./routes/salon/explore')
+
 const {isSignedIn} = require("./middlewares/firebaseAuth");
 
 const runMigration = require("./migrations/runMigrations");
+const { apps } = require("firebase-functions/lib/apps");
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -38,5 +44,10 @@ app.post("/updatePassword", updatePassword);
 app.post("/createProfile", isSignedIn, createProfile);
 app.get("/fetchProfile", isSignedIn, fetchProfile);
 app.post("/updateProfile", isSignedIn, updateProfile);
+
+//Salons
+app.get('/fetchSalons', isSignedIn, fetchSalons)
+app.get('/fetchSalonById/:id', isSignedIn, fetchSalonById)
+
 
 exports.api = functions.https.onRequest(app);

@@ -1,3 +1,5 @@
+const config = require('./config')
+
 const randomPhoneNumber = () => {
   return Math.random().toString().slice(2, 11);
 }
@@ -73,10 +75,10 @@ const generateDummySalon = (count, followingUserIds = [], workerSnapShots = [], 
   salons = []
   for (var i = 0; i < count; i++) {
     salons.push({
-      name: `NewSalonInTown${count}`,
-      address: generateRandomAddress(count),
+      name: `NewSalonInTown${i}`,
+      address: generateRandomAddress(i),
       phonenumber: randomPhoneNumber(),
-      products: randomProducts(`NewwSalonInTown${count}`),
+      products: randomProducts(`NewwSalonInTown${i}`),
       reviews: randomReviews(),
       followingUserIds: followingUserIds,
       workerSnapShots:workerSnapShots,
@@ -85,4 +87,4 @@ const generateDummySalon = (count, followingUserIds = [], workerSnapShots = [], 
   }
   return salons
 }
-module.exports = generateDummySalon(20)
+module.exports = generateDummySalon(config.dummySalonCount)

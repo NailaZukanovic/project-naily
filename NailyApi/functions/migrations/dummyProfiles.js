@@ -1,3 +1,4 @@
+const config = require('./config') 
 
 const randomPhoneNumber = () => {
   return Math.random().toString().slice(2,11); 
@@ -16,5 +17,5 @@ const dummyProfileGenerator = count =>{
   return profiles
 }
 
-module.exports = dummyProfileGenerator(20)
+module.exports = dummyProfileGenerator(config.dummyAccountCount)
 

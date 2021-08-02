@@ -1,3 +1,5 @@
+const config = require('./config') 
+
 const accountGenerator = count => {
   accounts = []
   for(var i = 0;i < count;i++){
@@ -9,4 +11,4 @@ const accountGenerator = count => {
   return accounts
 }
 
-module.exports = accountGenerator(20)
+module.exports = accountGenerator(config.dummyAccountCount)

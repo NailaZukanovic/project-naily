@@ -1,5 +1,5 @@
 const {firestore} = require("../../utils/firebase");
-const {salonCollection} = require("../../db/collections");
+const {salonCollection, salonProducSubCollection, salonReviewSubCollection} = require("../../db/collections");
 
 exports.fetchSalons = (req,res)=>{
     firestore.collection(salonCollection).get()
@@ -21,7 +21,7 @@ exports.fetchSalonById = async (req,res)=>{
     var products = []
     var reviews = []
 
-    await docRef.collection('products').get()
+    await docRef.collection(salonProducSubCollection).get()
     .then(snapShot=>{
         snapShot.forEach(productDoc=>{
             products.push(productDoc.data())
@@ -31,7 +31,7 @@ exports.fetchSalonById = async (req,res)=>{
         res.status(500).json({message: err})
     })
 
-    await docRef.collection('reviews').get()
+    await docRef.collection(salonReviewSubCollection).get()
     .then(snapShot=>{
         snapShot.forEach(reviewDoc=>{
             reviews.push(reviewDoc.data())

@@ -23,8 +23,10 @@ import {
   ProductDetail,
   DateTimePicker,
   Worker,
+  Signup,
+  Signin,
 } from './screens/index';
-import {COLORS, FONTS, SCREEN_NAMES} from './constants/index';
+import {COLORS, FONTS, SCREEN_NAMES, NAVIGATOR_NAMES} from './constants/index';
 
 const NavigationStack = createStackNavigator();
 
@@ -79,54 +81,77 @@ const AppointmentStackScreen = () => (
   </NavigationStack.Navigator>
 );
 
-const App = () => {
+const MainNavigator = () => {
   const tabNav = createBottomTabNavigator();
+  return (
+    <tabNav.Navigator
+      tabBarOptions={{
+        activeTintColor: COLORS.darkPrimary,
+        inactiveTintColor: COLORS.gray,
+        labelStyle: FONTS.body5,
+      }}>
+      <tabNav.Screen
+        name="Home"
+        options={{
+          tabBarIcon: ({focused, color, size}) => (
+            <Icon name="home" type="font-awesome" color={color} />
+          ),
+        }}
+        component={HomeStackScreen}
+      />
+      <tabNav.Screen
+        name="Search"
+        component={SearchStackScreen}
+        options={{
+          tabBarIcon: ({focused, color, size}) => (
+            <Icon name="search" type="font-awesome" color={color} />
+          ),
+        }}
+      />
+      <tabNav.Screen
+        name="Appointments"
+        component={AppointmentStackScreen}
+        options={{
+          tabBarIcon: ({focused, color, size}) => (
+            <Icon name="calendar" type="font-awesome" color={color} />
+          ),
+        }}
+      />
+      <tabNav.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          tabBarIcon: ({focused, color, size}) => (
+            <Icon name="settings" type="feather" color={color} />
+          ),
+        }}
+      />
+    </tabNav.Navigator>
+  );
+};
 
+const AuthenticationNavigator = () => {
+  return (
+    <NavigationStack.Navigator headerMode="none">
+      <NavigationStack.Screen name={SCREEN_NAMES.signin} component={Signin} />
+      <NavigationStack.Screen name={SCREEN_NAMES.signup} component={Signup} />
+    </NavigationStack.Navigator>
+  );
+};
+
+const App = () => {
   return (
     <NavigationContainer>
-      <tabNav.Navigator
-        tabBarOptions={{
-          activeTintColor: COLORS.darkPrimary,
-          inactiveTintColor: COLORS.gray,
-          labelStyle: FONTS.body5,
-        }}>
-        <tabNav.Screen
-          name="Home"
-          options={{
-            tabBarIcon: ({focused, color, size}) => (
-              <Icon name="home" type="font-awesome" color={color} />
-            ),
-          }}
-          component={HomeStackScreen}
+      <NavigationStack.Navigator headerMode="none">
+        <NavigationStack.Screen
+          name={NAVIGATOR_NAMES.authentication}
+          component={AuthenticationNavigator}
         />
-        <tabNav.Screen
-          name="Search"
-          component={SearchStackScreen}
-          options={{
-            tabBarIcon: ({focused, color, size}) => (
-              <Icon name="search" type="font-awesome" color={color} />
-            ),
-          }}
+        <NavigationStack.Screen
+          name={NAVIGATOR_NAMES.main}
+          component={MainNavigator}
         />
-        <tabNav.Screen
-          name="Appointments"
-          component={AppointmentStackScreen}
-          options={{
-            tabBarIcon: ({focused, color, size}) => (
-              <Icon name="calendar" type="font-awesome" color={color} />
-            ),
-          }}
-        />
-        <tabNav.Screen
-          name="Settings"
-          component={Settings}
-          options={{
-            tabBarIcon: ({focused, color, size}) => (
-              <Icon name="settings" type="feather" color={color} />
-            ),
-          }}
-        />
-      </tabNav.Navigator>
+      </NavigationStack.Navigator>
     </NavigationContainer>
   );
 };

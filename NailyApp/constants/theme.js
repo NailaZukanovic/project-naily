@@ -16,6 +16,8 @@ export const COLORS = {
   lightViolet: '#A77ADD',
 
   roseRed: '#F72585',
+  pink: '#FF88FF',
+  lightPink: '#ffe3ff',
 
   green: '#52B788',
 
@@ -49,6 +51,7 @@ export const SIZES = {
   tinyMargin: 5,
 
   // font sizes
+  massiveTitle: 70,
   largeTitle: 50,
   h1: 30,
   h2: 22,
@@ -107,6 +110,11 @@ export const FONTS = {
   medium3: {fontFamily: 'Roboto-Medium', fontSize: SIZES.body3, lineHeight: 22},
   medium4: {fontFamily: 'Roboto-Medium', fontSize: SIZES.body4, lineHeight: 22},
   medium5: {fontFamily: 'Roboto-Medium', fontSize: SIZES.body5, lineHeight: 20},
+  bigNaily: {
+    fontFamily: 'Sarina-Regular',
+    fontSize: SIZES.massiveTitle,
+    lineHeight: 100,
+  },
 };
 
 const appTheme = {COLORS, SIZES, FONTS};

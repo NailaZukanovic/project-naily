@@ -9,8 +9,13 @@ const SCREEN_NAMES = {
   productDetail: 'product-detail',
   dateTimePicker: 'date-time-picker',
   worker: 'worker',
+  signup: 'signup',
+  signin: 'signin',
 };
 
-const temp = {};
+const NAVIGATOR_NAMES = {
+  main: 'main',
+  authentication: 'authentication',
+};
 
-export {SCREEN_NAMES, temp};
+export {SCREEN_NAMES, NAVIGATOR_NAMES};

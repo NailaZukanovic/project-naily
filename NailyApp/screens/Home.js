@@ -14,7 +14,7 @@ import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {registerCustomIconType} from 'react-native-elements';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {searchStyles, styles} from '../styles/index';
+import {styles} from '../styles/index';
 
 import {reservations, discoverySalons} from '../dummy/index';
 

@@ -7,6 +7,8 @@ import ProductDetail from './ProductDetail';
 import DateTimePicker from './DateTimePicker';
 import Worker from './Worker';
 import AppointmentDetail from './AppointmentDetail';
+import Signup from './Signup';
+import Signin from './Signin';
 export {
   Home,
   Search,
@@ -17,4 +19,6 @@ export {
   DateTimePicker,
   Worker,
   AppointmentDetail,
+  Signup,
+  Signin,
 };

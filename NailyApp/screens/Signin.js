@@ -19,7 +19,12 @@ import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 
 const Signup = ({navigation}) => {
-  const [text, onChangeText] = React.useState('');
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const goToSignup = () => {
+    navigation.navigate(SCREEN_NAMES.signup);
+  };
 
   return (
     <LinearGradient
@@ -32,47 +37,53 @@ const Signup = ({navigation}) => {
           <View style={mainStyles.centeredGroup}>
             <Text style={mainStyles.nailyLogo}>Naily</Text>
 
-            <View style={mainStyles.inputGroup}>
-              <TextInput
-                style={mainStyles.input}
-                onChangeText={onChangeText}
-                value={text}
-                placeholder={'Username'}
-                placeholderTextColor={COLORS.pink}
-              />
-              <Icon
-                name="person-outline"
-                type="material-icons"
-                size={SIZES.iconSize}
-              />
-            </View>
-
-            <View style={mainStyles.inputGroup}>
-              <TextInput
-                style={mainStyles.input}
-                onChangeText={onChangeText}
-                value={text}
-                placeholder={'Password'}
-                placeholderTextColor={COLORS.pink}
-              />
-              <Icon name="eye" type="feather" size={SIZES.iconSize} />
-            </View>
-
-            <TouchableOpacity
-              onPress={() => navigation.navigate(SCREEN_NAMES.signin)}
-              style={mainStyles.actionButton}>
-              <View>
-                <Text style={mainStyles.buttonText}>Sign in</Text>
+            <View style={mainStyles.inputContainer}>
+              <View style={mainStyles.inputGroup}>
+                <Text style={FONTS.h4}>Username</Text>
+                <TextInput
+                  style={mainStyles.input}
+                  onChangeText={setUsername}
+                  value={username}
+                />
               </View>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate(SCREEN_NAMES.signin)}
-              style={mainStyles.actionButton}>
-              <View>
-                <Text style={mainStyles.buttonText}>Sign up</Text>
+              <View style={mainStyles.inputGroup}>
+                <Text style={FONTS.h4}>Password</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <TextInput
+                    secureTextEntry={true}
+                    style={{...mainStyles.input, flex: 1}}
+                    onChangeText={setPassword}
+                    value={password}
+                  />
+                  <TouchableOpacity>
+                    <Icon name="eye" type="feather" size={SIZES.iconSize} />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  ...mainStyles.actionButton,
+                  backgroundColor: COLORS.orange,
+                }}>
+                <View>
+                  <Text style={mainStyles.buttonText}>Sign in</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={mainStyles.actionButton}
+                onPress={goToSignup}>
+                <View>
+                  <Text style={mainStyles.buttonText}>Sign up</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <Text style={FONTS.body3}>Forgot password?</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
@@ -95,25 +106,29 @@ const mainStyles = StyleSheet.create({
   nailyLogo: {
     ...FONTS.bigNaily,
     color: COLORS.pink,
+    marginBottom: SIZES.margin * 2,
+  },
+  inputContainer: {
+    backgroundColor: COLORS.white,
+    paddingVertical: SIZES.padding,
+    paddingHorizontal: SIZES.largePadding,
+    borderRadius: SIZES.borderRadius,
+    ...styles.shadow,
   },
   inputGroup: {
     justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
   },
   input: {
-    width: 250,
     height: 30,
     marginVertical: SIZES.margin15,
     borderRadius: SIZES.smallBorderRadius,
     borderWidth: 2,
-    borderColor: COLORS.primary,
-    backgroundColor: COLORS.lightPink,
+    borderColor: COLORS.lightGray,
     paddingHorizontal: SIZES.padding,
   },
   actionButton: {
     alignItems: 'center',
-    width: 200,
+    width: 300,
     padding: SIZES.smallPadding,
     borderRadius: SIZES.borderRadius,
     backgroundColor: COLORS.green,
@@ -123,6 +138,9 @@ const mainStyles = StyleSheet.create({
   buttonText: {
     ...FONTS.h2,
     color: COLORS.white,
+  },
+  forgotPasswordButton: {
+    marginTop: SIZES.margin * 2,
   },
 });
 

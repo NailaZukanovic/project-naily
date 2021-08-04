@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 
 import {
   SafeAreaView,
@@ -7,7 +7,6 @@ import {
   TextInput,
   View,
   StyleSheet,
-  Image,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
@@ -17,14 +16,33 @@ import LinearGradient from 'react-native-linear-gradient';
 import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
+import {useDispatch, useSelector} from 'react-redux';
+import saveCredentials from '../redux/actions/authentication/saveCredentials';
+import SAVE_CREDENTIALS from '../redux/actions';
 
 const Signup = ({navigation}) => {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = useState('account0@email.com');
+  const [password, setPassword] = useState('dummyaccountpassword0');
+
+  const dispatch = useDispatch();
+  const credentials = useSelector(state => {
+    console.log(state);
+    return state;
+  });
+
+  console.log('credentials ', credentials);
 
   const goToSignup = () => {
     navigation.navigate(SCREEN_NAMES.signup);
   };
+
+  const signInClicked = useCallback(() => {
+    const credential = {
+      email: email,
+      password: password,
+    };
+    dispatch(saveCredentials(credential));
+  }, [email, password, dispatch]);
 
   return (
     <LinearGradient
@@ -39,11 +57,11 @@ const Signup = ({navigation}) => {
 
             <View style={mainStyles.inputContainer}>
               <View style={mainStyles.inputGroup}>
-                <Text style={FONTS.h4}>Username</Text>
+                <Text style={FONTS.h4}>Email</Text>
                 <TextInput
                   style={mainStyles.input}
-                  onChangeText={setUsername}
-                  value={username}
+                  onChangeText={setEmail}
+                  value={email}
                 />
               </View>
 
@@ -63,6 +81,7 @@ const Signup = ({navigation}) => {
               </View>
 
               <TouchableOpacity
+                onPress={signInClicked}
                 style={{
                   ...mainStyles.actionButton,
                   backgroundColor: COLORS.orange,

@@ -28,6 +28,9 @@ import {
 } from './screens/index';
 import {COLORS, FONTS, SCREEN_NAMES, NAVIGATOR_NAMES} from './constants/index';
 
+import {Provider} from 'react-redux';
+import store from './redux/store';
+
 const NavigationStack = createStackNavigator();
 
 const HomeStackScreen = () => (
@@ -141,18 +144,20 @@ const AuthenticationNavigator = () => {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <NavigationStack.Navigator headerMode="none">
-        <NavigationStack.Screen
-          name={NAVIGATOR_NAMES.authentication}
-          component={AuthenticationNavigator}
-        />
-        <NavigationStack.Screen
-          name={NAVIGATOR_NAMES.main}
-          component={MainNavigator}
-        />
-      </NavigationStack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <NavigationStack.Navigator headerMode="none">
+          <NavigationStack.Screen
+            name={NAVIGATOR_NAMES.authentication}
+            component={AuthenticationNavigator}
+          />
+          <NavigationStack.Screen
+            name={NAVIGATOR_NAMES.main}
+            component={MainNavigator}
+          />
+        </NavigationStack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
 

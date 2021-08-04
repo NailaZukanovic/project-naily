@@ -1,0 +1,3 @@
+const SAVE_CREDENTIALS = 'SAVE_CREDENTIALS';
+
+export default SAVE_CREDENTIALS;

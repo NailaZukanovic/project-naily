@@ -22,6 +22,7 @@
 		9076D731461A8589764F9B4F /* libPods-NailyApp-NailyAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 445D694D52D1C9E2B47DF76C /* libPods-NailyApp-NailyAppTests.a */; };
 		98C92A8295DC4CFBB4141F1D /* Roboto-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 453D30BA29F44B6F941C98C4 /* Roboto-MediumItalic.ttf */; };
 		9D1A6961DBA34113B56677F0 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 42E40AC43F62411BB33750A7 /* Roboto-Light.ttf */; };
+		A9F70D7FD7324AD6A0D13B3E /* Sarina-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6778F4B9E0614950A91F3130 /* Sarina-Regular.ttf */; };
 		AABF5563029646BAB4DC9FED /* RobotoCondensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B38EAD9D0424967B05A07CA /* RobotoCondensed-Italic.ttf */; };
 		B85479D7C870E0CF0EEF57CD /* libPods-NailyApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA62955999E70A2D1AA311B /* libPods-NailyApp.a */; };
 		BCF2BB8EED0248E494CF2386 /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A2E9FB14C644DE8B5BEA9A0 /* Roboto-LightItalic.ttf */; };
@@ -32,7 +33,6 @@
 		D39258908AF94464872191FB /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0BE548AEE0F04D008FAE3EAF /* Roboto-Bold.ttf */; };
 		DAE1ABAE2D8944988FE5B413 /* Roboto-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46107A9CB3224086A2FF3879 /* Roboto-Black.ttf */; };
 		F9C4D8FDB9E24D6A8547BB3F /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5E8B19F4126A41FBA4055608 /* Roboto-Thin.ttf */; };
-		A9F70D7FD7324AD6A0D13B3E /* Sarina-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6778F4B9E0614950A91F3130 /* Sarina-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +80,7 @@
 		5763C8A2BB5E307CAE63BB53 /* Pods-NailyApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NailyApp.debug.xcconfig"; path = "Target Support Files/Pods-NailyApp/Pods-NailyApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5E8B19F4126A41FBA4055608 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Thin.ttf"; path = "../assets/fonts/Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		66B4A39A88694ECEA4DF1C5C /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../assets/fonts/Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		6778F4B9E0614950A91F3130 /* Sarina-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Sarina-Regular.ttf"; path = "../assets/fonts/Sarina-Regular.ttf"; sourceTree = "<group>"; };
 		68582EF0912F4DE0A7ED5A7B /* RobotoCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-BoldItalic.ttf"; path = "../assets/fonts/RobotoCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
 		6A2E9FB14C644DE8B5BEA9A0 /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-LightItalic.ttf"; path = "../assets/fonts/Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
 		6F219EF1E3484300A6BE5B2B /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
@@ -97,7 +98,6 @@
 		E6AF09E38FE743B6B6BD68FB /* RobotoCondensed-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "RobotoCondensed-Regular.ttf"; path = "../assets/fonts/RobotoCondensed-Regular.ttf"; sourceTree = "<group>"; };
 		E8E203DBF19B48D79089C4E5 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		6778F4B9E0614950A91F3130 /* Sarina-Regular.ttf */ = {isa = PBXFileReference; name = "Sarina-Regular.ttf"; path = "../assets/fonts/Sarina-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -778,7 +778,7 @@
 				00E356F71AD99517003FC87E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "NailyApp" */ = {
 			isa = XCConfigurationList;
@@ -787,7 +787,7 @@
 				13B07F951A680F5B00A75B9A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "NailyApp" */ = {
 			isa = XCConfigurationList;
@@ -796,7 +796,7 @@
 				83CBBA211A601CBA00E9B192 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

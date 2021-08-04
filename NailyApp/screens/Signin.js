@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 
 import {
   SafeAreaView,
@@ -13,7 +13,13 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
+import {
+  COLORS,
+  SIZES,
+  FONTS,
+  SCREEN_NAMES,
+  NAVIGATOR_NAMES,
+} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 import {useDispatch, useSelector} from 'react-redux';
@@ -25,9 +31,18 @@ const Signup = ({navigation}) => {
   const [password, setPassword] = useState('dummyaccountpassword0');
 
   const dispatch = useDispatch();
+
   const credentials = useSelector(state => {
-    return state;
+    return state.authenticationReducer.credentials;
   });
+
+  useEffect(() => {
+    try {
+      if (credentials.token != null) {
+        navigation.navigate(NAVIGATOR_NAMES.main);
+      }
+    } catch (err) {}
+  }, [credentials]);
 
   const goToSignup = () => {
     navigation.navigate(SCREEN_NAMES.signup);

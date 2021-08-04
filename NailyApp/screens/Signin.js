@@ -26,11 +26,8 @@ const Signup = ({navigation}) => {
 
   const dispatch = useDispatch();
   const credentials = useSelector(state => {
-    console.log(state);
     return state;
   });
-
-  console.log('credentials ', credentials);
 
   const goToSignup = () => {
     navigation.navigate(SCREEN_NAMES.signup);

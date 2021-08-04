@@ -15,7 +15,6 @@ const {
 const {
   fetchSalons,
   fetchSalonById,
-  fetchSalonsByName
 } = require('./routes/salon/explore')
 
 const {isSignedIn} = require("./middlewares/firebaseAuth");
@@ -40,7 +39,5 @@ app.post("/updateProfile", isSignedIn, updateProfile);
 //Salons
 app.get('/fetchSalons', isSignedIn, fetchSalons)
 app.get('/fetchSalonById/:id', isSignedIn, fetchSalonById)
-app.post('/fetchSalonsByName', isSignedIn, fetchSalonsByName)
-
 
 exports.api = functions.https.onRequest(app);

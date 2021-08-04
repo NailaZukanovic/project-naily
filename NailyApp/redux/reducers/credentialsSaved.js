@@ -9,8 +9,6 @@ const initialState = {
 };
 
 const authenticationReducer = (state = initialState, action) => {
-  console.log('action payload ', action.payload);
-  console.log('action type', action.type);
   switch (action.type) {
     case SAVE_CREDENTIALS:
       return {...state, credentials: action.payload};

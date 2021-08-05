@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
 
 import {
   SafeAreaView,
@@ -9,7 +9,11 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
+
+import {useDispatch, useSelector} from 'react-redux';
+import {signUpAction} from '../redux/actions/authentication';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -18,13 +22,84 @@ import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 
 const Signup = ({navigation}) => {
-  const [email, setEmail] = React.useState('');
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const initialRender = useRef(true);
+  const [email, setEmail] = useState('nguyen@email.com');
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [password, setPassword] = useState('custompassword');
+  const [repeatPassword, setRepeatPassword] = useState('custompassword');
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isPasswordRevealed, setIsPasswordRevealed] = useState(false);
+
+  const dispatch = useDispatch();
 
   const goToSignIn = () => {
-    navigation.navigate(SCREEN_NAMES.signin);
+    navigation.replace(SCREEN_NAMES.signin);
   };
+
+  const validateEmail = email => {
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(email.toLowerCase())) {
+      setIsEmailValid(true);
+    } else {
+      setIsEmailValid(false);
+    }
+  };
+
+  const validatePassword = (password, repeatPassword) => {
+    if (password === repeatPassword) {
+      setIsPasswordValid(true);
+    } else {
+      setIsPasswordValid(false);
+    }
+  };
+
+  const onEmailTextChanged = text => {
+    console.log(text);
+    setEmail(text);
+    validateEmail(email);
+  };
+
+  const onPasswordChanged = text => {
+    setPassword(text);
+    validatePassword(text, repeatPassword);
+  };
+
+  const onRepeatPasswordChanged = text => {
+    setRepeatPassword(text);
+    validatePassword(password, text);
+  };
+
+  const showMessage = (title, message, buttonText) => {
+    Alert.alert(title, message, [
+      {
+        text: buttonText,
+        style: 'cancel',
+      },
+    ]);
+  };
+
+  const auth = useSelector(state => state.authenticationReducer.auth);
+
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      if (auth.token != null) {
+        showMessage('Message', auth.message, 'Okay');
+      } else if (auth.message != null) {
+        showMessage('Message', auth.message, 'Try again');
+      }
+    }
+  }, [auth, navigation]);
+
+  const signUpClicked = useCallback(() => {
+    if (isEmailValid && isPasswordValid) {
+      dispatch(signUpAction({email: email, password: password}));
+    } else {
+      showMessage('Message', "Invalid information. Can't sign up", 'Try again');
+    }
+  }, [isEmailValid, isPasswordValid, dispatch]);
 
   return (
     <LinearGradient
@@ -39,39 +114,79 @@ const Signup = ({navigation}) => {
 
             <View style={mainStyles.inputContainer}>
               <View style={mainStyles.inputGroup}>
-                <Text style={FONTS.h4}>Email</Text>
+                <View style={mainStyles.titleGroup}>
+                  <Text style={FONTS.h4}>Email</Text>
+                  <Text
+                    style={
+                      isEmailValid ? mainStyles.validText : mainStyles.errorText
+                    }>
+                    {isEmailValid ? 'Okay' : 'Invalid email format'}
+                  </Text>
+                </View>
                 <TextInput
                   style={mainStyles.input}
-                  onChangeText={setEmail}
+                  onChangeText={onEmailTextChanged}
                   value={email}
                 />
               </View>
 
               <View style={mainStyles.inputGroup}>
-                <Text style={FONTS.h4}>Username</Text>
-                <TextInput
-                  style={mainStyles.input}
-                  onChangeText={setUsername}
-                  value={username}
-                />
-              </View>
-
-              <View style={mainStyles.inputGroup}>
-                <Text style={FONTS.h4}>Password</Text>
+                <View style={mainStyles.titleGroup}>
+                  <Text style={FONTS.h4}>Password</Text>
+                  <Text
+                    style={
+                      isPasswordValid
+                        ? mainStyles.validText
+                        : mainStyles.errorText
+                    }>
+                    {isPasswordValid ? 'Okay' : "Password doesn't match"}
+                  </Text>
+                </View>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <TextInput
-                    secureTextEntry={true}
+                    secureTextEntry={isPasswordRevealed}
                     style={{...mainStyles.input, flex: 1}}
-                    onChangeText={setPassword}
+                    onChangeText={onPasswordChanged}
                     value={password}
                   />
-                  <TouchableOpacity>
-                    <Icon name="eye" type="feather" size={SIZES.iconSize} />
+                  <TouchableOpacity
+                    onPress={() => {
+                      setIsPasswordRevealed(!isPasswordRevealed);
+                    }}>
+                    <Icon
+                      name={isPasswordRevealed ? 'eye' : 'eye-off'}
+                      type="feather"
+                      size={SIZES.iconSize}
+                    />
                   </TouchableOpacity>
                 </View>
               </View>
 
-              <TouchableOpacity style={mainStyles.actionButton}>
+              <View style={mainStyles.inputGroup}>
+                <Text style={FONTS.h4}>Type password again</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <TextInput
+                    secureTextEntry={isPasswordRevealed}
+                    style={{...mainStyles.input, flex: 1}}
+                    onChangeText={onRepeatPasswordChanged}
+                    value={repeatPassword}
+                  />
+                  <TouchableOpacity
+                    onPress={() => {
+                      setIsPasswordRevealed(!isPasswordRevealed);
+                    }}>
+                    <Icon
+                      name={isPasswordRevealed ? 'eye' : 'eye-off'}
+                      type="feather"
+                      size={SIZES.iconSize}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              <TouchableOpacity
+                style={mainStyles.actionButton}
+                onPress={signUpClicked}>
                 <View>
                   <Text style={mainStyles.buttonText}>Sign up</Text>
                 </View>
@@ -149,6 +264,18 @@ const mainStyles = StyleSheet.create({
   },
   forgotPasswordButton: {
     marginTop: SIZES.margin * 2,
+  },
+  titleGroup: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  errorText: {
+    paddingStart: SIZES.padding,
+    color: COLORS.roseRed,
+  },
+  validText: {
+    paddingStart: SIZES.padding,
+    color: COLORS.green,
   },
 });
 

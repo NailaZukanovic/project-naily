@@ -3,17 +3,13 @@ import apiConfig from '../constants/apiConfig';
 
 const signIn = data => {
   return axios.post(`${apiConfig.baseUrl}/signIn`, data).then(response => {
-    return {
-      email: data.email,
-      password: data.password,
-      token: response.data.token,
-    };
+    return response.data;
   });
 };
 
 const signUp = data => {
   return axios.post(`${apiConfig.baseUrl}/signUp`, data).then(response => {
-    return response;
+    return response.data;
   });
 };
 

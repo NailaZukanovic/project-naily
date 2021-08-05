@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
 
 import {
   SafeAreaView,
@@ -9,6 +9,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -23,29 +24,42 @@ import {
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 import {useDispatch, useSelector} from 'react-redux';
-import saveCredentials from '../redux/actions/authentication/saveCredentials';
-import SAVE_CREDENTIALS from '../redux/actions';
+import {signInAction} from '../redux/actions/authentication/index';
 
-const Signup = ({navigation}) => {
+const Signin = ({navigation}) => {
   const [email, setEmail] = useState('account0@email.com');
   const [password, setPassword] = useState('dummyaccountpassword0');
 
   const dispatch = useDispatch();
+  const initialRender = useRef(true);
 
-  const credentials = useSelector(state => {
-    return state.authenticationReducer.credentials;
+  const auth = useSelector(state => {
+    return state.authenticationReducer.auth;
   });
 
+  const showMessage = (message, buttonText) => {
+    Alert.alert('Sign in failed', message, [
+      {
+        text: buttonText,
+        style: 'cancel',
+      },
+    ]);
+  };
+
   useEffect(() => {
-    try {
-      if (credentials.token != null) {
-        navigation.navigate(NAVIGATOR_NAMES.main);
+    if (initialRender.current) {
+      initialRender.current = false;
+    } else {
+      if (auth.token != null) {
+        navigation.replace(NAVIGATOR_NAMES.main);
+      } else if (auth.message != null) {
+        showMessage(auth.message, 'Try again');
       }
-    } catch (err) {}
-  }, [credentials]);
+    }
+  }, [auth, navigation]);
 
   const goToSignup = () => {
-    navigation.navigate(SCREEN_NAMES.signup);
+    navigation.replace(SCREEN_NAMES.signup);
   };
 
   const signInClicked = useCallback(() => {
@@ -53,7 +67,7 @@ const Signup = ({navigation}) => {
       email: email,
       password: password,
     };
-    dispatch(saveCredentials(credential));
+    dispatch(signInAction(credential));
   }, [email, password, dispatch]);
 
   return (
@@ -175,4 +189,4 @@ const mainStyles = StyleSheet.create({
   },
 });
 
-export default Signup;
+export default Signin;

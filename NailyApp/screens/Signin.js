@@ -29,6 +29,7 @@ import {signInAction} from '../redux/actions/authenticationActions';
 const Signin = ({navigation}) => {
   const [email, setEmail] = useState('account0@email.com');
   const [password, setPassword] = useState('dummyaccountpassword0');
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
   const dispatch = useDispatch();
   const initialRender = useRef(true);
@@ -95,13 +96,18 @@ const Signin = ({navigation}) => {
                 <Text style={FONTS.h4}>Password</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <TextInput
-                    secureTextEntry={true}
+                    secureTextEntry={isPasswordHidden}
                     style={{...mainStyles.input, flex: 1}}
                     onChangeText={setPassword}
                     value={password}
                   />
-                  <TouchableOpacity>
-                    <Icon name="eye" type="feather" size={SIZES.iconSize} />
+                  <TouchableOpacity
+                    onPress={() => setIsPasswordHidden(!isPasswordHidden)}>
+                    <Icon
+                      name={isPasswordHidden ? 'eye' : 'eye-off'}
+                      type="feather"
+                      size={SIZES.iconSize}
+                    />
                   </TouchableOpacity>
                 </View>
               </View>

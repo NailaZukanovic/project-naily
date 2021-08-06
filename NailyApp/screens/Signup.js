@@ -28,7 +28,7 @@ const Signup = ({navigation}) => {
   const [password, setPassword] = useState('custompassword');
   const [repeatPassword, setRepeatPassword] = useState('custompassword');
   const [isPasswordValid, setIsPasswordValid] = useState(true);
-  const [isPasswordRevealed, setIsPasswordRevealed] = useState(false);
+  const [isPasswordHidden, setIsPasswordHidden] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -144,17 +144,17 @@ const Signup = ({navigation}) => {
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <TextInput
-                    secureTextEntry={isPasswordRevealed}
+                    secureTextEntry={isPasswordHidden}
                     style={{...mainStyles.input, flex: 1}}
                     onChangeText={onPasswordChanged}
                     value={password}
                   />
                   <TouchableOpacity
                     onPress={() => {
-                      setIsPasswordRevealed(!isPasswordRevealed);
+                      setIsPasswordHidden(!isPasswordHidden);
                     }}>
                     <Icon
-                      name={isPasswordRevealed ? 'eye' : 'eye-off'}
+                      name={isPasswordHidden ? 'eye' : 'eye-off'}
                       type="feather"
                       size={SIZES.iconSize}
                     />
@@ -166,17 +166,17 @@ const Signup = ({navigation}) => {
                 <Text style={FONTS.h4}>Type password again</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <TextInput
-                    secureTextEntry={isPasswordRevealed}
+                    secureTextEntry={isPasswordHidden}
                     style={{...mainStyles.input, flex: 1}}
                     onChangeText={onRepeatPasswordChanged}
                     value={repeatPassword}
                   />
                   <TouchableOpacity
                     onPress={() => {
-                      setIsPasswordRevealed(!isPasswordRevealed);
+                      setIsPasswordHidden(!isPasswordHidden);
                     }}>
                     <Icon
-                      name={isPasswordRevealed ? 'eye' : 'eye-off'}
+                      name={isPasswordHidden ? 'eye' : 'eye-off'}
                       type="feather"
                       size={SIZES.iconSize}
                     />

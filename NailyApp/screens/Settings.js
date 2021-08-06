@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -6,19 +6,22 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {COLORS, SIZES, FONTS} from '../constants/index';
+import {FONTS, NAVIGATOR_NAMES} from '../constants/index';
 import {Icon} from 'react-native-elements';
-import {
-  styles,
-  searchStyles,
-  reservationStyles,
-  settingsStyles,
-} from '../styles/index';
+import {styles, settingsStyles} from '../styles/index';
+import {useDispatch} from 'react-redux';
+import {signOutAction} from '../redux/actions/authenticationActions';
 
-import {discoverySalons, reservationData} from '../dummy/index';
 import ScreenHeader from '../components/ScreenHeader';
 
-const Settings = () => {
+const Settings = ({navigation}) => {
+  const dispatch = useDispatch();
+
+  const signOutClicked = useCallback(() => {
+    dispatch(signOutAction());
+    navigation.navigate(NAVIGATOR_NAMES.authentication);
+  }, [dispatch]);
+
   return (
     <View style={styles.fullContainer}>
       <SafeAreaView>
@@ -64,6 +67,17 @@ const Settings = () => {
             <View style={settingsStyles.itemContainer}>
               <TouchableOpacity style={settingsStyles.item}>
                 <Text style={{...FONTS.body2}}> Salon Management</Text>
+                <Icon name="right" type="ant-design" />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View>
+            <Text style={{...FONTS.h2}}>Actions</Text>
+            <View style={settingsStyles.itemContainer}>
+              <TouchableOpacity
+                style={settingsStyles.item}
+                onPress={signOutClicked}>
+                <Text style={{...FONTS.body2}}> Log out</Text>
                 <Icon name="right" type="ant-design" />
               </TouchableOpacity>
             </View>

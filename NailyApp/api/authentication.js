@@ -13,4 +13,10 @@ const signUp = data => {
   });
 };
 
-export {signIn, signUp};
+const signOut = () => {
+  return axios.post(`${apiConfig.baseUrl}/signOut`).then(response => {
+    return response.data;
+  });
+};
+
+export {signIn, signUp, signOut};

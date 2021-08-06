@@ -3,6 +3,7 @@ import {
   SIGN_IN_FAILED,
   SIGN_UP_SUCCESSFUL,
   SIGN_UP_FAILED,
+  SIGN_OUT,
 } from '../actions/index';
 
 const initialState = {
@@ -49,6 +50,15 @@ const authenticationReducer = (state = initialState, action) => {
           token: null,
           timeStamp: null,
           message: 'Unable to sign up for an account',
+        },
+      };
+    case SIGN_OUT:
+      return {
+        ...state,
+        auth: {
+          token: null,
+          timeStamp: null,
+          message: null,
         },
       };
     default:

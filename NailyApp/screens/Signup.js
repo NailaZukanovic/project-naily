@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {signUpAction} from '../redux/actions/authentication';
+import {signUpAction} from '../redux/actions/authenticationActions';
 
 import LinearGradient from 'react-native-linear-gradient';
 

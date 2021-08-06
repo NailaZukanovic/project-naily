@@ -3,8 +3,9 @@ import {
   SIGN_IN_FAILED,
   SIGN_UP_SUCCESSFUL,
   SIGN_UP_FAILED,
-} from '../index';
-import {signIn, signUp} from '../../../api/authentication';
+  SIGN_OUT,
+} from './index';
+import {signIn, signUp, signOut} from '../../api/authentication';
 
 const signInAction = credentials => {
   return dispatch => {
@@ -42,4 +43,19 @@ const signUpAction = validatedData => {
   };
 };
 
-export {signInAction, signUpAction};
+const signOutAction = () => {
+  return dispatch => {
+    signOut()
+      .then(_ => {
+        dispatch({
+          type: SIGN_OUT,
+          payload: null,
+        });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+};
+
+export {signInAction, signUpAction, signOutAction};

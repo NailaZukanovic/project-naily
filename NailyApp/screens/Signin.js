@@ -24,7 +24,7 @@ import {
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 import {useDispatch, useSelector} from 'react-redux';
-import {signInAction} from '../redux/actions/authentication/index';
+import {signInAction} from '../redux/actions/authenticationActions';
 
 const Signin = ({navigation}) => {
   const [email, setEmail] = useState('account0@email.com');

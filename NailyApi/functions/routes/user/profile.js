@@ -39,7 +39,11 @@ exports.fetchProfile = (req, res)=>{
 
   firestore.collection(profileCollection).doc(currentUser.uid).get()
       .then((doc)=>{
-        return res.status(200).json(doc.data());
+        if(doc.exists){
+          return res.status(200).json(doc.data());
+        } else {
+          return res.status(404).json({message: 'Document not found'});
+        }
       })
       .catch((err)=>{
         return res.status(200).json({message: err});

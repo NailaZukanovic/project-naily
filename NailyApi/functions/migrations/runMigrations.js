@@ -68,7 +68,7 @@ module.exports = async () => {
 
 
   console.info("#######################")
-  console.info("RUNNING DATA MIGRATION")
+  console.info("RUNNING DATA SEEDING")
   console.info("#######################")
 
   await clearDb()
@@ -77,7 +77,6 @@ module.exports = async () => {
     await firebase.auth()
       .createUserWithEmailAndPassword(account.email, account.password)
       .then((response) => {
-        console.log(`Created new user with uid = ${response.user.uid}`);
         return response.user.uid
       })
       .then(uid => {
@@ -88,18 +87,21 @@ module.exports = async () => {
       });
   }
 
+  firebase.auth().signOut().then(console.log('signed out')).catch(err=>console.log(err))
+
   //Create profiles for each new account
   var i = 0;
   for(uid of uids){
-    createProfile(uid, dummyProfiles[i])
+    await createProfile(uid, dummyProfiles[i])
     i=i+1
   }
 
   //Create dummy salons data
-  console.log(JSON.stringify(dummySalons, null, '\t'))
   for(salon of dummySalons){
-    createSalon(salon)
+    await createSalon(salon)
   }
 
-
+  console.info("#######################")
+  console.info("COMPLETED DATA SEEDING")
+  console.info("#######################")
 };

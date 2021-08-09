@@ -21,6 +21,8 @@ const {isSignedIn} = require("./middlewares/firebaseAuth");
 
 const runMigration = require("./migrations/runMigrations");
 
+console.log('API is starting ... ')
+
 // Run data migrations. RUN IT ONCE WHEN THE COLLECTIONS ARE TEMPTy
 runMigration();
 

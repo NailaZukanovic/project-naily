@@ -9,15 +9,16 @@ exports.signUp = (req, res)=>{
     email: req.body.email,
     password: req.body.password,
   };
-  console.log(newUser);
 
   firebase.auth()
       .createUserWithEmailAndPassword(newUser.email, newUser.password)
       .then((data)=>{
-        console.log(data);
-        res.status(200).json(`user-id: ${data.user.uid}`);
+        return data.user.getIdToken();
+      })
+      .then((token)=>{
+        return res.status(200).json({token: token});
       }).catch((error) => {
-        res.status(500).json(`SERVER ERROR: ${error}`);
+        res.status(500).json({message: error});
       });
 };
 
@@ -36,7 +37,7 @@ exports.signIn = (req, res)=>{
         return res.status(200).json({token: token});
       })
       .catch((error)=>{
-        res.status(501).json(`${error}`);
+        res.status(501).json({message: error});
       });
 };
 

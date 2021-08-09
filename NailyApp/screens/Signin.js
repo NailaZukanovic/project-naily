@@ -52,7 +52,7 @@ const Signin = ({navigation}) => {
       initialRender.current = false;
     } else {
       if (auth.token != null) {
-        navigation.replace(NAVIGATOR_NAMES.main);
+        navigation.navigate(SCREEN_NAMES.profileCreation);
       } else if (auth.message != null) {
         showMessage(auth.message, 'Try again');
       }

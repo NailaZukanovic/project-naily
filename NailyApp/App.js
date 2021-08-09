@@ -25,6 +25,8 @@ import {
   Worker,
   Signup,
   Signin,
+  Profile,
+  ProfileCreation,
 } from './screens/index';
 import {COLORS, FONTS, SCREEN_NAMES, NAVIGATOR_NAMES} from './constants/index';
 
@@ -138,6 +140,10 @@ const AuthenticationNavigator = () => {
     <NavigationStack.Navigator headerMode="none">
       <NavigationStack.Screen name={SCREEN_NAMES.signin} component={Signin} />
       <NavigationStack.Screen name={SCREEN_NAMES.signup} component={Signup} />
+      <NavigationStack.Screen
+        name={SCREEN_NAMES.profileCreation}
+        component={ProfileCreation}
+      />
     </NavigationStack.Navigator>
   );
 };

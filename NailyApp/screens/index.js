@@ -9,6 +9,9 @@ import Worker from './Worker';
 import AppointmentDetail from './AppointmentDetail';
 import Signup from './Signup';
 import Signin from './Signin';
+import Profile from './Profile';
+import ProfileCreation from './ProfileCreation';
+
 export {
   Home,
   Search,
@@ -21,4 +24,6 @@ export {
   AppointmentDetail,
   Signup,
   Signin,
+  Profile,
+  ProfileCreation,
 };

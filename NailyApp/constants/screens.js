@@ -3,14 +3,16 @@ const SCREEN_NAMES = {
   salon: 'salon',
   search: 'search',
   appointment: 'appointment',
-  appointmentDetail: 'appointment-detail',
+  appointmentDetail: 'appointmentDetail',
   settings: 'settings',
   salonDetail: 'salon-detail',
-  productDetail: 'product-detail',
-  dateTimePicker: 'date-time-picker',
+  productDetail: 'productDetail',
+  dateTimePicker: 'dateTimePicker',
   worker: 'worker',
   signup: 'signup',
   signin: 'signin',
+  profile: 'profile',
+  profileCreation: 'profileCreation',
 };
 
 const NAVIGATOR_NAMES = {

@@ -1,6 +1,7 @@
 import React, {useState, useCallback, useEffect, useRef} from 'react';
 
 import {
+  Alert,
   SafeAreaView,
   TouchableOpacity,
   Text,
@@ -24,20 +25,46 @@ import {
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 import {useDispatch, useSelector} from 'react-redux';
-import {fetchProfileAction} from '../redux/actions/profileActions';
-import {PROFILE_EMPTY, PROFILE_FETCHED} from '../redux/actions';
+import {
+  fetchProfileAction,
+  createProfileAction,
+} from '../redux/actions/profileActions';
+import {
+  PROFILE_CREATED_FAILED,
+  PROFILE_CREATED_SUCCESSFUL,
+  PROFILE_EMPTY,
+  PROFILE_FETCHED,
+} from '../redux/actions';
 
 const ProfileCreation = ({navigation}) => {
+  const [username, setUsername] = useState('username123');
   const [firstname, setFirstName] = useState('Firstname Test');
   const [lastname, setLastName] = useState('Lastname test');
   const [phonenumber, setPhoneNumber] = useState('123131313');
+  const [avatarurl, setAvatarUrl] = useState(null);
   const [isProfileCreated, setIsProfileCreated] = useState(true);
 
   const dispatch = useDispatch();
   const actionType = useSelector(state => state.profileReducer.action.type);
+  const errorMessage = useSelector(
+    state => state.profileReducer.action.errorMessage,
+  );
 
   const goBack = () => {
     navigation.goBack();
+  };
+
+  const goToMainNavigator = () => {
+    navigation.replace(NAVIGATOR_NAMES.main);
+  };
+
+  const showMessage = (title, message = '', buttonText = 'Okay') => {
+    Alert.alert(title, message, [
+      {
+        text: buttonText,
+        style: 'cancel',
+      },
+    ]);
   };
 
   useEffect(() => {
@@ -46,6 +73,12 @@ const ProfileCreation = ({navigation}) => {
       dispatch(fetchProfileAction());
     } else {
       switch (actionType) {
+        case PROFILE_CREATED_FAILED:
+          showMessage('Error', errorMessage);
+          break;
+        case PROFILE_CREATED_SUCCESSFUL:
+          goToMainNavigator();
+          break;
         case PROFILE_FETCHED:
           navigation.replace(NAVIGATOR_NAMES.main);
           break;
@@ -56,6 +89,17 @@ const ProfileCreation = ({navigation}) => {
       }
     }
   }, [actionType, dispatch, navigation]);
+
+  const submitProfileCreation = useCallback(() => {
+    const data = {
+      firstname: firstname,
+      lastname: lastname,
+      phonenumber: phonenumber,
+      username: username,
+      avatarurl: avatarurl,
+    };
+    dispatch(createProfileAction(data));
+  }, [firstname, lastname, phonenumber, username, avatarurl, dispatch]);
 
   return (
     <LinearGradient
@@ -85,6 +129,14 @@ const ProfileCreation = ({navigation}) => {
               </Text>
               <View style={mainStyles.inputContainer}>
                 <View style={mainStyles.inputGroup}>
+                  <Text style={FONTS.h4}>Username</Text>
+                  <TextInput
+                    style={mainStyles.input}
+                    onChangeText={setUsername}
+                    value={username}
+                  />
+                </View>
+                <View style={mainStyles.inputGroup}>
                   <Text style={FONTS.h4}>First name</Text>
                   <TextInput
                     style={mainStyles.input}
@@ -109,6 +161,7 @@ const ProfileCreation = ({navigation}) => {
                   />
                 </View>
                 <TouchableOpacity
+                  onPress={submitProfileCreation}
                   style={{
                     ...mainStyles.actionButton,
                     backgroundColor: COLORS.orange,

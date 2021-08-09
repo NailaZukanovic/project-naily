@@ -9,8 +9,9 @@ import {
 import {FONTS, NAVIGATOR_NAMES} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {styles, settingsStyles} from '../styles/index';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {signOutAction} from '../redux/actions/authenticationActions';
+import {clearProfile} from '../redux/actions/profileActions';
 
 import ScreenHeader from '../components/ScreenHeader';
 
@@ -19,6 +20,7 @@ const Settings = ({navigation}) => {
 
   const signOutClicked = useCallback(() => {
     dispatch(signOutAction());
+    dispatch(clearProfile());
     navigation.navigate(NAVIGATOR_NAMES.authentication);
   }, [dispatch]);
 

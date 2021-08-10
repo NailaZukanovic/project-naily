@@ -71,18 +71,22 @@ const randomProducts = (salonName) => {
   return products
 }
 
-const generateDummySalon = (count, followingUserIds = [], workerSnapShots = [], imageUrls = []) => {
+const generateDummySalon = (count, followingUserIds = [], workerSnapShots = [], featuredImage = null) => {
   salons = []
   for (var i = 0; i < count; i++) {
+    const reviews = randomReviews()
+    const reviewCount = reviews.length
     salons.push({
       name: `NewSalonInTown${i}`,
       address: generateRandomAddress(i),
       phonenumber: randomPhoneNumber(),
       products: randomProducts(`NewwSalonInTown${i}`),
-      reviews: randomReviews(),
+      reviews: reviews,
       followingUserIds: followingUserIds,
+      loves: randomInt(5000),
+      reviewCount: reviewCount,
       workerSnapShots:workerSnapShots,
-      imageUrls: imageUrls
+      featuredImage: featuredImage 
       })
   }
   return salons

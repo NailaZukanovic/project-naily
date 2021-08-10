@@ -94,7 +94,7 @@ const SalonDetail = ({navigation}) => {
 const mainStyle = StyleSheet.create({
   container: {
     height: '50%',
-    marginBottom: SIZES.margin10 * 2,
+    marginBottom: SIZES.margin * 2,
     flex: 1,
   },
   slide1: {

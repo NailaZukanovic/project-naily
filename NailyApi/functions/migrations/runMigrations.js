@@ -33,9 +33,11 @@ const createSalon = (salon) => {
     name: salon.name,
     address: salon.address,
     phonenumber: salon.phonenumber,
-    imageUrls: salon.imageUrls,
+    featuredImage: salon.featuredImage,
     followingUserIds: salon.followingUserIds,
-    workerSnapShots: salon.workerSnapShots
+    workerSnapShots: salon.workerSnapShots,
+    loves: salon.loves,
+    reviewCount: salon.reviewCount
   }).then(doc=>{
 
     for(review of salon.reviews){

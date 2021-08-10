@@ -73,7 +73,7 @@ const Profile = ({navigation}) => {
           <View style={mainStyles.avatarGroup}>
             <Image style={mainStyles.avatarImage} />
             <TouchableOpacity style={mainStyles.editAvatarButton}>
-              <Text style={FONTS.body2}>Edit</Text>
+              <Text style={FONTS.body3}>Edit</Text>
             </TouchableOpacity>
           </View>
 

@@ -86,6 +86,13 @@ const AppointmentStackScreen = () => (
   </NavigationStack.Navigator>
 );
 
+const SettingStackScreen = () => (
+  <NavigationStack.Navigator headerMode={'none'}>
+    <NavigationStack.Screen name={SCREEN_NAMES.settings} component={Settings} />
+    <NavigationStack.Screen name={SCREEN_NAMES.profile} component={Profile} />
+  </NavigationStack.Navigator>
+);
+
 const MainNavigator = () => {
   const tabNav = createBottomTabNavigator();
   return (
@@ -124,7 +131,7 @@ const MainNavigator = () => {
       />
       <tabNav.Screen
         name="Settings"
-        component={Settings}
+        component={SettingStackScreen}
         options={{
           tabBarIcon: ({focused, color, size}) => (
             <Icon name="settings" type="feather" color={color} />

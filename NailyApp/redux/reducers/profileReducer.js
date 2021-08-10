@@ -4,6 +4,8 @@ import {
   PROFILE_FETCHED,
   PROFILE_EMPTY,
   CLEAR_PROFILE,
+  UPDATE_PROFILE_SUCCESSFUL,
+  UPDATE_PROFILE_FAILED,
 } from '../actions/index';
 
 const initialState = {
@@ -24,6 +26,7 @@ const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case PROFILE_FETCHED:
     case PROFILE_CREATED_SUCCESSFUL:
+    case UPDATE_PROFILE_SUCCESSFUL:
       return {
         ...state,
         action: {
@@ -70,6 +73,10 @@ const profileReducer = (state = initialState, action) => {
       };
     case CLEAR_PROFILE:
       return initialState;
+
+    case UPDATE_PROFILE_FAILED:
+      state.action.type = action.type;
+      return state;
 
     default:
       return state;

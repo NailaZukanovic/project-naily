@@ -6,21 +6,24 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {FONTS, NAVIGATOR_NAMES} from '../constants/index';
+import {FONTS, NAVIGATOR_NAMES, SCREEN_NAMES} from '../constants/index';
 import {Icon} from 'react-native-elements';
 import {styles, settingsStyles} from '../styles/index';
 import {useDispatch, useSelector} from 'react-redux';
 import {signOutAction} from '../redux/actions/authenticationActions';
-import {clearProfile} from '../redux/actions/profileActions';
-
+import {clearProfileAction} from '../redux/actions/profileActions';
 import ScreenHeader from '../components/ScreenHeader';
 
 const Settings = ({navigation}) => {
   const dispatch = useDispatch();
 
+  const goToProfile = () => {
+    navigation.navigate(SCREEN_NAMES.profile);
+  };
+
   const signOutClicked = useCallback(() => {
     dispatch(signOutAction());
-    dispatch(clearProfile());
+    dispatch(clearProfileAction());
     navigation.navigate(NAVIGATOR_NAMES.authentication);
   }, [dispatch]);
 
@@ -33,8 +36,10 @@ const Settings = ({navigation}) => {
           <View>
             <Text style={{...FONTS.h2}}>General</Text>
             <View style={settingsStyles.itemContainer}>
-              <TouchableOpacity style={settingsStyles.item}>
-                <Text style={{...FONTS.body2}}> Profile</Text>
+              <TouchableOpacity
+                style={settingsStyles.item}
+                onPress={goToProfile}>
+                <Text style={{...FONTS.body2}}> Edit profile</Text>
                 <Icon name="right" type="ant-design" />
               </TouchableOpacity>
               <TouchableOpacity style={settingsStyles.item}>

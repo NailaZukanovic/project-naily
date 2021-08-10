@@ -15,4 +15,12 @@ const fetchProfile = _ => {
   });
 };
 
-export {createProfile, fetchProfile};
+const updateProfie = data => {
+  return axios
+    .post(`${apiConfig.baseUrl}/updateProfile`, data)
+    .then(response => {
+      return response.data;
+    });
+};
+
+export {createProfile, fetchProfile, updateProfie};

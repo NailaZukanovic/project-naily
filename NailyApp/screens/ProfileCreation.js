@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useRef} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 
 import {
   Alert,
@@ -15,14 +15,7 @@ import {
 
 import LinearGradient from 'react-native-linear-gradient';
 
-import {
-  COLORS,
-  SIZES,
-  FONTS,
-  SCREEN_NAMES,
-  NAVIGATOR_NAMES,
-} from '../constants/index';
-import {Icon} from 'react-native-elements';
+import {COLORS, SIZES, FONTS, NAVIGATOR_NAMES} from '../constants/index';
 import {styles} from '../styles/index';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -68,7 +61,6 @@ const ProfileCreation = ({navigation}) => {
   };
 
   useEffect(() => {
-    console.log(actionType);
     if (actionType == null) {
       dispatch(fetchProfileAction());
     } else {

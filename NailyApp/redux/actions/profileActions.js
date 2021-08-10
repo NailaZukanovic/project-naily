@@ -4,8 +4,10 @@ import {
   PROFILE_CREATED_FAILED,
   PROFILE_EMPTY,
   CLEAR_PROFILE,
+  UPDATE_PROFILE_FAILED,
+  UPDATE_PROFILE_SUCCESSFUL,
 } from './index';
-import {createProfile, fetchProfile} from '../../api/profile';
+import {createProfile, fetchProfile, updateProfie} from '../../api/profile';
 
 const fetchProfileAction = _ => {
   return dispatch => {
@@ -29,7 +31,6 @@ const fetchProfileAction = _ => {
 
 const createProfileAction = formData => {
   return dispatch => {
-    console.log('here');
     createProfile(formData)
       .then(res => {
         dispatch({
@@ -48,7 +49,7 @@ const createProfileAction = formData => {
   };
 };
 
-const clearProfile = () => {
+const clearProfileAction = () => {
   return dispatch => {
     dispatch({
       type: CLEAR_PROFILE,
@@ -56,4 +57,28 @@ const clearProfile = () => {
   };
 };
 
-export {fetchProfileAction, createProfileAction, clearProfile};
+const updateProfileAction = formData => {
+  return dispatch => {
+    updateProfie(formData)
+      .then(data => {
+        dispatch({
+          type: UPDATE_PROFILE_SUCCESSFUL,
+          payload: data,
+        });
+      })
+      .catch(err => {
+        if (err.response.status === 500) {
+          dispatch({
+            type: UPDATE_PROFILE_FAILED,
+          });
+        }
+      });
+  };
+};
+
+export {
+  fetchProfileAction,
+  createProfileAction,
+  clearProfileAction,
+  updateProfileAction,
+};

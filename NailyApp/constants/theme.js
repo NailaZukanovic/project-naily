@@ -41,11 +41,9 @@ export const SIZES = {
   largePadding: 15,
   padding: 10,
   smallPadding: 5,
-  padding2: 12,
-  margin5: 5,
-  margin10: 10,
-  margin15: 15,
 
+  hugeMargin: 25,
+  largMargin: 20,
   margin: 15,
   smallMargin: 10,
   tinyMargin: 5,

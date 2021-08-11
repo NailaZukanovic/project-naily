@@ -17,8 +17,11 @@ const {
   fetchSalonById,
 } = require('./routes/salon/explore')
 
-const {isSignedIn} = require("./middlewares/firebaseAuth");
+const {
+  uploadImage
+} = require('./routes/file/upload')
 
+const {isSignedIn} = require("./middlewares/firebaseAuth");
 const runMigration = require("./migrations/runMigrations");
 
 console.log('API is starting ... ')
@@ -41,5 +44,8 @@ app.post("/updateProfile", isSignedIn, updateProfile);
 //Salons
 app.get('/fetchSalons', isSignedIn, fetchSalons)
 app.get('/fetchSalonById/:id', isSignedIn, fetchSalonById)
+
+//upload files
+app.post('/uploadImage', uploadImage)  
 
 exports.api = functions.https.onRequest(app);

@@ -11,15 +11,13 @@ const {
   createProfile,
   updateProfile,
   fetchProfile,
+  uploadAvatar,
+  fetchAvatar
 } = require("./routes/user/profile");
 const {
   fetchSalons,
   fetchSalonById,
 } = require('./routes/salon/explore')
-
-const {
-  uploadImage
-} = require('./routes/file/upload')
 
 const {isSignedIn} = require("./middlewares/firebaseAuth");
 const runMigration = require("./migrations/runMigrations");
@@ -46,6 +44,6 @@ app.get('/fetchSalons', isSignedIn, fetchSalons)
 app.get('/fetchSalonById/:id', isSignedIn, fetchSalonById)
 
 //upload files
-app.post('/uploadImage', uploadImage)  
+app.post('/uploadAvatar', isSignedIn, uploadAvatar)  
 
 exports.api = functions.https.onRequest(app);

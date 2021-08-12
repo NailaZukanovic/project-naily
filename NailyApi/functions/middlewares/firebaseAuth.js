@@ -7,7 +7,6 @@ exports.isSignedIn = (req, res, next)=>{
         .json({message: "Unauthorized. Please sign in first"});
   } else {
     req.currentUser = firebase.auth().currentUser
-    console.log('current user ', req.currentUser.uid)
     return next();
   }
 };

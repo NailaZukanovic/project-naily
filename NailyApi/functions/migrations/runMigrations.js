@@ -68,7 +68,6 @@ const createSalon = (salon) => {
 
 module.exports = async () => {
 
-
   console.info("#######################")
   console.info("RUNNING DATA SEEDING")
   console.info("#######################")

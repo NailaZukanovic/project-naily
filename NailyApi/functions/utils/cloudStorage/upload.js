@@ -4,7 +4,9 @@ const fs = require('fs')
 const path = require('path')
 const uuid = require('uuid')
 
-exports.uploadFile = (req, rootDir, resolve, reject) => {
+const defualtOnField = (key, value) => {}
+
+exports.uploadFile = (req, fields, resolve, reject, onField = defualtOnField) => {
     try{
         const tmpdir = 'tmp'
 
@@ -19,15 +21,17 @@ exports.uploadFile = (req, rootDir, resolve, reject) => {
         var secreteFileName = null
         var filepath = null
 
+        busboy.on('field', onField)
+
         busboy.on('file', (fieldname, stream, filename, encoding, mimetype)=>{
             secreteFileName = `${secretId}+${filename}`
             filepath = path.join(tmpdir, secreteFileName)
-            console.log(filepath)
             stream.pipe(fs.createWriteStream(filepath))
+            stream.resume()
         })
 
         busboy.on('finish', ()=>{
-            const refpath = path.join(rootDir,secreteFileName)
+            const refpath = path.join(fields.rootDir,secreteFileName)
             const imageRef = storage.ref().child(refpath)
 
             fs.readFile(filepath, (err,data)=>{

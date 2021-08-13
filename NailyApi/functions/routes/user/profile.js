@@ -1,6 +1,7 @@
 const { firestore } = require("../../utils/firebase");
 const { profileCollection } = require("../../db/collections");
 const { uploadFile } = require('../../utils/cloudStorage/upload')
+const BusBoy = require('busboy')
 
 exports.createProfile = (req, res) => {
     const currentUser = req.currentUser;
@@ -70,11 +71,15 @@ exports.updateProfile = (req, res) => {
 };
 
 exports.uploadAvatar = (req, res) => {
-    const uploadTask = new Promise((resolve, reject) => {
-        uploadFile(req, 'avatars', resolve, reject)
-    })
-    uploadTask.then(downloadUrl => {
+    var fields = {
+        rootDir: 'avatars'
+    }
 
+    const uploadTask = new Promise((resolve, reject) => {
+        uploadFile(req, fields, resolve, reject)
+    })
+
+    uploadTask.then(downloadUrl => {
         const uid = req.currentUser.uid
 
         firestore.collection(profileCollection).doc(uid).update({
@@ -85,6 +90,7 @@ exports.uploadAvatar = (req, res) => {
             return res.status(500).json({ message: err })
         })
     }).catch(err => {
+        console.error(err) 
         return res.status(500).json({ message: err })
     })
 }

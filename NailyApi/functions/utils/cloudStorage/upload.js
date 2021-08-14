@@ -45,7 +45,7 @@ exports.uploadFile = (req, fields, resolve, reject, onField = defualtOnField) =>
                                 reject(err)
                             }
                         })
-                        resolve(imageRef.getDownloadURL())
+                        resolve(secreteFileName)
                     }).catch(err=>{
                         reject(err)
                     })

@@ -1,4 +1,4 @@
-const { firestore } = require("../../utils/firebase");
+const { firestore, storage} = require("../../utils/firebase");
 const { profileCollection } = require("../../db/collections");
 const { uploadFile } = require('../../utils/cloudStorage/upload')
 const BusBoy = require('busboy')
@@ -82,16 +82,33 @@ exports.updateProfile = (req, res) => {
         });
 };
 
-exports.uploadAvatar = (req, res) => {
+exports.uploadAvatar = async (req, res) => {
     var fields = {
         rootDir: 'avatars'
     }
+    
+    const currentUser = req.currentUser
+
+    await firestore.collection(profileCollection).doc(currentUser.uid).get()
+    .then(doc=>{
+        if(doc.exists){
+            if(doc.data().avatar != null){
+                const imageRef = storage.ref().child(`avatars/${doc.data().avatar}`)
+                .delete().then(()=>{
+                }).catch(err=>{
+                    return res.status(500).json({message: err})
+                })
+            }
+        } 
+    }).catch(err=>{
+        return res.status(500).json({message: err})
+    })
 
     const uploadTask = new Promise((resolve, reject) => {
         uploadFile(req, fields, resolve, reject)
     })
 
-    uploadTask.then(downloadUrl => {
+    uploadTask.then(avatarFileName => {
         const currentUser = req.currentUser
 
         if(currentUser == null){
@@ -101,9 +118,9 @@ exports.uploadAvatar = (req, res) => {
         const uid = currentUser.uid
 
         firestore.collection(profileCollection).doc(uid).update({
-            avatarUrl: downloadUrl
+            avatar: avatarFileName
         }).then(response=>{
-            return res.status(200).json({ message: 'success', url: downloadUrl})
+            return res.status(200).json({ message: 'success', url: avatarFileName})
         }).catch(err=>{
             return res.status(500).json({ message: err })
         })

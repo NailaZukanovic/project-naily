@@ -1,4 +1,4 @@
-const { firestore, storage } = require("../../utils/firebase");
+const { firebase, firestore} = require("../../utils/firebase");
 const { salonCollection } = require("../../db/collections");
 const {uploadFile} = require('../../utils/cloudStorage/upload')
 const path = require('path')
@@ -26,7 +26,7 @@ exports.uploadSalonImages = (req,res) => {
     .then(downloadUrl => {
         console.log(downloadUrl)
         firestore.collection(salonCollection).doc(fields.salonId).update({
-            imageUrls: [downloadUrl]
+            imageUrls: firebase.firestore.FieldValue.arrayUnion(downloadUrl)
         }).then(response=>{
             return res.status(200).json({ message: 'success', url: downloadUrl})
         }).catch(err=>{

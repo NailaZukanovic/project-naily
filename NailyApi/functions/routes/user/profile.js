@@ -6,6 +6,10 @@ const BusBoy = require('busboy')
 exports.createProfile = (req, res) => {
     const currentUser = req.currentUser;
 
+    if(currentUser == null){
+        return res.status(500).json({message: 'Sign in required'})
+    }
+
     const userProfile = {
         username: req.body.username,
         firstname: req.body.firstname,
@@ -32,19 +36,23 @@ exports.createProfile = (req, res) => {
                 });
         })
         .catch((err) => {
-            return res.status(500).json({ message: "Username is taken" });
+            return res.status(500).json({ message: err });
         });
 };
 
 exports.fetchProfile = (req, res) => {
     const currentUser = req.currentUser;
 
+    if(currentUser == null){
+        return res.status(500).json({message: 'Sign in required'})
+    }
+
     firestore.collection(profileCollection).doc(currentUser.uid).get()
         .then((doc) => {
             if (doc.exists) {
                 return res.status(200).json(doc.data());
             } else {
-                return res.status(404).json({ message: 'Document not found' });
+                return res.status(404).json({ message: 'Profile not found' });
             }
         })
         .catch((err) => {
@@ -54,6 +62,10 @@ exports.fetchProfile = (req, res) => {
 
 exports.updateProfile = (req, res) => {
     const currentUser = req.currentUser
+
+    if(currentUser == null){
+        return res.status(500).json({message: 'Sign in required'})
+    }
 
     const userProfile = {
         username: req.body.username,
@@ -80,7 +92,13 @@ exports.uploadAvatar = (req, res) => {
     })
 
     uploadTask.then(downloadUrl => {
-        const uid = req.currentUser.uid
+        const currentUser = req.currentUser
+
+        if(currentUser == null){
+            return res.status(500).json({message: 'Sign in required'})
+        }
+
+        const uid = currentUser.uid
 
         firestore.collection(profileCollection).doc(uid).update({
             avatarUrl: downloadUrl

@@ -31,6 +31,7 @@ exports.uploadFile = (req, fields, resolve, reject, onField = defualtOnField) =>
         })
 
         busboy.on('finish', ()=>{
+
             const refpath = path.join(fields.rootDir,secreteFileName)
             const imageRef = storage.ref().child(refpath)
 

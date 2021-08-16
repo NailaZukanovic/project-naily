@@ -86,7 +86,7 @@ const Signup = ({navigation}) => {
       initialRender.current = false;
     } else {
       if (auth.token != null) {
-        showMessage('Message', auth.message, 'Okay');
+        navigation.navigate(SCREEN_NAMES.profileCreation);
       } else if (auth.message != null) {
         showMessage('Message', auth.message, 'Try again');
       }

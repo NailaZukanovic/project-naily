@@ -4,6 +4,7 @@ import {
   SIGN_UP_SUCCESSFUL,
   SIGN_UP_FAILED,
   SIGN_OUT,
+  AUTH_SERVER_ERROR,
 } from './index';
 import {signIn, signUp, signOut} from '../../api/authentication';
 
@@ -17,10 +18,21 @@ const signInAction = credentials => {
         });
       })
       .catch(err => {
-        dispatch({
-          type: SIGN_IN_FAILED,
-          payload: err,
-        });
+        console.log(err);
+        switch (err.response.status) {
+          case 403:
+            dispatch({
+              type: SIGN_IN_FAILED,
+              payload: err.response.message,
+            });
+            return;
+          default:
+            dispatch({
+              type: AUTH_SERVER_ERROR,
+              payload: err.response.message,
+            });
+            return;
+        }
       });
   };
 };

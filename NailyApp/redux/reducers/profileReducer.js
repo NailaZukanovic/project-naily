@@ -6,6 +6,9 @@ import {
   CLEAR_PROFILE,
   UPDATE_PROFILE_SUCCESSFUL,
   UPDATE_PROFILE_FAILED,
+  UPLOAD_AVATAR_SUCCESSFUL,
+  UPLOAD_AVATAR_FAILED,
+  SERVER_ERROR,
 } from '../actions/index';
 
 const initialState = {
@@ -18,7 +21,7 @@ const initialState = {
   },
   action: {
     type: null,
-    errorMesasge: null,
+    message: null,
   },
 };
 
@@ -30,7 +33,7 @@ const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         action: {
-          errorMesasge: null,
+          message: null,
           type: action.type,
         },
         profile: {
@@ -61,7 +64,7 @@ const profileReducer = (state = initialState, action) => {
         ...state,
         action: {
           type: action.type,
-          errorMessage: action.payload,
+          message: action.payload,
         },
         profile: {
           firstname: null,
@@ -77,6 +80,33 @@ const profileReducer = (state = initialState, action) => {
     case UPDATE_PROFILE_FAILED:
       state.action.type = action.type;
       return state;
+
+    case UPLOAD_AVATAR_SUCCESSFUL:
+      return {
+        ...state,
+        action: {
+          type: action.type,
+          message: 'Uploaded avatar succesfullly',
+        },
+      };
+
+    case UPLOAD_AVATAR_FAILED:
+      return {
+        ...state,
+        action: {
+          type: action.type,
+          message: 'Failed to upload avatar',
+        },
+      };
+
+    case SERVER_ERROR:
+      return {
+        ...state,
+        action: {
+          type: action.type,
+          message: 'Server error, please check log',
+        },
+      };
 
     default:
       return state;

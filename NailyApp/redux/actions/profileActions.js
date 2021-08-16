@@ -6,8 +6,15 @@ import {
   CLEAR_PROFILE,
   UPDATE_PROFILE_FAILED,
   UPDATE_PROFILE_SUCCESSFUL,
+  UPLOAD_AVATAR_SUCCESSFUL,
+  UPLOAD_AVATAR_FAILED,
 } from './index';
-import {createProfile, fetchProfile, updateProfie} from '../../api/profile';
+import {
+  createProfile,
+  fetchProfile,
+  updateProfie,
+  uploadAvatar,
+} from '../../api/profile';
 
 const fetchProfileAction = _ => {
   return dispatch => {
@@ -76,9 +83,41 @@ const updateProfileAction = formData => {
   };
 };
 
+const uploadAvatarAction = image => {
+  return dispatch => {
+    uploadAvatar(image)
+      .then(data => {
+        console.log(data);
+        dispatch({
+          type: UPLOAD_AVATAR_SUCCESSFUL,
+          payload: data,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        switch (err.response.status) {
+          case 403:
+            dispatch({
+              type: UPLOAD_AVATAR_FAILED,
+              payload: err,
+            });
+            return;
+          case 500:
+          default:
+            dispatch({
+              type: UPLOAD_AVATAR_FAILED,
+              payload: err,
+            });
+            return;
+        }
+      });
+  };
+};
+
 export {
   fetchProfileAction,
   createProfileAction,
   clearProfileAction,
   updateProfileAction,
+  uploadAvatarAction,
 };

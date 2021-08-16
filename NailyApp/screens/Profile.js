@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useRef} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 
 import {
   SafeAreaView,
@@ -17,7 +17,12 @@ import {COLORS, SIZES, FONTS} from '../constants/index';
 import {ScreenHeader} from '../components/index';
 import {useSelector, useDispatch} from 'react-redux';
 import {styles} from '../styles';
-import {updateProfileAction} from '../redux/actions/profileActions';
+import {
+  updateProfileAction,
+  uploadAvatarAction,
+} from '../redux/actions/profileActions';
+
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const Profile = ({navigation}) => {
   const profile = useSelector(state => state.profileReducer.profile);
@@ -35,6 +40,36 @@ const Profile = ({navigation}) => {
         style: 'cancel',
       },
     ]);
+  };
+
+  const showCamera = () => {
+    launchCamera({title: 'Take a picture'}, response => {
+      if (response.errorMessage) {
+        showMessage('Error', response.errorMessage, 'Ok');
+      } else if (response.assets) {
+        console.error(response.assets[0].fileSize);
+      }
+    });
+  };
+
+  const showGallery = () => {
+    launchImageLibrary({title: 'Gallery'}, response => {
+      if (response.didCancel) {
+        console.log('Canceled picking image');
+      } else if (response.errorMessage) {
+        showMessage('Error', response.errorMessage, 'Ok');
+      } else if (response.assets) {
+        console.log(response.assets[0]);
+        var imageObject = response.assets[0];
+
+        if (Platform.OS === 'ios') {
+          imageObject.uri = imageObject.uri.replace('file://', '');
+        }
+
+        // console.log(imageObject.fileSize);
+        dispatch(uploadAvatarAction(imageObject));
+      }
+    });
   };
 
   useEffect(() => {
@@ -72,7 +107,9 @@ const Profile = ({navigation}) => {
         <ScrollView style={mainStyles.centeredGroup}>
           <View style={mainStyles.avatarGroup}>
             <Image style={mainStyles.avatarImage} />
-            <TouchableOpacity style={mainStyles.editAvatarButton}>
+            <TouchableOpacity
+              style={mainStyles.editAvatarButton}
+              onPress={showGallery}>
               <Text style={FONTS.body3}>Edit</Text>
             </TouchableOpacity>
           </View>

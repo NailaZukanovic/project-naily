@@ -10,6 +10,9 @@ const initialState = {
   auth: {
     token: null,
     timeStamp: null,
+  },
+  action: {
+    type: null,
     message: null,
   },
 };
@@ -22,6 +25,9 @@ const authenticationReducer = (state = initialState, action) => {
         auth: {
           token: action.payload.token,
           timeStamp: new Date().toISOString(),
+        },
+        action: {
+          type: action.type,
           message: 'Signed in succesful',
         },
       };
@@ -31,7 +37,10 @@ const authenticationReducer = (state = initialState, action) => {
         auth: {
           token: null,
           timeStamp: null,
-          message: 'Wrong username or password',
+        },
+        action: {
+          type: action.type,
+          message: 'Signed in succesful',
         },
       };
     case SIGN_UP_SUCCESSFUL:
@@ -40,7 +49,10 @@ const authenticationReducer = (state = initialState, action) => {
         auth: {
           token: action.payload.token,
           timeStamp: new Date().toISOString(),
-          message: 'Signed up successful',
+        },
+        action: {
+          type: action.type,
+          message: 'Signed up succesful',
         },
       };
     case SIGN_UP_FAILED:
@@ -49,6 +61,9 @@ const authenticationReducer = (state = initialState, action) => {
         auth: {
           token: null,
           timeStamp: null,
+        },
+        action: {
+          type: action.type,
           message: 'Unable to sign up for an account',
         },
       };
@@ -58,6 +73,9 @@ const authenticationReducer = (state = initialState, action) => {
         auth: {
           token: null,
           timeStamp: null,
+        },
+        action: {
+          type: action.type,
           message: null,
         },
       };

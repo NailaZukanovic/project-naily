@@ -16,13 +16,16 @@ const initialState = {
 };
 
 const salonReducer = (state = initialState, action) => {
-  state.action.type = action.type;
   switch (action.type) {
     case FETCH_SALONS_SUCCESSFUL:
       return {
         ...state,
         salons: action.payload.data,
         salonCount: action.payload.count,
+        action: {
+          ...state.action,
+          type: action.type,
+        },
       };
     case FETCH_SALON_DETAIL_SUCCESSFUL:
       return {

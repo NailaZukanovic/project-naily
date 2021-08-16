@@ -7,7 +7,7 @@ exports.createProfile = (req, res) => {
     const currentUser = req.currentUser;
 
     if(currentUser == null){
-        return res.status(500).json({message: 'Sign in required'})
+        return res.status(403).json({message: 'Sign in required'})
     }
 
     const userProfile = {
@@ -44,7 +44,7 @@ exports.fetchProfile = (req, res) => {
     const currentUser = req.currentUser;
 
     if(currentUser == null){
-        return res.status(500).json({message: 'Sign in required'})
+        return res.status(403).json({message: 'Sign in required'})
     }
 
     firestore.collection(profileCollection).doc(currentUser.uid).get()
@@ -64,7 +64,7 @@ exports.updateProfile = (req, res) => {
     const currentUser = req.currentUser
 
     if(currentUser == null){
-        return res.status(500).json({message: 'Sign in required'})
+        return res.status(403).json({message: 'Sign in required'})
     }
 
     const userProfile = {
@@ -112,7 +112,7 @@ exports.uploadAvatar = async (req, res) => {
         const currentUser = req.currentUser
 
         if(currentUser == null){
-            return res.status(500).json({message: 'Sign in required'})
+            return res.status(403).json({message: 'Sign in required'})
         }
 
         const uid = currentUser.uid

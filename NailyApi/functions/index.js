@@ -26,7 +26,7 @@ const {
 const {isSignedIn} = require("./middlewares/firebaseAuth");
 const runMigration = require("./migrations/runMigrations");
 
-// runMigration()
+runMigration()
 
 app.get("/healthCheck", healthCheck);
 app.get("/seedData", (req,res)=>{

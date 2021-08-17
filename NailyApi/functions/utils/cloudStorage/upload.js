@@ -6,7 +6,7 @@ const uuid = require('uuid')
 
 const defualtOnField = (key, value) => {}
 
-exports.uploadFile = (req, fields, resolve, reject, onField = defualtOnField) => {
+exports.uploadFile = (req, fields, resolve, reject, metadata = {}, onField = defualtOnField) => {
     try{
         const tmpdir = 'tmp'
 
@@ -39,7 +39,7 @@ exports.uploadFile = (req, fields, resolve, reject, onField = defualtOnField) =>
                 if(err){
                     reject(err)
                 } else {
-                    imageRef.put(data).then(snapShot => {
+                    imageRef.put(data, metadata).then(snapShot => {
                         fs.unlink(filepath, err=>{
                             if(err){
                                 reject(err)

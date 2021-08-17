@@ -1,4 +1,4 @@
-const { firestore, storage} = require("../../utils/firebase");
+const { firestore, storage } = require("../../utils/firebase");
 const { profileCollection } = require("../../db/collections");
 const { uploadFile } = require('../../utils/cloudStorage/upload')
 const BusBoy = require('busboy')
@@ -6,8 +6,8 @@ const BusBoy = require('busboy')
 exports.createProfile = (req, res) => {
     const currentUser = req.currentUser;
 
-    if(currentUser == null){
-        return res.status(403).json({message: 'Sign in required'})
+    if (currentUser == null) {
+        return res.status(403).json({ message: 'Sign in required' })
     }
 
     const userProfile = {
@@ -43,14 +43,21 @@ exports.createProfile = (req, res) => {
 exports.fetchProfile = (req, res) => {
     const currentUser = req.currentUser;
 
-    if(currentUser == null){
-        return res.status(403).json({message: 'Sign in required'})
+    if (currentUser == null) {
+        return res.status(403).json({ message: 'Sign in required' })
     }
 
     firestore.collection(profileCollection).doc(currentUser.uid).get()
         .then((doc) => {
             if (doc.exists) {
-                return res.status(200).json(doc.data());
+                if (doc.data().avatar != null) {
+                    storage.ref().child(`avatars/${doc.data().avatar}`).getDownloadURL()
+                    .then(downloadUrl=>{
+                        return res.status(200).json({ ...doc.data(), avatarUrl: downloadUrl });
+                    })
+                } else {
+                    return res.status(200).json({ ...doc.data(), avatarUrl: null });
+                }
             } else {
                 return res.status(404).json({ message: 'Profile not found' });
             }
@@ -63,8 +70,8 @@ exports.fetchProfile = (req, res) => {
 exports.updateProfile = (req, res) => {
     const currentUser = req.currentUser
 
-    if(currentUser == null){
-        return res.status(403).json({message: 'Sign in required'})
+    if (currentUser == null) {
+        return res.status(403).json({ message: 'Sign in required' })
     }
 
     const userProfile = {
@@ -86,46 +93,49 @@ exports.uploadAvatar = async (req, res) => {
     var fields = {
         rootDir: 'avatars'
     }
-    
+
     const currentUser = req.currentUser
 
     await firestore.collection(profileCollection).doc(currentUser.uid).get()
-    .then(doc=>{
-        if(doc.exists){
-            if(doc.data().avatar != null){
-                const imageRef = storage.ref().child(`avatars/${doc.data().avatar}`)
-                .delete().then(()=>{
-                }).catch(err=>{
-                    return res.status(500).json({message: err})
-                })
+        .then(doc => {
+            if (doc.exists) {
+                if (doc.data().avatar != null) {
+                    storage.ref().child(`avatars/${doc.data().avatar}`)
+                        .delete().then(() => {
+                        }).catch(err => {
+                            return res.status(500).json({ message: err })
+                        })
+                }
             }
-        } 
-    }).catch(err=>{
-        return res.status(500).json({message: err})
-    })
+        }).catch(err => {
+            return res.status(500).json({ message: err })
+        })
 
     const uploadTask = new Promise((resolve, reject) => {
-        uploadFile(req, fields, resolve, reject)
+        const metadata = {
+            contentType: 'image/jpeg',
+        }
+        uploadFile(req, fields, resolve, reject, metadata)
     })
 
     uploadTask.then(avatarFileName => {
         const currentUser = req.currentUser
 
-        if(currentUser == null){
-            return res.status(403).json({message: 'Sign in required'})
+        if (currentUser == null) {
+            return res.status(403).json({ message: 'Sign in required' })
         }
 
         const uid = currentUser.uid
 
         firestore.collection(profileCollection).doc(uid).update({
             avatar: avatarFileName
-        }).then(response=>{
-            return res.status(200).json({ message: 'success', url: avatarFileName})
-        }).catch(err=>{
+        }).then(response => {
+            return res.status(200).json({ message: 'success', url: avatarFileName })
+        }).catch(err => {
             return res.status(500).json({ message: err })
         })
     }).catch(err => {
-        console.error(err) 
+        console.error(err)
         return res.status(500).json({ message: err })
     })
 }

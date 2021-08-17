@@ -19,7 +19,11 @@ exports.uploadSalonImages = (req,res) => {
     }
 
     const uploadPromise = new Promise((resolve, reject)=>{
-        uploadFile(req, fields, resolve, reject, onField)
+        const metadata = {
+            contentType: 'image/jpeg',
+        }
+        
+        uploadFile(req, fields, resolve, reject, metadata,  onField)
     }) 
 
     uploadPromise

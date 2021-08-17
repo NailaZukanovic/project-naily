@@ -13,6 +13,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import {Icon} from 'react-native-elements';
 import {COLORS, SIZES, FONTS} from '../constants/index';
 import {ScreenHeader} from '../components/index';
 import {useSelector, useDispatch} from 'react-redux';
@@ -22,7 +23,8 @@ import {
   uploadAvatarAction,
 } from '../redux/actions/profileActions';
 
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera} from 'react-native-image-picker';
+import {LOCALHOST_IP} from '../constants/apiConfig';
 
 const Profile = ({navigation}) => {
   const profile = useSelector(state => state.profileReducer.profile);
@@ -32,6 +34,7 @@ const Profile = ({navigation}) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
 
   const showMessage = (title, message, buttonText) => {
     Alert.alert(title, message, [
@@ -47,26 +50,12 @@ const Profile = ({navigation}) => {
       if (response.errorMessage) {
         showMessage('Error', response.errorMessage, 'Ok');
       } else if (response.assets) {
-        console.error(response.assets[0].fileSize);
-      }
-    });
-  };
-
-  const showGallery = () => {
-    launchImageLibrary({title: 'Gallery'}, response => {
-      if (response.didCancel) {
-        console.log('Canceled picking image');
-      } else if (response.errorMessage) {
-        showMessage('Error', response.errorMessage, 'Ok');
-      } else if (response.assets) {
         console.log(response.assets[0]);
         var imageObject = response.assets[0];
 
         if (Platform.OS === 'ios') {
           imageObject.uri = imageObject.uri.replace('file://', '');
         }
-
-        // console.log(imageObject.fileSize);
         dispatch(uploadAvatarAction(imageObject));
       }
     });
@@ -92,6 +81,12 @@ const Profile = ({navigation}) => {
     setFirstName(profile.firstName);
     setLastName(profile.lastName);
     setPhoneNumber(profile.phoneNumber);
+    //TODO: this is a special treatment for avatarUrl
+    //TODO: to convert localhost to server local IP address
+    //TODO: do not use this code in production
+    //TODO: USE THIS INSTEAD
+    // setAvatarUrl(profile.avatarUrl);
+    setAvatarUrl(profile.avatarUrl.replace('localhost', LOCALHOST_IP));
   };
 
   return (
@@ -106,11 +101,25 @@ const Profile = ({navigation}) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <ScrollView style={mainStyles.centeredGroup}>
           <View style={mainStyles.avatarGroup}>
-            <Image style={mainStyles.avatarImage} />
+            <Image
+              style={mainStyles.avatarImage}
+              source={{
+                // uri: avatarUrl,
+                uri: 'http://192.168.1.245:9199/v0/b/naily-c16f5.appspot.com/o/avatars%2F130d44ec-a07e-4907-b2ae-da599811f087%2B8632365F-4B42-4B14-A9A3-950E415D3A99.jpg?alt=media&token=13dcc58f-ab3b-42ad-b5e1-80d568d8e75d',
+                // uri: 'https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png',
+              }}
+            />
             <TouchableOpacity
               style={mainStyles.editAvatarButton}
-              onPress={showGallery}>
-              <Text style={FONTS.body3}>Edit</Text>
+              onPress={showCamera}>
+              <View style={{flexDirection: 'row'}}>
+                <Icon
+                  name="camera"
+                  type="feather"
+                  style={{marginEnd: SIZES.margin}}
+                />
+                <Text style={FONTS.body3}>Edit</Text>
+              </View>
             </TouchableOpacity>
           </View>
 

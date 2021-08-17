@@ -20,6 +20,7 @@ const fetchProfileAction = _ => {
   return dispatch => {
     fetchProfile()
       .then(data => {
+        console.log(data);
         dispatch({
           type: PROFILE_FETCHED,
           payload: data,

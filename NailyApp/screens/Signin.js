@@ -170,12 +170,13 @@ const mainStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    height: 30,
+    height: 40,
     marginVertical: SIZES.margin15,
     borderRadius: SIZES.smallBorderRadius,
     borderWidth: 2,
     borderColor: COLORS.lightGray,
     paddingHorizontal: SIZES.padding,
+    color: COLORS.black,
   },
   actionButton: {
     alignItems: 'center',

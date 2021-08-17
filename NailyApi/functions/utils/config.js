@@ -7,3 +7,6 @@ exports.firebaseConfig = {
   appId: "1:546037259704:web:898ac9fb5e52fa8589434d",
   measurementId: "G-LNFMPZ9C2Z",
 };
+
+// exports.localhost = '192.168.1.245'
+exports.localhost = 'localhost'

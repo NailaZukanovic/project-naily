@@ -10,17 +10,18 @@ const express = require("express");
 const app = express();
 
 const firebase = require("firebase");
-const {firebaseConfig} = require("./config");
+const {firebaseConfig, localhost} = require("./config");
 firebase.initializeApp(firebaseConfig)
 
 const firestore = firebase.firestore();
 
 const storage = firebase.storage();
 
+
 //Use emulators
-firebase.auth().useEmulator('http://localhost:9099')
-firestore.useEmulator('localhost',8080)
-storage.useEmulator('localhost',9199)
+firebase.auth().useEmulator(`http://${localhost}:9099`)
+firestore.useEmulator(localhost,8080)
+storage.useEmulator(localhost,9199)
 
 
 module.exports = {admin, firestore, app, firebase, storage};

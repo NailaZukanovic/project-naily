@@ -108,7 +108,7 @@ const ProfileCreation = ({navigation}) => {
               }}>
               <ActivityIndicator color={COLORS.white} size="large" />
               <Text style={{...FONTS.h2, color: COLORS.white}}>
-                Fetching use profile
+                Fetching user profile
               </Text>
             </View>
           ) : (

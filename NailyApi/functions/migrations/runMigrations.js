@@ -2,18 +2,17 @@ const { firestore, firebase } = require("../utils/firebase");
 const { profileCollection, salonCollection } = require("../db/collections");
 const dummyAccounts = require("../migrations/dummyAccounts");
 const dummyProfiles = require("../migrations/dummyProfiles");
-const {firebaseConfig} = require('../utils/config')
+const {firebaseConfig, localhost} = require('../utils/config')
 const axios = require('axios');
 const dummySalons = require("./dummySalons");
-const { extractInstanceAndPath } = require("firebase-functions/lib/providers/database");
 
 //#############################################
 // DANGER: DO NOT RUN THIS SCRIPT ON PRODUCTION
 //#############################################
 
 const clearDb = async () => {
-  axios.delete(`http://localhost:9099/emulator/v1/projects/${firebaseConfig.projectId}/accounts`).then(()=>{}).catch(err=>{console.log(err)})
-  axios.delete(`http://localhost:8080/emulator/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents`).then(()=>{}).catch(err=>{console.log(err)})
+  axios.delete(`http://${localhost}:9099/emulator/v1/projects/${firebaseConfig.projectId}/accounts`).then(()=>{}).catch(err=>{console.log(err)})
+  axios.delete(`http://${localhost}:8080/emulator/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents`).then(()=>{}).catch(err=>{console.log(err)})
 }
 
 const createProfile = (uid, profile) => {

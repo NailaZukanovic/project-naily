@@ -24,10 +24,16 @@ import {
 } from '../redux/actions/profileActions';
 
 import {launchCamera} from 'react-native-image-picker';
-import {LOCALHOST_IP} from '../constants/apiConfig';
+import apiConfig from '../constants/apiConfig';
+import {RefreshControlBase} from 'react-native';
 
 const Profile = ({navigation}) => {
   const profile = useSelector(state => state.profileReducer.profile);
+
+  const profileActionType = useSelector(
+    state => state.profileReducer.action.type,
+  );
+  console.log('rendered with action ', profileActionType);
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
@@ -62,8 +68,9 @@ const Profile = ({navigation}) => {
   };
 
   useEffect(() => {
+    console.log('useEffect');
     loadProfile();
-  }, [profile]);
+  }, [profileActionType]);
 
   const saveUpdateClicked = useCallback(() => {
     const data = {
@@ -86,9 +93,10 @@ const Profile = ({navigation}) => {
     //TODO: do not use this code in production
     //TODO: USE THIS INSTEAD
     // setAvatarUrl(profile.avatarUrl);
-    setAvatarUrl(profile.avatarUrl.replace('localhost', LOCALHOST_IP));
+    if (profile.avatarUrl != null) {
+      setAvatarUrl(profile.avatarUrl.replace('localhost', apiConfig.localhost));
+    }
   };
-
   return (
     <SafeAreaView style={mainStyles.container}>
       <ScreenHeader
@@ -103,11 +111,7 @@ const Profile = ({navigation}) => {
           <View style={mainStyles.avatarGroup}>
             <Image
               style={mainStyles.avatarImage}
-              source={{
-                // uri: avatarUrl,
-                uri: 'http://192.168.1.245:9199/v0/b/naily-c16f5.appspot.com/o/avatars%2F130d44ec-a07e-4907-b2ae-da599811f087%2B8632365F-4B42-4B14-A9A3-950E415D3A99.jpg?alt=media&token=13dcc58f-ab3b-42ad-b5e1-80d568d8e75d',
-                // uri: 'https://www.publicdomainpictures.net/pictures/320000/velka/background-image.png',
-              }}
+              source={avatarUrl ? {uri: avatarUrl} : {}}
             />
             <TouchableOpacity
               style={mainStyles.editAvatarButton}

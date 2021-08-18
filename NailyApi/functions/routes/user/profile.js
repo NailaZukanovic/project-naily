@@ -50,14 +50,7 @@ exports.fetchProfile = (req, res) => {
     firestore.collection(profileCollection).doc(currentUser.uid).get()
         .then((doc) => {
             if (doc.exists) {
-                if (doc.data().avatar != null) {
-                    storage.ref().child(`avatars/${doc.data().avatar}`).getDownloadURL()
-                    .then(downloadUrl=>{
-                        return res.status(200).json({ ...doc.data(), avatarUrl: downloadUrl });
-                    })
-                } else {
-                    return res.status(200).json({ ...doc.data(), avatarUrl: null });
-                }
+                return res.status(200).json(doc.data())
             } else {
                 return res.status(404).json({ message: 'Profile not found' });
             }
@@ -89,27 +82,12 @@ exports.updateProfile = (req, res) => {
         });
 };
 
-exports.uploadAvatar = async (req, res) => {
+exports.uploadAvatar = (req, res) => {
     var fields = {
         rootDir: 'avatars'
     }
 
     const currentUser = req.currentUser
-
-    await firestore.collection(profileCollection).doc(currentUser.uid).get()
-        .then(doc => {
-            if (doc.exists) {
-                if (doc.data().avatar != null) {
-                    storage.ref().child(`avatars/${doc.data().avatar}`)
-                        .delete().then(() => {
-                        }).catch(err => {
-                            return res.status(500).json({ message: err })
-                        })
-                }
-            }
-        }).catch(err => {
-            return res.status(500).json({ message: err })
-        })
 
     const uploadTask = new Promise((resolve, reject) => {
         const metadata = {
@@ -118,22 +96,39 @@ exports.uploadAvatar = async (req, res) => {
         uploadFile(req, fields, resolve, reject, metadata)
     })
 
-    uploadTask.then(avatarFileName => {
-        const currentUser = req.currentUser
+    uploadTask
+    .then(async avatarFileName => {
+        try{
 
-        if (currentUser == null) {
-            return res.status(403).json({ message: 'Sign in required' })
-        }
+            const currentUser = req.currentUser
 
-        const uid = currentUser.uid
+            if (currentUser == null) {
+                return res.status(403).json({ message: 'Sign in required' })
+            }
 
-        firestore.collection(profileCollection).doc(uid).update({
-            avatar: avatarFileName
-        }).then(response => {
-            return res.status(200).json({ message: 'success', url: avatarFileName })
-        }).catch(err => {
+            const uid = currentUser.uid
+
+            const doc = await firestore.collection(profileCollection).doc(currentUser.uid).get()
+
+            if (doc.exists && doc.data().avatar != null) {
+                storage.ref().child(`avatars/${doc.data().avatar}`)
+                    .delete()
+                    .catch(err => {
+                        return res.status(500).json({ message: err })
+                    })
+            }
+
+            const avatarDownloadUrl = await storage.ref().child(`avatars/${avatarFileName}`).getDownloadURL()
+
+            await firestore.collection(profileCollection).doc(uid).update({
+                avatar: avatarFileName,
+                avatarUrl: avatarDownloadUrl})
+
+            return res.status(200).json({ message: 'success', avatarUrl: avatarDownloadUrl })
+
+        } catch(err){
             return res.status(500).json({ message: err })
-        })
+        }
     }).catch(err => {
         console.error(err)
         return res.status(500).json({ message: err })

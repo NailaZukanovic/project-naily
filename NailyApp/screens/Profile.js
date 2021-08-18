@@ -22,18 +22,14 @@ import {
   updateProfileAction,
   uploadAvatarAction,
 } from '../redux/actions/profileActions';
+import {Snackbar} from 'react-native-paper';
 
-import {launchCamera} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import apiConfig from '../constants/apiConfig';
-import {RefreshControlBase} from 'react-native';
 
 const Profile = ({navigation}) => {
   const profile = useSelector(state => state.profileReducer.profile);
 
-  const profileActionType = useSelector(
-    state => state.profileReducer.action.type,
-  );
-  console.log('rendered with action ', profileActionType);
   const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
@@ -51,26 +47,46 @@ const Profile = ({navigation}) => {
     ]);
   };
 
-  const showCamera = () => {
-    launchCamera({title: 'Take a picture'}, response => {
-      if (response.errorMessage) {
-        showMessage('Error', response.errorMessage, 'Ok');
-      } else if (response.assets) {
-        console.log(response.assets[0]);
-        var imageObject = response.assets[0];
-
-        if (Platform.OS === 'ios') {
-          imageObject.uri = imageObject.uri.replace('file://', '');
-        }
-        dispatch(uploadAvatarAction(imageObject));
+  const imageCallback = response => {
+    if (response.errorMessage) {
+      showMessage('Error', response.errorMessage, 'Ok');
+    } else if (response.assets) {
+      console.log(response.assets[0]);
+      var imageObject = response.assets[0];
+      if (Platform.OS === 'ios') {
+        imageObject.uri = imageObject.uri.replace('file://', '');
       }
-    });
+      dispatch(uploadAvatarAction(imageObject));
+    }
+  };
+
+  const options = {
+    title: 'Change avatar',
+  };
+
+  const showEditAvatarActions = () => {
+    Alert.alert('Avatar', 'Pick a method', [
+      {
+        text: 'Take a picture',
+        onPress: () => launchCamera(options, imageCallback),
+        style: 'cancel',
+      },
+      {
+        text: 'Open gallery',
+        onPress: () => launchImageLibrary(options, imageCallback),
+        style: 'cancel',
+      },
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+    ]);
   };
 
   useEffect(() => {
     console.log('useEffect');
     loadProfile();
-  }, [profileActionType]);
+  }, [profile]);
 
   const saveUpdateClicked = useCallback(() => {
     const data = {
@@ -115,14 +131,14 @@ const Profile = ({navigation}) => {
             />
             <TouchableOpacity
               style={mainStyles.editAvatarButton}
-              onPress={showCamera}>
+              onPress={showEditAvatarActions}>
               <View style={{flexDirection: 'row'}}>
                 <Icon
                   name="camera"
                   type="feather"
                   style={{marginEnd: SIZES.margin}}
                 />
-                <Text style={FONTS.body3}>Edit</Text>
+                <Text style={FONTS.body3}>Change</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -192,6 +208,7 @@ const mainStyles = StyleSheet.create({
   avatarGroup: {
     alignItems: 'center',
     paddingVertical: SIZES.largePadding,
+    ...styles.lightShadow,
   },
   inputGroup: {
     paddingVertical: SIZES.largePadding,
@@ -212,8 +229,9 @@ const mainStyles = StyleSheet.create({
   },
   avatarImage: {
     backgroundColor: COLORS.gray,
-    width: 180,
-    height: 180,
+    width: 100,
+    height: 100,
+    borderRadius: SIZES.borderRadius,
   },
   editAvatarButton: {
     borderRadius: SIZES.borderRadius,

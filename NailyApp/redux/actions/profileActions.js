@@ -91,11 +91,10 @@ const uploadAvatarAction = image => {
         console.log(data);
         dispatch({
           type: UPLOAD_AVATAR_SUCCESSFUL,
-          payload: data,
+          payload: data.avatarUrl,
         });
       })
       .catch(err => {
-        console.log(err);
         switch (err.response.status) {
           case 403:
             dispatch({

@@ -84,6 +84,10 @@ const profileReducer = (state = initialState, action) => {
     case UPLOAD_AVATAR_SUCCESSFUL:
       return {
         ...state,
+        profile: {
+          ...state.profile,
+          avatarUrl: action.payload,
+        },
         action: {
           type: action.type,
           message: 'Uploaded avatar succesfullly',

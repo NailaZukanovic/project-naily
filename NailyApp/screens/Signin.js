@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  Modal,
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';

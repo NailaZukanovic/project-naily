@@ -88,7 +88,6 @@ const uploadAvatarAction = image => {
   return dispatch => {
     uploadAvatar(image)
       .then(data => {
-        console.log(data);
         dispatch({
           type: UPLOAD_AVATAR_SUCCESSFUL,
           payload: data.avatarUrl,

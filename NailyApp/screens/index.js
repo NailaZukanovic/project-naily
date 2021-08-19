@@ -2,7 +2,7 @@ import Home from './Home';
 import Search from './Search';
 import Appointments from './Appointments';
 import Settings from './Settings';
-import SalonDetail from './SalonDetail';
+import SalonDetail from './salon/SalonDetail';
 import ProductDetail from './ProductDetail';
 import DateTimePicker from './DateTimePicker';
 import Worker from './Worker';
@@ -11,6 +11,9 @@ import Signup from './Signup';
 import Signin from './Signin';
 import Profile from './Profile';
 import ProfileCreation from './ProfileCreation';
+import SalonManagement from './salon/SalonManagement';
+import SalonEdit from './salon/SalonEdit';
+import SalonCreation from './salon/SalonCreation';
 
 export {
   Home,
@@ -26,4 +29,7 @@ export {
   Signin,
   Profile,
   ProfileCreation,
+  SalonManagement,
+  SalonEdit,
+  SalonCreation,
 };

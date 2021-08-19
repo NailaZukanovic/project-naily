@@ -22,7 +22,6 @@ import {
   updateProfileAction,
   uploadAvatarAction,
 } from '../redux/actions/profileActions';
-import {Snackbar} from 'react-native-paper';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import apiConfig from '../constants/apiConfig';

@@ -8,19 +8,19 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../constants/index';
-import {ScreenHeader} from '../components/index';
+import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../../constants/index';
 import Swiper from 'react-native-swiper';
-import {salonContact, salonImages, workers, comments} from '../dummy/index';
+import {salonContact, salonImages, workers, comments} from '../../dummy/index';
 import {Icon} from 'react-native-elements';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import {styles} from '../styles/index';
+import {styles} from '../../styles/index';
 import {
   ProductTab,
   WorkersTab,
   ReviewsTab,
   ContactTab,
-} from '../components/index';
+  ScreenHeader,
+} from '../../components/index';
 
 const CustomTabBar = ({props}) => (
   <TabBar

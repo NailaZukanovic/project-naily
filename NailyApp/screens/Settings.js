@@ -21,6 +21,10 @@ const Settings = ({navigation}) => {
     navigation.navigate(SCREEN_NAMES.profile);
   };
 
+  const goToSalonManagement = () => {
+    navigation.navigate(SCREEN_NAMES.salonManagement);
+  };
+
   const signOutClicked = useCallback(() => {
     dispatch(signOutAction());
     dispatch(clearProfileAction());
@@ -72,7 +76,9 @@ const Settings = ({navigation}) => {
           <View>
             <Text style={{...FONTS.h2}}>Manager Settings</Text>
             <View style={settingsStyles.itemContainer}>
-              <TouchableOpacity style={settingsStyles.item}>
+              <TouchableOpacity
+                style={settingsStyles.item}
+                onPress={goToSalonManagement}>
                 <Text style={{...FONTS.body2}}> Salon Management</Text>
                 <Icon name="right" type="ant-design" />
               </TouchableOpacity>

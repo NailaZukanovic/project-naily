@@ -27,6 +27,9 @@ import {
   Signin,
   Profile,
   ProfileCreation,
+  SalonManagement,
+  SalonEdit,
+  SalonCreation,
 } from './screens/index';
 import {COLORS, FONTS, SCREEN_NAMES, NAVIGATOR_NAMES} from './constants/index';
 
@@ -90,6 +93,18 @@ const SettingStackScreen = () => (
   <NavigationStack.Navigator headerMode={'none'}>
     <NavigationStack.Screen name={SCREEN_NAMES.settings} component={Settings} />
     <NavigationStack.Screen name={SCREEN_NAMES.profile} component={Profile} />
+    <NavigationStack.Screen
+      name={SCREEN_NAMES.salonManagement}
+      component={SalonManagement}
+    />
+    <NavigationStack.Screen
+      name={SCREEN_NAMES.salonEdit}
+      component={SalonEdit}
+    />
+    <NavigationStack.Screen
+      name={SCREEN_NAMES.salonCreation}
+      component={SalonCreation}
+    />
   </NavigationStack.Navigator>
 );
 

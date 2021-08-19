@@ -13,6 +13,9 @@ const SCREEN_NAMES = {
   signin: 'signin',
   profile: 'profile',
   profileCreation: 'profileCreation',
+  salonManagement: 'salonManagement',
+  salonEdit: 'salonEdit',
+  salonCreation: 'salonCreation',
 };
 
 const NAVIGATOR_NAMES = {

@@ -9,6 +9,8 @@ import {styles} from '../../styles/index';
 import {ScreenHeader} from '../../components/index';
 import {TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native';
+import {Modal} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const SalonCreation = ({navigation}) => {
   const [salonName, setSalonName] = useState('');
@@ -21,13 +23,53 @@ const SalonCreation = ({navigation}) => {
   const [friday, setFriday] = useState(true);
   const [saturday, setSaturday] = useState(false);
   const [sunday, setSunday] = useState(false);
-  const [mondayHours, setMondayHours] = useState({start: 7, close: 20});
-  const [tuesdayHours, setTuesdayHours] = useState({start: 7, close: 20});
-  const [wednesdayHours, setWednesdayHours] = useState({start: 7, close: 20});
-  const [thursdayHours, setThursdayHours] = useState({start: 7, close: 20});
-  const [fridayHours, setFridayHours] = useState({start: 7, close: 20});
-  const [saturdayHours, setSaturdayHours] = useState({start: 7, close: 20});
-  const [sundayHours, setSundayHours] = useState({start: 7, close: 20});
+  const [mondayHours, setMondayHours] = useState({
+    startHour: 7,
+    startMinute: 0,
+    closeHour: 20,
+    closeMinute: 0,
+  });
+  const [tuesdayHours, setTuesdayHours] = useState({
+    startHour: 7,
+    startMinute: 0,
+    closeHour: 20,
+    closeMinute: 0,
+  });
+  const [wednesdayHours, setWednesdayHours] = useState({
+    startHour: 7,
+    startMinute: 0,
+    closeHour: 20,
+    closeMinute: 0,
+  });
+  const [thursdayHours, setThursdayHours] = useState({
+    startHour: 7,
+    startMinute: 0,
+    closeHour: 20,
+    closeMinute: 0,
+  });
+  const [fridayHours, setFridayHours] = useState({
+    startHour: 7,
+    startMinute: 0,
+    closeHour: 20,
+    closeMinute: 0,
+  });
+  const [saturdayHours, setSaturdayHours] = useState({
+    startHour: 7,
+    startMinute: 0,
+    closeHour: 20,
+    closeMinute: 0,
+  });
+  const [sundayHours, setSundayHours] = useState({
+    startHour: 7,
+    startMinute: 0,
+    closeHour: 20,
+    closeMinute: 0,
+  });
+  const [modalVisible, setModalVisiable] = useState(false);
+  const [startHour, setStartHour] = useState(new Date());
+  const [closeHour, setCloseHour] = useState(new Date());
+
+  const [selectingDay, setSelectingDay] = useState(0);
 
   const days = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
   const setDayArray = [
@@ -78,12 +120,107 @@ const SalonCreation = ({navigation}) => {
     });
   }
 
-  const convertToAmPm = hour => {
+  const convertHourToString = (hour, minute) => {
+    var minuteString = minute.toLocaleString('en-US', {
+      minimumIntegerDigits: 2,
+      useGrouping: false,
+    });
     if (hour > 12) {
-      return `${hour - 12} PM`;
+      return `${hour - 12}:${minuteString} PM`;
     } else {
-      return `${hour} AM`;
+      return `${hour}:${minuteString} AM`;
     }
+  };
+
+  const showTimePicker = (startHour, startMinute, closeHour, closeMinute) => {
+    var initialStartHour = new Date();
+    initialStartHour.setHours(startHour, startMinute);
+
+    var initialCloseHour = new Date();
+    initialCloseHour.setHours(closeHour, closeMinute);
+
+    setStartHour(initialStartHour);
+    setCloseHour(initialCloseHour);
+    setModalVisiable(true);
+  };
+
+  const changeHoursModal = () => {
+    const cancel = () => {
+      setModalVisiable(false);
+    };
+
+    const accept = _ => {
+      setModalVisiable(false);
+      var chosenStartHour = startHour;
+      var chosenCloseHour = closeHour;
+      openHours[selectingDay].hourSet({
+        startHour: chosenStartHour.getHours(),
+        startMinute: chosenStartHour.getMinutes(),
+        closeHour: chosenCloseHour.getHours(),
+        closeMinute: chosenCloseHour.getMinutes(),
+      });
+    };
+
+    const onStartHourChange = (event, datetime) => {
+      setStartHour(datetime);
+    };
+
+    const onCloseHourChange = (event, datetime) => {
+      setCloseHour(datetime);
+    };
+
+    return (
+      <Modal
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={cancel}>
+        <View style={mainStyles.modalContainer}>
+          <Text style={{...FONTS.h2, marginBottom: SIZES.margin}}>
+            {openHours[selectingDay].title} open hours
+          </Text>
+          <View style={mainStyles.timePickerContainer}>
+            <View style={mainStyles.timePickerGroup}>
+              <Text style={mainStyles.timePickerTitle}>Start hour</Text>
+              <DateTimePicker
+                value={startHour}
+                mode={'time'}
+                display={'spinner'}
+                onChange={onStartHourChange}
+              />
+            </View>
+            <View style={mainStyles.timePickerGroup}>
+              <Text style={mainStyles.timePickerTitle}>Close hour</Text>
+              <DateTimePicker
+                value={closeHour}
+                mode={'time'}
+                display={'spinner'}
+                onChange={onCloseHourChange}
+              />
+            </View>
+          </View>
+
+          <TouchableOpacity style={mainStyles.modalButton} onPress={accept}>
+            <Icon
+              name="check"
+              type="font-awesome"
+              size={SIZES.iconSize}
+              color={COLORS.green}
+            />
+            <Text style={FONTS.body2}>Save</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={mainStyles.modalButton} onPress={cancel}>
+            <Icon
+              name="close"
+              type="font-awesome"
+              size={SIZES.iconSize}
+              color={COLORS.roseRed}
+            />
+            <Text style={FONTS.body2}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+    );
   };
 
   return (
@@ -93,6 +230,7 @@ const SalonCreation = ({navigation}) => {
         shownBackArrow
         onPressLeftButton={() => navigation.goBack()}
       />
+      {changeHoursModal()}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={mainStyles.formContainer}>
           <View style={mainStyles.inputGroup}>
@@ -122,7 +260,7 @@ const SalonCreation = ({navigation}) => {
           <View>
             <Text style={FONTS.h4}>Open Hours</Text>
 
-            {openHours.map(openHour => {
+            {openHours.map((openHour, index) => {
               return (
                 <View style={mainStyles.checkContainer}>
                   <CheckBox
@@ -132,10 +270,27 @@ const SalonCreation = ({navigation}) => {
                   />
                   <Text style={{flex: 1}}>{openHour.title}</Text>
 
-                  <TouchableOpacity style={{flex: 2}}>
+                  <TouchableOpacity
+                    style={{flex: 2}}
+                    onPress={() => {
+                      setSelectingDay(index);
+                      showTimePicker(
+                        openHour.hours.startHour,
+                        openHour.hours.startMinute,
+                        openHour.hours.closeHour,
+                        openHour.hours.closeMinute,
+                      );
+                    }}>
                     <Text style={mainStyles.openHourText}>
-                      {convertToAmPm(openHour.hours.start)} -{' '}
-                      {convertToAmPm(openHour.hours.close)}
+                      {convertHourToString(
+                        openHour.hours.startHour,
+                        openHour.hours.startMinute,
+                      )}{' '}
+                      -{' '}
+                      {convertHourToString(
+                        openHour.hours.closeHour,
+                        openHour.hours.closeMinute,
+                      )}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -178,6 +333,34 @@ const mainStyles = StyleSheet.create({
   openHourText: {
     ...FONTS.body3,
     textAlign: 'center',
+  },
+
+  timePickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: SIZES.width,
+  },
+  timePickerGroup: {
+    justifyContent: 'center',
+    flex: 1,
+  },
+  timePickerTitle: {
+    textAlign: 'center',
+    ...FONTS.h3,
+  },
+
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.white,
+  },
+  modalButton: {
+    flexDirection: 'row',
+    width: SIZES.oneQuarterWidth,
+    margin: SIZES.margin,
+    padding: SIZES.padding,
+    borderRadius: SIZES.borderRadius,
   },
 });
 

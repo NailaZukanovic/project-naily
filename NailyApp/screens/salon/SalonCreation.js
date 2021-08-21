@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -80,6 +80,7 @@ const SalonCreation = ({navigation}) => {
   const [featureImages, setFeatureImages] = useState([]);
 
   const [imagePreviewVisible, setImagePreviewVisible] = useState(false);
+  const [selectingImageIndex, setSelectingImageIndex] = useState(0);
 
   const days = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
   const setDayArray = [
@@ -154,12 +155,6 @@ const SalonCreation = ({navigation}) => {
 
       setFeatureImages(images);
     }
-  };
-
-  const deleteImage = index => {
-    var images = [...featureImages];
-    images.splice(index, 1);
-    setFeatureImages(images);
   };
 
   const options = {
@@ -305,6 +300,7 @@ const SalonCreation = ({navigation}) => {
               <TouchableOpacity
                 style={mainStyles.featureImageContainer}
                 onPress={() => {
+                  setSelectingImageIndex(index);
                   setImagePreviewVisible(true);
                 }}>
                 <Image
@@ -335,6 +331,12 @@ const SalonCreation = ({navigation}) => {
       setImagePreviewVisible(false);
     };
 
+    const deleteCurrentImage = _ => {
+      var images = [...featureImages];
+      images.splice(selectingImageIndex, 1);
+      setFeatureImages(images);
+    };
+
     return (
       <Modal
         animationType="slide"
@@ -348,14 +350,25 @@ const SalonCreation = ({navigation}) => {
             <Icon name="close" type="font-awesome" size={SIZES.iconSize} />
           </TouchableOpacity>
           <View style={{height: SIZES.oneThirdHeight}}>
-            <Swiper loop={false} paginationStyle={{bottom: -20}}>
-              {featureImages.map(image => (
-                <Image
-                  source={{uri: image.uri}}
-                  resizeMode="cover"
-                  style={mainStyles.imagePreview}
-                />
-              ))}
+            <Swiper
+              loop={false}
+              paginationStyle={{bottom: -20}}
+              index={selectingImageIndex}
+              onIndexChanged={index => setSelectingImageIndex(index)}>
+              {featureImages.length > 0 ? (
+                featureImages.map(image => (
+                  <Image
+                    source={{uri: image.uri}}
+                    resizeMode="cover"
+                    style={mainStyles.imagePreview}
+                  />
+                ))
+              ) : (
+                <Text style={{...FONTS.h4, textAlign: 'center'}}>
+                  No feature image to review {'\n'} You can add up to 5 feature
+                  images
+                </Text>
+              )}
             </Swiper>
           </View>
 
@@ -375,6 +388,7 @@ const SalonCreation = ({navigation}) => {
               />
             </TouchableOpacity>
             <TouchableOpacity
+              onPress={deleteCurrentImage}
               style={{
                 ...mainStyles.imagePreviewActionButton,
                 borderColor: COLORS.roseRed,

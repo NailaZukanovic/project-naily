@@ -1,16 +1,24 @@
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, View, TextInput} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  Image,
+  Alert,
+  Platform,
+} from 'react-native';
 import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../../constants/index';
-import Swiper from 'react-native-swiper';
-import {salonContact, salonImages, workers, comments} from '../../dummy/index';
 import {Icon, CheckBox} from 'react-native-elements';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {styles} from '../../styles/index';
 import {ScreenHeader} from '../../components/index';
 import {TouchableOpacity} from 'react-native';
 import {ScrollView} from 'react-native';
 import {Modal} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import Swiper from 'react-native-swiper';
 
 const SalonCreation = ({navigation}) => {
   const [salonName, setSalonName] = useState('');
@@ -68,8 +76,10 @@ const SalonCreation = ({navigation}) => {
   const [modalVisible, setModalVisiable] = useState(false);
   const [startHour, setStartHour] = useState(new Date());
   const [closeHour, setCloseHour] = useState(new Date());
-
   const [selectingDay, setSelectingDay] = useState(0);
+  const [featureImages, setFeatureImages] = useState([]);
+
+  const [imagePreviewVisible, setImagePreviewVisible] = useState(false);
 
   const days = [monday, tuesday, wednesday, thursday, friday, saturday, sunday];
   const setDayArray = [
@@ -120,6 +130,68 @@ const SalonCreation = ({navigation}) => {
     });
   }
 
+  const showMessage = (title, message, buttonText) => {
+    Alert.alert(title, message, [
+      {
+        text: buttonText,
+        style: 'cancel',
+      },
+    ]);
+  };
+
+  const imageCallback = response => {
+    if (response.errorMessage) {
+      showMessage('Error', response.errorMessage, 'Ok');
+    } else if (response.assets) {
+      var images = [...featureImages];
+      var isIos = Platform.OS === 'ios';
+      response.assets.forEach(asset => {
+        if (isIos) {
+          asset.uri = asset.uri.replace('file://', '');
+        }
+        images.push(asset);
+      });
+
+      setFeatureImages(images);
+    }
+  };
+
+  const deleteImage = index => {
+    var images = [...featureImages];
+    images.splice(index, 1);
+    setFeatureImages(images);
+  };
+
+  const options = {
+    title: 'Change avatar',
+  };
+
+  const showImagePicker = () => {
+    if (featureImages.length >= 5) {
+      Alert.alert('Only 5 feature images are allowed', '', [
+        {text: 'Okay', style: 'cancel'},
+      ]);
+      return;
+    }
+
+    Alert.alert('Add a new feature image', 'Pick a method', [
+      {
+        text: 'Take a picture',
+        onPress: () => launchCamera(options, imageCallback),
+        style: 'cancel',
+      },
+      {
+        text: 'Open gallery',
+        onPress: () => launchImageLibrary(options, imageCallback),
+        style: 'cancel',
+      },
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+    ]);
+  };
+
   const convertHourToString = (hour, minute) => {
     var minuteString = minute.toLocaleString('en-US', {
       minimumIntegerDigits: 2,
@@ -144,7 +216,7 @@ const SalonCreation = ({navigation}) => {
     setModalVisiable(true);
   };
 
-  const changeHoursModal = () => {
+  const renderTimePickerModal = () => {
     const cancel = () => {
       setModalVisiable(false);
     };
@@ -223,6 +295,104 @@ const SalonCreation = ({navigation}) => {
     );
   };
 
+  const renderImagePicker = () => {
+    return (
+      <View>
+        <ScrollView>
+          <Text style={FONTS.h4}>Featured images</Text>
+          <View>
+            {featureImages.map((image, index) => (
+              <TouchableOpacity
+                style={mainStyles.featureImageContainer}
+                onPress={() => {
+                  setImagePreviewVisible(true);
+                }}>
+                <Image
+                  source={{uri: image.uri}}
+                  style={mainStyles.featureImage}
+                  resizeMode={'cover'}
+                />
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <View style={mainStyles.imageButtonGroup}>
+            <TouchableOpacity
+              style={mainStyles.imageActionButton}
+              onPress={showImagePicker}>
+              <Text style={{textAlign: 'center', ...FONTS.body2}}>
+                Add images
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  };
+
+  const renderImagePreviewModal = () => {
+    const cancel = () => {
+      setImagePreviewVisible(false);
+    };
+
+    return (
+      <Modal
+        animationType="slide"
+        visible={imagePreviewVisible}
+        onRequestClose={cancel}
+        style={mainStyles.modalContainer}>
+        <View style={mainStyles.imagePreviewModalContainer}>
+          <TouchableOpacity
+            onPress={() => setImagePreviewVisible(false)}
+            style={mainStyles.imagePreviewCloseButton}>
+            <Icon name="close" type="font-awesome" size={SIZES.iconSize} />
+          </TouchableOpacity>
+          <View style={{height: SIZES.oneThirdHeight}}>
+            <Swiper loop={false} paginationStyle={{bottom: -20}}>
+              {featureImages.map(image => (
+                <Image
+                  source={{uri: image.uri}}
+                  resizeMode="cover"
+                  style={mainStyles.imagePreview}
+                />
+              ))}
+            </Swiper>
+          </View>
+
+          <View style={mainStyles.imagePreviewActionButtonGroup}>
+            <TouchableOpacity
+              onPress={showImagePicker}
+              style={{
+                ...mainStyles.imagePreviewActionButton,
+                borderColor: COLORS.orange,
+              }}>
+              <Text style={mainStyles.imagePreviewActionText}>Add image</Text>
+              <Icon
+                name="plus"
+                type="font-awesome"
+                size={SIZES.iconSize}
+                color={COLORS.orange}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                ...mainStyles.imagePreviewActionButton,
+                borderColor: COLORS.roseRed,
+              }}>
+              <Text style={mainStyles.imagePreviewActionText}>Delete</Text>
+              <Icon
+                name="trash-o"
+                type="font-awesome"
+                size={SIZES.iconSize}
+                color={COLORS.roseRed}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
   return (
     <SafeAreaView style={mainStyles.container}>
       <ScreenHeader
@@ -230,7 +400,8 @@ const SalonCreation = ({navigation}) => {
         shownBackArrow
         onPressLeftButton={() => navigation.goBack()}
       />
-      {changeHoursModal()}
+      {renderTimePickerModal()}
+      {renderImagePreviewModal()}
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={mainStyles.formContainer}>
           <View style={mainStyles.inputGroup}>
@@ -297,6 +468,13 @@ const SalonCreation = ({navigation}) => {
               );
             })}
           </View>
+
+          {renderImagePicker()}
+          <View>
+            <TouchableOpacity>
+              <Text>Create new salon</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -348,7 +526,6 @@ const mainStyles = StyleSheet.create({
     textAlign: 'center',
     ...FONTS.h3,
   },
-
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -361,6 +538,52 @@ const mainStyles = StyleSheet.create({
     margin: SIZES.margin,
     padding: SIZES.padding,
     borderRadius: SIZES.borderRadius,
+  },
+  featureImageContainer: {
+    marginVertical: SIZES.tinyMargin,
+  },
+  featureImage: {
+    height: SIZES.oneQuarterHeight,
+    marginVertical: SIZES.tinyMargin,
+    borderRadius: SIZES.smallBorderRadius,
+  },
+  imageButtonGroup: {
+    justifyContent: 'center',
+    margin: SIZES.margin,
+  },
+  imageActionButton: {
+    borderRadius: SIZES.borderRadius,
+    borderColor: COLORS.orange,
+    borderWidth: 2,
+  },
+  imagePreviewModalContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  imagePreview: {
+    height: SIZES.oneThirdHeight,
+  },
+  imagePreviewActionButtonGroup: {
+    marginVertical: SIZES.margin,
+  },
+  imagePreviewActionButton: {
+    borderRadius: SIZES.borderRadius,
+    borderWidth: 2,
+    paddingHorizontal: SIZES.padding,
+    width: SIZES.oneHalfWidth,
+    marginVertical: SIZES.margin,
+    flexDirection: 'row',
+  },
+  imagePreviewCloseButton: {
+    alignItems: 'flex-end',
+    width: '100%',
+    padding: SIZES.padding * 2,
+  },
+  imagePreviewActionText: {
+    textAlign: 'center',
+    ...FONTS.body3,
+    flex: 1,
   },
 });
 

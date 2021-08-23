@@ -16,4 +16,10 @@ const fetchSalonById = id => {
     });
 };
 
-export {fetchSalonList, fetchSalonById};
+const createNewSalon = data => {
+  return axios
+    .post(`${apiConfig.baseUrl}/createSalon`, data)
+    .then(response => response.data);
+};
+
+export {fetchSalonList, fetchSalonById, createNewSalon};

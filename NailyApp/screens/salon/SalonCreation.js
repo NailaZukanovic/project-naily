@@ -315,10 +315,11 @@ const SalonCreation = ({navigation}) => {
           <View style={mainStyles.imageButtonGroup}>
             <TouchableOpacity
               style={mainStyles.imageActionButton}
-              onPress={showImagePicker}>
-              <Text style={{textAlign: 'center', ...FONTS.body2}}>
-                Add images
-              </Text>
+              onPress={() => {
+                setSelectingImageIndex(0);
+                setImagePreviewVisible(true);
+              }}>
+              <Text style={{textAlign: 'center', ...FONTS.body2}}>Edit</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -484,9 +485,16 @@ const SalonCreation = ({navigation}) => {
           </View>
 
           {renderImagePicker()}
-          <View>
-            <TouchableOpacity>
-              <Text>Create new salon</Text>
+          <View style={mainStyles.imageButtonGroup}>
+            <TouchableOpacity style={mainStyles.saveButton}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  ...FONTS.body2,
+                  color: COLORS.white,
+                }}>
+                Create new salon
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -569,6 +577,12 @@ const mainStyles = StyleSheet.create({
     borderRadius: SIZES.borderRadius,
     borderColor: COLORS.orange,
     borderWidth: 2,
+  },
+  saveButton: {
+    borderRadius: SIZES.borderRadius,
+    backgroundColor: COLORS.green,
+    ...styles.shadow,
+    paddingVertical: SIZES.smallPadding,
   },
   imagePreviewModalContainer: {
     justifyContent: 'center',

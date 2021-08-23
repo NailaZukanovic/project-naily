@@ -4,7 +4,7 @@ const fs = require('fs')
 const path = require('path')
 const uuid = require('uuid')
 
-const defualtOnField = (key, value) => {}
+const defualtOnField = (field, value, truncatedField, truncatedValue, encode, mimeType) => {}
 
 exports.uploadFile = (req, fields, resolve, reject, metadata = {}, onField = defualtOnField) => {
     try{

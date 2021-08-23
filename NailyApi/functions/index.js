@@ -20,12 +20,12 @@ const {
 } = require('./routes/salon/explore')
 
 const {
-  uploadSalonImages
+  uploadSalonImages,
+  newSalon 
 } = require('./routes/salon/createSalon')
 
 const {isSignedIn} = require("./middlewares/firebaseAuth");
 const runMigration = require("./migrations/runMigrations");
-
 runMigration()
 
 app.get("/healthCheck", healthCheck);
@@ -49,6 +49,6 @@ app.post('/uploadAvatar', isSignedIn, uploadAvatar)
 //Salons
 app.get('/fetchSalons', isSignedIn, fetchSalons)
 app.get('/fetchSalonById/:id', isSignedIn, fetchSalonById)
-app.post('/uploadSalonImages', isSignedIn, uploadSalonImages)
+app.post('/createSalon', newSalon)
 
 exports.api = functions.https.onRequest(app);

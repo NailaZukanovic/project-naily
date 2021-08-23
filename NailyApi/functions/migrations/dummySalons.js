@@ -71,7 +71,7 @@ const randomProducts = (salonName) => {
   return products
 }
 
-const generateDummySalon = (count, followingUserIds = [], workerSnapShots = [], featuredImage = null) => {
+const generateDummySalon = (count, followingUserIds = [], workerSnapShots = [], featuredImages = []) => {
   salons = []
   for (var i = 0; i < count; i++) {
     const reviews = randomReviews()
@@ -86,7 +86,7 @@ const generateDummySalon = (count, followingUserIds = [], workerSnapShots = [], 
       loves: randomInt(5000),
       reviewCount: reviewCount,
       workerSnapShots:workerSnapShots,
-      featuredImage: featuredImage 
+      featuredImages: featuredImages 
       })
   }
   return salons

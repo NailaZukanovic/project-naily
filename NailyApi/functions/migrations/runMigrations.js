@@ -32,7 +32,7 @@ const createSalon = (salon) => {
     name: salon.name,
     address: salon.address,
     phonenumber: salon.phonenumber,
-    featuredImage: salon.featuredImage,
+    featuredImages: salon.featuredImages,
     followingUserIds: salon.followingUserIds,
     workerSnapShots: salon.workerSnapShots,
     loves: salon.loves,

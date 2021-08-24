@@ -3,6 +3,8 @@ import {
   FETCH_SALON_DETAIL_FAILED,
   FETCH_SALONS_SUCCESSFUL,
   FETCH_SALONS_FAILED,
+  CREATE_SALON_SUCCESSFUL,
+  CREATE_SALON_FAILED,
 } from '../actions/index';
 
 const initialState = {
@@ -23,7 +25,7 @@ const salonReducer = (state = initialState, action) => {
         salons: action.payload.data,
         salonCount: action.payload.count,
         action: {
-          ...state.action,
+          errorMessage: null,
           type: action.type,
         },
       };
@@ -32,11 +34,20 @@ const salonReducer = (state = initialState, action) => {
         ...state,
         salonDetail: action.payload,
       };
+    case CREATE_SALON_SUCCESSFUL:
+      return {
+        ...state,
+        action: {
+          type: action.type,
+          errorMessage: null,
+        },
+      };
     case FETCH_SALON_DETAIL_FAILED:
       return {
         ...state,
         salonDetail: null,
       };
+    case CREATE_SALON_FAILED:
     case FETCH_SALONS_FAILED:
       return {
         ...state,
@@ -45,6 +56,7 @@ const salonReducer = (state = initialState, action) => {
           errorMessage: action.payload,
         },
       };
+
     default:
       return state;
   }

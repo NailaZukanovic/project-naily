@@ -3,9 +3,11 @@ import {
   FETCH_SALON_DETAIL_FAILED,
   FETCH_SALONS_SUCCESSFUL,
   FETCH_SALONS_FAILED,
+  CREATE_SALON_SUCCESSFUL,
+  CREATE_SALON_FAILED,
 } from '../actions/index';
 
-import {fetchSalonList, fetchSalonById} from '../../api/salon';
+import {fetchSalonList, createNewSalon} from '../../api/salon';
 
 const fetchSalonListAction = _ => {
   return dispatch => {
@@ -26,4 +28,22 @@ const fetchSalonListAction = _ => {
   };
 };
 
-export {fetchSalonListAction};
+const createSalonAction = data => {
+  return dispatch => {
+    createNewSalon(data)
+      .then(response => {
+        dispatch({
+          type: CREATE_SALON_SUCCESSFUL,
+          payload: response,
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: CREATE_SALON_FAILED,
+          payload: err,
+        });
+      });
+  };
+};
+
+export {fetchSalonListAction, createSalonAction};

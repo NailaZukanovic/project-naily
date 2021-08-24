@@ -1,4 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
+import {useDispatch} from 'react-redux';
+import {createSalonAction} from '../../redux/actions/salonActions';
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,9 +24,11 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Swiper from 'react-native-swiper';
 
 const SalonCreation = ({navigation}) => {
-  const [salonName, setSalonName] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [salonName, setSalonName] = useState('Test new salon name');
+  const [address, setAddress] = useState(
+    '1234 Somwhere in the State, TX, 13311',
+  );
+  const [phoneNumber, setPhoneNumber] = useState('1231345669');
   const [monday, setMonday] = useState(true);
   const [tuesday, setTuesday] = useState(true);
   const [wednesday, setWednesday] = useState(true);
@@ -130,6 +135,22 @@ const SalonCreation = ({navigation}) => {
       hourSet: hourSetArray[i],
     });
   }
+
+  //Actions
+
+  const dispatch = useDispatch();
+  const submitSalonData = useCallback(() => {
+    const data = {
+      salonName: salonName,
+      phoneNumber: phoneNumber,
+      address: address,
+      featureImages: featureImages,
+    };
+
+    console.log(data);
+
+    dispatch(createSalonAction(data));
+  }, [salonName, phoneNumber, address, featureImages, dispatch]);
 
   const showMessage = (title, message, buttonText) => {
     Alert.alert(title, message, [
@@ -423,24 +444,24 @@ const SalonCreation = ({navigation}) => {
             <Text style={FONTS.h4}>Salon name</Text>
             <TextInput
               style={mainStyles.input}
-              onChangeText={salonName}
-              value={setSalonName}
+              onChangeText={setSalonName}
+              value={salonName}
             />
           </View>
           <View style={mainStyles.inputGroup}>
             <Text style={FONTS.h4}>Address</Text>
             <TextInput
               style={mainStyles.input}
-              onChangeText={address}
-              value={setAddress}
+              onChangeText={setAddress}
+              value={address}
             />
           </View>
           <View style={mainStyles.inputGroup}>
             <Text style={FONTS.h4}>Phone number</Text>
             <TextInput
               style={mainStyles.input}
-              onChangeText={phoneNumber}
-              value={setPhoneNumber}
+              onChangeText={setPhoneNumber}
+              value={phoneNumber}
             />
           </View>
           <View>
@@ -486,7 +507,9 @@ const SalonCreation = ({navigation}) => {
 
           {renderImagePicker()}
           <View style={mainStyles.imageButtonGroup}>
-            <TouchableOpacity style={mainStyles.saveButton}>
+            <TouchableOpacity
+              style={mainStyles.saveButton}
+              onPress={submitSalonData}>
               <Text
                 style={{
                   textAlign: 'center',

@@ -20,7 +20,7 @@ const {
 } = require('./routes/salon/explore')
 
 const {
-  uploadSalonImages,
+  uploadSalonImage,
   newSalon 
 } = require('./routes/salon/createSalon')
 
@@ -49,6 +49,7 @@ app.post('/uploadAvatar', isSignedIn, uploadAvatar)
 //Salons
 app.get('/fetchSalons', isSignedIn, fetchSalons)
 app.get('/fetchSalonById/:id', isSignedIn, fetchSalonById)
-app.post('/createSalon', newSalon)
+app.post('/createSalon',isSignedIn ,newSalon)
+app.post('/uploadSalonImage', isSignedIn, uploadSalonImage)
 
 exports.api = functions.https.onRequest(app);

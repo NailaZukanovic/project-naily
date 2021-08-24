@@ -1,97 +1,132 @@
-const { firebase, firestore, storage} = require("../../utils/firebase");
+const { firebase, firestore, storage } = require("../../utils/firebase");
 const { salonCollection } = require("../../db/collections");
 const path = require('path');
 const BusBoy = require('busboy')
 const uuid = require('uuid')
 const fs = require('fs')
 
-const createSalonTask = (req, resolve, reject) => {
+const uploadSalonImage = (req, resolve, reject) => {
 
-    const busboy = new BusBoy({headers: req.headers})
-    var fields = {
-        featuredImages: []
-    }
+    const busboy = new BusBoy({ headers: req.headers })
+
     var secretId = uuid.v4()
-    var filePaths = [] 
+    var filepath = null
+    var uploadedFilename = null
+    var salonId = null
+    var rootDir = null
 
     const tmpdir = 'tmp'
-    const rootDir = 'salons/featuredImages/'
 
-    fs.mkdir(tmpdir, {recursive: true}, err=>{
-        if(err){
+    var imageDownloadUrl = null
+
+    fs.mkdir(tmpdir, { recursive: true }, err => {
+        if (err) {
             reject(err)
         }
     })
 
-    busboy.on('field', (field, value)=>{
-        fields[field] = value
+    busboy.on('field', (key, value) => {
+        if (key == 'salonId') {
+            salonId = value
+        }
     })
 
-    busboy.on('file',  (fieldname, stream, filename, encode, mimeType)=>{
+    busboy.on('file', (fieldname, stream, filename, encode, mimeType) => {
+        uploadedFilename = filename
         const secretFileName = `${secretId}+${filename}`
-        const filepath = path.join(tmpdir, secretFileName)
-        filePaths.push(filepath)
+        filepath = path.join(tmpdir, secretFileName)
         stream.pipe(fs.createWriteStream(filepath))
         stream.resume()
-    }) 
+    })
 
     busboy.on('finish', async () => {
+        if (salonId == null || salonId === '') {
+            return reject('Salon id is not provided in request body')
+        } else {
+            try {
+                //Check if salon id exists
+                const doc = await firestore.collection('salons').doc(salonId).get()
 
-        const newSalon = {
-            name: fields.salonName,
-            phoneNumber: fields.phoneNumber,
-            address: fields.address,
-            featureImageUrls: []
-        }
-        const metaData = {contentType: 'image/jpeg'}
-
-        if(filePaths.length > 0){
-            for(filepath of filePaths) {
-                
-                const splits = filepath.split('/') 
-                const filename = splits[splits.length - 1]
-                const refPath = path.join(rootDir, filename)
-                const imageRef = storage.ref().child(refPath)
-
-                try{
-                    const data = fs.readFileSync(filepath)
-
-                    await imageRef.put(data, metaData).then(snapShot=>{
-                    }).catch(err=>reject(err))
-
-                    await imageRef.getDownloadURL().then(url=>{
-                        newSalon.featureImageUrls.push(url) 
-                    }).catch(err=>reject(err))
-
-                    fs.unlinkSync(filepath)
-                } catch (err) {
-                    reject(err)
+                if (doc.exists) {
+                    if (doc.data().featuredImages.length >= 5) {
+                        return reject('Each salon only is allowed maximum 5 feature images')
+                    }
+                } else {
+                    return reject('Salon not found')
                 }
+
+                rootDir = `salons/featuredImages/${salonId}`
+
+                const metaData = { contentType: 'image/jpeg' }
+                const refPath = path.join(rootDir, uploadedFilename)
+                const imageRef = storage.ref().child(refPath)
+                const data = fs.readFileSync(filepath)
+
+                await imageRef.put(data, metaData)
+
+                var imageDownloadUrl = await imageRef.getDownloadURL()
+
+                await firestore.collection('salons').doc(salonId).update({
+                    featuredImages: firebase.firestore.FieldValue.arrayUnion(imageDownloadUrl)
+                })
+
+            } catch (err) {
+                return reject(err)
             }
+
+            return resolve(imageDownloadUrl)
         }
-
-        await firestore.collection('salons').add(newSalon).then(doc=>{
-            newSalon.id = doc.id
-        }).catch(err=>reject(err))
-
-        resolve(newSalon)
     })
 
     busboy.end(req.rawBody)
 
 }
 
-exports.newSalon = (req,res) => {
+exports.newSalon = (req, res) => {
+    console.log(req.body)
+    const currentUser = req.currentUser;
 
-    const uploadTaskPromise = new Promise((resolve, reject)=>{
-        createSalonTask(req, resolve, reject)
-    })
+    if (currentUser == null) {
+        return res.status(403).json({ message: 'Sign in required' })
+    }
 
-    uploadTaskPromise.then(filePaths=>{
-        console.log(filePaths)
-        res.send('ok')
-    }).catch(err=>{
-        console.log(err)
-        res.send(err)
+    const newSalon = {
+        salonName: req.body.salonName,
+        phoneNumber: req.body.phoneNumber,
+        address: req.body.address,
+        featuredImages: []
+    }
+
+    firestore.collection('salons').add(newSalon).then(doc => {
+        newSalon.id = doc.id
+        return res.status(200).json({ message: 'sucesss', salon: newSalon })
+    }).catch(err => {
+        return res.status(500).json({ message: err })
     })
 }
+
+exports.uploadSalonImage = async (req, res) => {
+
+    var uploadTaskPromise = new Promise((resolve, reject) => {
+        uploadSalonImage(req, resolve, reject)
+    })
+
+    try{
+        const url = await uploadTaskPromise
+        res.status(200).json({ message: 'ok', imageURL: url })
+    } catch(err){
+        res.status(500).json({ message: err})
+    }
+
+    //Clean up tmp directory
+    fs.readdir('tmp', (err, files)=>{
+        for(var file of files){
+            fs.unlink(path.join('tmp', file), (err)=>{
+                if(err){
+                    console.error(err)
+                }
+            })
+        }
+    })
+}
+

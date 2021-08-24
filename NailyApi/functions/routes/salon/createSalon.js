@@ -5,26 +5,12 @@ const BusBoy = require('busboy')
 const uuid = require('uuid')
 const fs = require('fs')
 
-const uploadTask = (req, onField, onFile, onFinish) => {
+const createSalonTask = (req, resolve, reject) => {
 
     const busboy = new BusBoy({headers: req.headers})
-
-    busboy.on('field', onField)
-
-    busboy.on('file', onFile) 
-
-    busboy.on('finish', onFinish)
-
-    busboy.end(req.rawBody)
-
-}
-
-exports.newSalon = (req,res) => {
-
     var fields = {
         featuredImages: []
     }
-
     var secretId = uuid.v4()
     var filePaths = [] 
 
@@ -33,79 +19,79 @@ exports.newSalon = (req,res) => {
 
     fs.mkdir(tmpdir, {recursive: true}, err=>{
         if(err){
-            return res.status(500).json({message: err})
+            reject(err)
         }
     })
 
-    const onField = (field, value) => {
+    busboy.on('field', (field, value)=>{
         fields[field] = value
-    }
+    })
 
-
-    const onFile = (fieldname, stream, filename, encode, mimeType)=>{
+    busboy.on('file',  (fieldname, stream, filename, encode, mimeType)=>{
         const secretFileName = `${secretId}+${filename}`
         const filepath = path.join(tmpdir, secretFileName)
         filePaths.push(filepath)
         stream.pipe(fs.createWriteStream(filepath))
         stream.resume()
-    }
+    }) 
 
-    const onFinish = () => {
-        console.log('upload done')
+    busboy.on('finish', async () => {
 
         const newSalon = {
             name: fields.salonName,
             phoneNumber: fields.phoneNumber,
             address: fields.address,
+            featureImageUrls: []
         }
-        var newSalonId = null
         const metaData = {contentType: 'image/jpeg'}
-        firestore.collection('salons').add(newSalon).then(doc=>{
-            newSalonId = doc.id
 
-            if(filePaths.length > 0){
-                filePaths.forEach(filepath=>{
-                    
-                    const splits = filepath.split('/') 
-                    const filename = splits[splits.length - 1]
-                    const refPath = path.join(rootDir, newSalonId, filename)
-                    const imageRef = storage.ref().child(refPath)
+        if(filePaths.length > 0){
+            for(filepath of filePaths) {
+                
+                const splits = filepath.split('/') 
+                const filename = splits[splits.length - 1]
+                const refPath = path.join(rootDir, filename)
+                const imageRef = storage.ref().child(refPath)
 
-                    fs.readFile(filepath, (err,data)=>{
-                        if(err){
-                            throw new Error(err)
-                        } else {
-                            imageRef.put(data, metaData).then(snapShot=>{
-                                fs.unlink(filepath, err => {
-                                    if(err){
-                                        throw new Error(err)
-                                    } else {
-                                        console.log('upload image ', filepath)
-                                    }
-                                })
-                            })
-                        }
-                    }) 
-                })
+                try{
+                    const data = fs.readFileSync(filepath)
+
+                    await imageRef.put(data, metaData).then(snapShot=>{
+                    }).catch(err=>reject(err))
+
+                    await imageRef.getDownloadURL().then(url=>{
+                        newSalon.featureImageUrls.push(url) 
+                    }).catch(err=>reject(err))
+
+                    fs.unlinkSync(filepath)
+                } catch (err) {
+                    reject(err)
+                }
             }
-        }).catch(err=>{throw new Error(err)})
-    }
-
-    const uploadTaskPromise = new Promise((resolve, reject)=>{
-        try{
-            uploadTask(req, onField, onFile, onFinish)
-            resolve(fields)
-        } catch(err){
-            reject(err)
         }
+
+        await firestore.collection('salons').add(newSalon).then(doc=>{
+            newSalon.id = doc.id
+        }).catch(err=>reject(err))
+
+        resolve(newSalon)
     })
 
-    uploadTaskPromise.then(async fields=>{
-        console.log(fields)
-        console.log(filePaths)
+    busboy.end(req.rawBody)
 
+}
+
+exports.newSalon = (req,res) => {
+
+    const uploadTaskPromise = new Promise((resolve, reject)=>{
+        createSalonTask(req, resolve, reject)
+    })
+
+    uploadTaskPromise.then(filePaths=>{
+        console.log(filePaths)
         res.send('ok')
     }).catch(err=>{
         console.log(err)
+        res.send(err)
     })
 }

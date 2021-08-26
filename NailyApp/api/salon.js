@@ -17,32 +17,40 @@ const fetchSalonById = id => {
 };
 
 const createNewSalon = data => {
-  var formData = new FormData();
-  var images = [];
+  const newSalon = {
+    salonName: data.salonName,
+    phoneNumber: data.phoneNumber,
+    address: data.address,
+  };
 
-  for (var image of data.featureImages) {
-    // images.push({
-    //   name: image.fileName,
-    //   type: image.type,
-    //   uri: image.uri,
-    // });
-    formData.append('images', {
-      name: image.fileName,
-      type: image.type,
-      uri: image.uri,
-    });
-  }
+  return axios
+    .post(`${apiConfig.baseUrl}/createSalon`, newSalon)
+    .then(response => response.data.salon);
+};
 
-  formData.append('salonName', data.salonName);
-  formData.append('phoneNumber', data.phoneNumber);
-  formData.append('address', data.address);
-  // formData.append('images', JSON.stringify(images));
+const uploadSalonFeatureImage = (image, salonId) => {
+  const formData = new FormData();
+
+  formData.append('image', {
+    name: image.fileName,
+    type: image.type,
+    uri: image.uri,
+  });
+
+  formData.append('salonId', salonId);
 
   console.log(formData);
 
   return axios
-    .post(`${apiConfig.baseUrl}/createSalon`, formData)
-    .then(response => response.data);
+    .post(`${apiConfig.baseUrl}/uploadSalonImage`, formData)
+    .then(response => {
+      return response.data;
+    });
 };
 
-export {fetchSalonList, fetchSalonById, createNewSalon};
+export {
+  fetchSalonList,
+  fetchSalonById,
+  createNewSalon,
+  uploadSalonFeatureImage,
+};

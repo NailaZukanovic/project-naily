@@ -5,9 +5,15 @@ import {
   FETCH_SALONS_FAILED,
   CREATE_SALON_SUCCESSFUL,
   CREATE_SALON_FAILED,
+  UPLOAD_SALON_IMAGE_SUCCESSFUL,
+  UPLOAD_SALON_IMAGE_FAILED,
 } from '../actions/index';
 
-import {fetchSalonList, createNewSalon} from '../../api/salon';
+import {
+  fetchSalonList,
+  createNewSalon,
+  uploadSalonFeatureImage,
+} from '../../api/salon';
 
 const fetchSalonListAction = _ => {
   return dispatch => {
@@ -29,12 +35,33 @@ const fetchSalonListAction = _ => {
 };
 
 const createSalonAction = data => {
+  var featureImages = data.featureImages;
   return dispatch => {
     createNewSalon(data)
-      .then(response => {
+      .then(async salon => {
+        var salonId = salon.id;
+
+        if (featureImages.length > 0) {
+          for (var image of featureImages) {
+            try {
+              const response = await uploadSalonFeatureImage(image, salonId);
+              dispatch({
+                type: UPLOAD_SALON_IMAGE_SUCCESSFUL,
+                payload: response.imageURL,
+              });
+            } catch (err) {
+              console.log(err);
+              dispatch({
+                type: UPLOAD_SALON_IMAGE_FAILED,
+                payload: err,
+              });
+            }
+          }
+        }
+
         dispatch({
           type: CREATE_SALON_SUCCESSFUL,
-          payload: response,
+          payload: salon,
         });
       })
       .catch(err => {
@@ -46,4 +73,22 @@ const createSalonAction = data => {
   };
 };
 
-export {fetchSalonListAction, createSalonAction};
+const uploadSalonImages = (image, salonId) => {
+  return dispatch => {
+    uploadSalonFeatureImage(image, salonId)
+      .then(response => {
+        dispatch({
+          type: UPLOAD_SALON_IMAGE_SUCCESSFUL,
+          payload: response,
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: UPLOAD_SALON_IMAGE_FAILED,
+          payload: err.response,
+        });
+      });
+  };
+};
+
+export {fetchSalonListAction, createSalonAction, uploadSalonImages};

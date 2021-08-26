@@ -24,15 +24,22 @@ const {
   newSalon 
 } = require('./routes/salon/createSalon')
 
-const {isSignedIn} = require("./middlewares/firebaseAuth");
+const {isSignedIn, verifyToken} = require("./middlewares/firebaseAuth");
 const runMigration = require("./migrations/runMigrations");
-runMigration()
+
+console.log('Starting API ...')
+
 
 app.get("/healthCheck", healthCheck);
 app.get("/seedData", (req,res)=>{
   runMigration()
   res.send('okay')
 });
+
+//Test
+app.get('/testJWT', verifyToken, (req,res)=>{
+  res.send('okay')
+})
 
 // User authentication
 app.post("/signUp", signUp);

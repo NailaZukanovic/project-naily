@@ -137,7 +137,6 @@ const SalonCreation = ({navigation}) => {
   }
 
   //Actions
-
   const dispatch = useDispatch();
   const submitSalonData = useCallback(() => {
     const data = {
@@ -146,9 +145,6 @@ const SalonCreation = ({navigation}) => {
       address: address,
       featureImages: featureImages,
     };
-
-    console.log(data);
-
     dispatch(createSalonAction(data));
   }, [salonName, phoneNumber, address, featureImages, dispatch]);
 

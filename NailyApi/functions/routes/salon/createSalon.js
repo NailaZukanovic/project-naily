@@ -110,15 +110,15 @@ exports.uploadSalonImage = async (req, res) => {
     var uploadTaskPromise = new Promise((resolve, reject) => {
         uploadSalonImage(req, resolve, reject)
     })
-
     try{
         const url = await uploadTaskPromise
         res.status(200).json({ message: 'ok', imageURL: url })
     } catch(err){
+        console.log(err)
         res.status(500).json({ message: err})
     }
 
-    //Clean up tmp directory
+    // Clean up tmp directory
     fs.readdir('tmp', (err, files)=>{
         for(var file of files){
             fs.unlink(path.join('tmp', file), (err)=>{

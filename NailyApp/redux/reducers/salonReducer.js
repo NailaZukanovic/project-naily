@@ -5,6 +5,8 @@ import {
   FETCH_SALONS_FAILED,
   CREATE_SALON_SUCCESSFUL,
   CREATE_SALON_FAILED,
+  UPLOAD_SALON_IMAGE_SUCCESSFUL,
+  UPLOAD_SALON_IMAGE_FAILED,
 } from '../actions/index';
 
 const initialState = {
@@ -35,6 +37,7 @@ const salonReducer = (state = initialState, action) => {
         salonDetail: action.payload,
       };
     case CREATE_SALON_SUCCESSFUL:
+    case UPLOAD_SALON_IMAGE_SUCCESSFUL:
       return {
         ...state,
         action: {
@@ -49,10 +52,11 @@ const salonReducer = (state = initialState, action) => {
       };
     case CREATE_SALON_FAILED:
     case FETCH_SALONS_FAILED:
+    case UPLOAD_SALON_IMAGE_FAILED:
       return {
         ...state,
         action: {
-          ...state.action,
+          type: action.type,
           errorMessage: action.payload,
         },
       };

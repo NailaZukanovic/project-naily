@@ -10,3 +10,18 @@ exports.isSignedIn = (req, res, next)=>{
     return next();
   }
 };
+
+exports.verifyToken = (req,res,next)=>{
+  const bearerToken = req.headers['authorization']
+  const jwt = bearerToken.split('Bearer ')[1]
+
+  admin.auth().verifyIdToken(jwt)
+  .then(decodedToken=>{
+    console.log(decodedToken)
+    next()
+  })
+  .catch(err=>{
+    console.log(err)
+    res.status(403).json({message: 'Unauthorized'})
+  })
+}

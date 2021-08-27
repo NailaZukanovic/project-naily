@@ -1,75 +1,72 @@
-import React from 'react';
-import {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {
   SafeAreaView,
   StyleSheet,
   Text,
   View,
   Image,
-  Platform,
   FlatList,
 } from 'react-native';
 import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../../constants/index';
-import Swiper from 'react-native-swiper';
-import {salonContact, salonImages, workers, comments} from '../../dummy/index';
 import {Icon} from 'react-native-elements';
-import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {styles} from '../../styles/index';
 import {ScreenHeader} from '../../components/index';
 import {TouchableOpacity} from 'react-native';
 
-const dummyData = [
-  {
-    id: 1,
-    salon: 'Salon 1',
-    address: 'Somethine in the middle of nowhere, NY, 14414',
-  },
-  {
-    id: 2,
-    salon: 'Salon 2',
-    address: 'Somethine in the middle of nowhere, NY, 14414',
-  },
-  {
-    id: 3,
-    salon: 'Salon 3',
-    address: 'Somethine in the middle of nowhere, NY, 14414',
-  },
-  {
-    id: 4,
-    salon: 'Salon 4',
-    address: 'Somethine in the middle of nowhere, NY, 14414',
-  },
-  {
-    id: 5,
-    salon: 'Salon 5',
-    address: 'Somethine in the middle of nowhere, NY, 14414',
-  },
-  {
-    id: 6,
-    salon: 'Salon 6',
-    address: 'Somethine in the middle of nowhere, NY, 14414',
-  },
-  {
-    id: 7,
-    salon: 'Salon 7',
-    address: 'Somethine in the middle of nowhere, NY, 14414',
-  },
-  {
-    id: 8,
-    salon: 'Salon 8',
-    address: 'Somethine in the middle of nowhere, NY, 14414',
-  },
-];
+import {
+  fetchMySalonsAction,
+  selectMySalonAtIndex,
+} from '../../redux/actions/salonActions';
 
 const SalonManagement = ({navigation}) => {
-  const SalonItem = ({item}) => (
-    <TouchableOpacity>
+  const mySalons = useSelector(state => state.salonReducer.mySalons);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchMySalonsAction());
+  }, [dispatch]);
+
+  const selectSalon = useCallback(
+    index => {
+      dispatch(selectMySalonAtIndex(index));
+      //Compose the salon details
+      // var contact = {
+      //   phoneNumber: item.contact,
+      //   address: item.address,
+      //   openHours: item.openHours.map(openHour => {
+      //     return openHour.isOpen
+      //       ? `${openHour.title} ${openHour.hours.startHour}:${openHour.hours.startMinute} - ${openHour.hours.closeHour}:${openHour.hours.closeMinute}\n`
+      //       : '';
+      //   }),
+      // };
+
+      navigation.navigate(SCREEN_NAMES.salon);
+      // navigation.navigate(SCREEN_NAMES.salon, {
+      //   salonName: item.salonName ? item.salonName : 'Salon Detail',
+      //   workers: item.workers ? item.workers : [],
+      //   comments: item.comments ? item.comments : [],
+      //   contact: contact,
+      //   isEditMode: true,
+      // });
+    },
+    [dispatch, navigation],
+  );
+
+  const SalonItem = ({item, index}) => (
+    <TouchableOpacity
+      onPress={() => {
+        selectSalon(index);
+      }}>
       <View style={mainStyles.salonItemContainer}>
         <View style={mainStyles.imageContainer}>
-          <Image style={mainStyles.salonImage} />
+          <Image
+            style={mainStyles.salonImage}
+            source={{uri: item.featuredImages[0]}}
+          />
         </View>
         <View style={mainStyles.textContainer}>
-          <Text style={FONTS.h3}>{item.salon}</Text>
+          <Text style={FONTS.h3}>{item.salonName}</Text>
           <Text style={{...FONTS.body3, flex: 1, flexWrap: 'wrap'}}>
             {item.address}
           </Text>
@@ -97,9 +94,9 @@ const SalonManagement = ({navigation}) => {
       <FlatList
         style={mainStyles.salonList}
         showsVerticalScrollIndicator={false}
-        data={dummyData}
+        data={mySalons}
         renderItem={SalonItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item, index) => index.toString()}
       />
     </SafeAreaView>
   );

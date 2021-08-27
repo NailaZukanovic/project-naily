@@ -1,18 +1,22 @@
 import {
   FETCH_SALON_DETAIL_SUCCESSFUL,
   FETCH_SALON_DETAIL_FAILED,
+  FETCH_MY_SALONS_SUCCESSFUL,
+  FETCH_MY_SALONS_FAILED,
   FETCH_SALONS_SUCCESSFUL,
   FETCH_SALONS_FAILED,
   CREATE_SALON_SUCCESSFUL,
   CREATE_SALON_FAILED,
   UPLOAD_SALON_IMAGE_SUCCESSFUL,
   UPLOAD_SALON_IMAGE_FAILED,
+  SELECTED_MY_SALON,
 } from '../actions/index';
 
 import {
   fetchSalonList,
   createNewSalon,
   uploadSalonFeatureImage,
+  fetchMySalons,
 } from '../../api/salon';
 
 const fetchSalonListAction = _ => {
@@ -91,4 +95,37 @@ const uploadSalonImages = (image, salonId) => {
   };
 };
 
-export {fetchSalonListAction, createSalonAction, uploadSalonImages};
+const fetchMySalonsAction = () => {
+  return dispatch => {
+    fetchMySalons()
+      .then(response => {
+        dispatch({
+          type: FETCH_MY_SALONS_SUCCESSFUL,
+          payload: response.data,
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: FETCH_MY_SALONS_FAILED,
+          payload: err,
+        });
+      });
+  };
+};
+
+const selectMySalonAtIndex = index => {
+  return dispatch => {
+    dispatch({
+      type: SELECTED_MY_SALON,
+      payload: index,
+    });
+  };
+};
+
+export {
+  fetchSalonListAction,
+  createSalonAction,
+  uploadSalonImages,
+  fetchMySalonsAction,
+  selectMySalonAtIndex,
+};

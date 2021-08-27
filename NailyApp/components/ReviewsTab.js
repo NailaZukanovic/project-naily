@@ -41,9 +41,13 @@ const ReviewsTab = props => {
   return (
     <View style={mainStyle.listContainer}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {props.comments.map(comment => (
-          <View>{renderItem(comment)}</View>
-        ))}
+        {props.comments != null && props.comments.length != 0 ? (
+          props.comments.map(comment => <View>{renderItem(comment)}</View>)
+        ) : (
+          <View>
+            <Text>There is no comments yet.</Text>
+          </View>
+        )}
 
         <TouchableOpacity
           style={{

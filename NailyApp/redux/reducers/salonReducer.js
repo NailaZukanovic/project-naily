@@ -1,18 +1,21 @@
 import {
   FETCH_SALON_DETAIL_SUCCESSFUL,
   FETCH_SALON_DETAIL_FAILED,
+  FETCH_MY_SALONS_SUCCESSFUL,
+  FETCH_MY_SALONS_FAILED,
   FETCH_SALONS_SUCCESSFUL,
   FETCH_SALONS_FAILED,
   CREATE_SALON_SUCCESSFUL,
   CREATE_SALON_FAILED,
   UPLOAD_SALON_IMAGE_SUCCESSFUL,
   UPLOAD_SALON_IMAGE_FAILED,
+  SELECTED_MY_SALON,
 } from '../actions/index';
 
 const initialState = {
   salons: [],
   salonDetail: {},
-  salonCount: 0,
+  mySalons: [],
   action: {
     type: null,
     errorMessage: null,
@@ -25,7 +28,6 @@ const salonReducer = (state = initialState, action) => {
       return {
         ...state,
         salons: action.payload.data,
-        salonCount: action.payload.count,
         action: {
           errorMessage: null,
           type: action.type,
@@ -50,9 +52,19 @@ const salonReducer = (state = initialState, action) => {
         ...state,
         salonDetail: null,
       };
+    case FETCH_MY_SALONS_SUCCESSFUL:
+      return {
+        ...state,
+        mySalons: action.payload,
+        action: {
+          type: action.type,
+          errorMessage: null,
+        },
+      };
     case CREATE_SALON_FAILED:
     case FETCH_SALONS_FAILED:
     case UPLOAD_SALON_IMAGE_FAILED:
+    case FETCH_MY_SALONS_FAILED:
       return {
         ...state,
         action: {
@@ -60,6 +72,26 @@ const salonReducer = (state = initialState, action) => {
           errorMessage: action.payload,
         },
       };
+
+    case SELECTED_MY_SALON:
+      if (state.mySalons.length < 0) {
+        return {
+          ...state,
+          action: {
+            type: action.type,
+            errorMessage: 'My salon is empty',
+          },
+        };
+      } else {
+        return {
+          ...state,
+          salonDetail: {...state.mySalons[action.payload], isOwner: true},
+          action: {
+            type: action.type,
+            errorMessage: null,
+          },
+        };
+      }
 
     default:
       return state;

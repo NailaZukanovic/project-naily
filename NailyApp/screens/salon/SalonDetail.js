@@ -21,6 +21,9 @@ import {
   ContactTab,
   ScreenHeader,
 } from '../../components/index';
+import {useDispatch, useSelector} from 'react-redux';
+import salonReducer from '../../redux/reducers/salonReducer';
+import {hourFormat} from '../../utils';
 
 const CustomTabBar = ({props}) => (
   <TabBar
@@ -41,6 +44,37 @@ const renderLabel = ({route, focused, color}) => (
 );
 
 const SalonDetail = ({navigation}) => {
+  //TODO: NOTE
+  //TODO: Only the owner of this salon
+  //TODO: can turn on edit mode
+  const salonDetail = useSelector(state => state.salonReducer.salonDetail);
+  var {
+    salonName,
+    comments,
+    workers,
+    phoneNumber,
+    address,
+    openHours,
+    featuredImages,
+    isOwner,
+  } = salonDetail;
+
+  var openHourString = '';
+  openHours.map(openHour => {
+    console.log(openHour);
+    openHourString += `${openHour.title}\t\t${hourFormat(
+      openHour.hours.startHour,
+      openHour.hours.startMinute,
+    )} - ${hourFormat(openHour.hours.closeHour, openHour.hours.closeMinute)}\n`;
+  });
+  console.log(openHourString);
+
+  var contact = {
+    phoneNumber: phoneNumber,
+    address: address,
+    openHours: openHourString,
+  };
+
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     {key: 'product', title: 'Product'},
@@ -49,10 +83,10 @@ const SalonDetail = ({navigation}) => {
     {key: 'contact', title: 'Contact'},
   ]);
   const renderScene = SceneMap({
-    product: () => <ProductTab navigation={navigation} />,
+    product: () => <ProductTab products={products} navigation={navigation} />,
     reviews: () => <ReviewsTab comments={comments} />,
-    workers: () => <WorkersTab data={workers} navigation={navigation} />,
-    contact: () => <ContactTab contact={salonContact} />,
+    workers: () => <WorkersTab workers={workers} navigation={navigation} />,
+    contact: () => <ContactTab contact={contact} />,
   });
 
   let isImageLoop = Platform.OS === 'android' ? false : true;
@@ -60,22 +94,30 @@ const SalonDetail = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScreenHeader
-        title="Salon Detail"
+        title={salonName}
         shownBackArrow={true}
         optionButtonIcon={<Icon name="heart-o" type="font-awesome" />}
         onPressLeftButton={() => navigation.goBack()}
       />
 
       <View style={mainStyle.container}>
-        <Swiper
-          loop={isImageLoop}
-          paginationStyle={{bottom: -20}}
-          dot={<View style={mainStyle.inActiveDot} />}
-          activeDot={<View style={mainStyle.activeDot} />}>
-          {salonImages.map(item => (
-            <Image source={item} style={mainStyle.image} resizeMode="cover" />
-          ))}
-        </Swiper>
+        {featuredImages.length > 0 ? (
+          <Swiper
+            loop={isImageLoop}
+            paginationStyle={{bottom: -20}}
+            dot={<View style={mainStyle.inActiveDot} />}
+            activeDot={<View style={mainStyle.activeDot} />}>
+            {featuredImages.map(uri => (
+              <Image
+                source={{uri: uri}}
+                style={mainStyle.image}
+                resizeMode="cover"
+              />
+            ))}
+          </Swiper>
+        ) : (
+          <Image style={{...mainStyle.image, backgroundColor: COLORS.gray}} />
+        )}
       </View>
       <View style={{flex: 2}}>
         <TabView

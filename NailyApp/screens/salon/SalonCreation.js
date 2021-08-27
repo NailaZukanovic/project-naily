@@ -1,5 +1,5 @@
-import React, {useState, useCallback} from 'react';
-import {useDispatch} from 'react-redux';
+import React, {useState, useCallback, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {createSalonAction} from '../../redux/actions/salonActions';
 
 import {
@@ -12,7 +12,7 @@ import {
   Alert,
   Platform,
 } from 'react-native';
-import {COLORS, SIZES, FONTS, SCREEN_NAMES} from '../../constants/index';
+import {COLORS, SIZES, FONTS} from '../../constants/index';
 import {Icon, CheckBox} from 'react-native-elements';
 import {styles} from '../../styles/index';
 import {ScreenHeader} from '../../components/index';
@@ -22,6 +22,10 @@ import {Modal} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Swiper from 'react-native-swiper';
+import {
+  CREATE_SALON_SUCCESSFUL,
+  CREATE_SALON_FAILED,
+} from '../../redux/actions/index';
 
 const SalonCreation = ({navigation}) => {
   const [salonName, setSalonName] = useState('Test new salon name');
@@ -129,7 +133,7 @@ const SalonCreation = ({navigation}) => {
   for (var i = 0; i < 7; i++) {
     openHours.push({
       title: titleArray[i],
-      day: days[i],
+      isOpen: days[i],
       setDay: setDayArray[i],
       hours: hours[i],
       hourSet: hourSetArray[i],
@@ -138,13 +142,43 @@ const SalonCreation = ({navigation}) => {
 
   //Actions
   const dispatch = useDispatch();
+
+  const creationState = useSelector(state => state.salonReducer.action.type);
+  const errorMessage = useSelector(
+    state => state.salonReducer.action.errorMessage,
+  );
+
+  useEffect(() => {
+    if (creationState != null) {
+      if (creationState === CREATE_SALON_SUCCESSFUL) {
+        showMessage('New salon created', '', 'Awesome');
+        navigation.goBack();
+      } else if (creationState === CREATE_SALON_FAILED) {
+        showMessage(
+          'Failed to create new salon',
+          errorMessage,
+          'Oops! try again',
+        );
+      }
+    }
+  }, [creationState, errorMessage, navigation]);
+
   const submitSalonData = useCallback(() => {
+    var openHoursFinalData = [];
+
+    for (var openHour of openHours) {
+      var {setDay, hourSet, ...openHourData} = openHour;
+      openHoursFinalData.push(openHourData);
+    }
+
     const data = {
       salonName: salonName,
       phoneNumber: phoneNumber,
       address: address,
       featureImages: featureImages,
+      openHours: openHoursFinalData,
     };
+
     dispatch(createSalonAction(data));
   }, [salonName, phoneNumber, address, featureImages, dispatch]);
 
@@ -467,9 +501,9 @@ const SalonCreation = ({navigation}) => {
               return (
                 <View style={mainStyles.checkContainer}>
                   <CheckBox
-                    checked={openHour.day}
+                    checked={openHour.isOpen}
                     style={{backgroundColor: COLORS.white}}
-                    onPress={() => openHour.setDay(!openHour.day)}
+                    onPress={() => openHour.setDay(!openHour.isOpen)}
                   />
                   <Text style={{flex: 1}}>{openHour.title}</Text>
 

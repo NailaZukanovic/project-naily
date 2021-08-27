@@ -12,7 +12,7 @@ import {products} from '../dummy/index';
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 
-const ProductTab = ({navigation}) => {
+const ProductTab = ({navigation, props}) => {
   const renderItem = ({item}) => (
     <TouchableOpacity
       style={mainStyle.productItem}

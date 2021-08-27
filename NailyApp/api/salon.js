@@ -21,6 +21,7 @@ const createNewSalon = data => {
     salonName: data.salonName,
     phoneNumber: data.phoneNumber,
     address: data.address,
+    openHours: data.openHours,
   };
 
   return axios
@@ -48,9 +49,16 @@ const uploadSalonFeatureImage = (image, salonId) => {
     });
 };
 
+const fetchMySalons = () => {
+  return axios
+    .get(`${apiConfig.baseUrl}/fetchMySalons`)
+    .then(response => response);
+};
+
 export {
   fetchSalonList,
   fetchSalonById,
   createNewSalon,
   uploadSalonFeatureImage,
+  fetchMySalons,
 };

@@ -48,12 +48,18 @@ const WorkersTab = props => {
 
   return (
     <View style={mainStyle.listContainer}>
-      <FlatList
-        data={props.data}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        showsVerticalScrollIndicator={false}
-      />
+      {props.workers != null && props.workers.length > 0 ? (
+        <FlatList
+          data={props.workers}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+        />
+      ) : (
+        <View>
+          <Text>This salon has no workers yet.</Text>
+        </View>
+      )}
     </View>
   );
 };

@@ -12,13 +12,13 @@ const ContactTab = props => (
     </TouchableOpacity>
 
     <TouchableOpacity style={mainStyle.contactItem}>
-      <Icon name="clock-o" type="font-awesome" color={COLORS.primary} />
-      <Text style={mainStyle.contactText}>Monday 8AM - 10PM</Text>
+      <Icon name="phone" type="font-awesome" color={COLORS.primary} />
+      <Text style={mainStyle.contactText}>{props.contact.phoneNumber}</Text>
     </TouchableOpacity>
 
     <TouchableOpacity style={mainStyle.contactItem}>
-      <Icon name="phone" type="font-awesome" color={COLORS.primary} />
-      <Text style={mainStyle.contactText}>{props.contact.phone}</Text>
+      <Icon name="clock-o" type="font-awesome" color={COLORS.primary} />
+      <Text style={mainStyle.contactText}>{props.contact.openHours}</Text>
     </TouchableOpacity>
   </View>
 );

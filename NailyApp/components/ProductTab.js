@@ -12,12 +12,12 @@ import {products} from '../dummy/index';
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 
-const ProductTab = ({navigation, props}) => {
+const ProductTab = props => {
   const renderItem = ({item}) => (
     <TouchableOpacity
-      style={mainStyle.productItem}
+      style={mainStyles.productItem}
       onPress={() =>
-        navigation.navigate(SCREEN_NAMES.productDetail, {
+        props.navigation.navigate(SCREEN_NAMES.productDetail, {
           title: item.title,
           likes: item.likes,
           image: item.image,
@@ -26,7 +26,7 @@ const ProductTab = ({navigation, props}) => {
       <View style={styles.lightShadow}>
         <Image
           source={item.image}
-          style={mainStyle.productImage}
+          style={mainStyles.productImage}
           resizeMode="cover"
         />
       </View>
@@ -46,21 +46,36 @@ const ProductTab = ({navigation, props}) => {
     </TouchableOpacity>
   );
   return (
-    <View style={mainStyle.listContainer}>
-      <FlatList
-        style={mainStyle.productList}
-        data={products}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        numColumns={2}
-        showsVerticalScrollIndicator={false}
-        columnWrapperStyle={{justifyContent: 'space-between'}}
-      />
+    <View style={mainStyles.listContainer}>
+      {props.isOwner ? (
+        <TouchableOpacity style={mainStyles.addProductButton}>
+          <Icon
+            type="font-awesome"
+            name="plus"
+            size={SIZES.smallIconSize}
+            color={COLORS.white}
+          />
+          <Text style={mainStyles.addProductText}>Add new product</Text>
+        </TouchableOpacity>
+      ) : null}
+      {props.products != null && props.products.length > 0 ? (
+        <FlatList
+          style={mainStyles.productList}
+          data={props.products}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          columnWrapperStyle={{justifyContent: 'space-between'}}
+        />
+      ) : (
+        <Text>There is no product added yet</Text>
+      )}
     </View>
   );
 };
 
-const mainStyle = StyleSheet.create({
+const mainStyles = StyleSheet.create({
   container: {
     height: '50%',
     marginBottom: SIZES.margin10 * 2,
@@ -120,6 +135,7 @@ const mainStyle = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
+    alignItems: 'center',
   },
   productItem: {
     padding: SIZES.padding,
@@ -174,6 +190,23 @@ const mainStyle = StyleSheet.create({
   },
   submitButton: {
     padding: SIZES.padding,
+  },
+  addProductButton: {
+    borderRadius: SIZES.radius,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: SIZES.oneHalfWidth,
+    padding: SIZES.padding,
+    backgroundColor: COLORS.green,
+    marginVertical: SIZES.margin,
+    ...styles.shadow,
+  },
+  addProductText: {
+    flex: 1,
+    textAlign: 'center',
+    ...FONTS.h4,
+    color: COLORS.white,
   },
 });
 

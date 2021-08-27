@@ -18,10 +18,10 @@ const onWorkerPressed = workerId => {
 const WorkersTab = props => {
   const renderItem = ({item}) => (
     <TouchableOpacity
-      style={mainStyle.workerItemContainer}
+      style={mainStyles.workerItemContainer}
       onPress={props.onPress}>
-      <Image source={item.image} style={mainStyle.workerAvatar} />
-      <View style={mainStyle.workerDataContainer}>
+      <Image source={item.image} style={mainStyles.workerAvatar} />
+      <View style={mainStyles.workerDataContainer}>
         <View>
           <Text style={{...FONTS.h4}}>{item.name}</Text>
           {item.features.map(feature => (
@@ -47,7 +47,7 @@ const WorkersTab = props => {
   );
 
   return (
-    <View style={mainStyle.listContainer}>
+    <View style={mainStyles.listContainer}>
       {props.workers != null && props.workers.length > 0 ? (
         <FlatList
           data={props.workers}
@@ -64,7 +64,7 @@ const WorkersTab = props => {
   );
 };
 
-const mainStyle = StyleSheet.create({
+const mainStyles = StyleSheet.create({
   container: {
     height: '50%',
     marginBottom: SIZES.margin10 * 2,

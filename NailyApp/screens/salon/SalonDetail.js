@@ -29,7 +29,7 @@ const CustomTabBar = ({props}) => (
   <TabBar
     {...props}
     scrollEnabled
-    style={mainStyle.tabBar}
+    style={mainStyles.tabBar}
     indicatorStyle={{backgroundColor: COLORS.darkPrimary, height: 2}}
     renderLabel={renderLabel}
   />
@@ -37,7 +37,7 @@ const CustomTabBar = ({props}) => (
 const renderLabel = ({route, focused, color}) => (
   <View>
     <Text
-      style={focused ? mainStyle.activeTabTitle : mainStyle.inActiveTabTitle}>
+      style={focused ? mainStyles.activeTabTitle : mainStyles.inActiveTabTitle}>
       {route.title}
     </Text>
   </View>
@@ -56,7 +56,9 @@ const SalonDetail = ({navigation}) => {
     address,
     openHours,
     featuredImages,
+    products,
     isOwner,
+    id,
   } = salonDetail;
 
   var openHourString = '';
@@ -83,7 +85,14 @@ const SalonDetail = ({navigation}) => {
     {key: 'contact', title: 'Contact'},
   ]);
   const renderScene = SceneMap({
-    product: () => <ProductTab products={products} navigation={navigation} />,
+    product: () => (
+      <ProductTab
+        products={products}
+        navigation={navigation}
+        isOwner={isOwner}
+        salonId={id}
+      />
+    ),
     reviews: () => <ReviewsTab comments={comments} />,
     workers: () => <WorkersTab workers={workers} navigation={navigation} />,
     contact: () => <ContactTab contact={contact} />,
@@ -100,23 +109,23 @@ const SalonDetail = ({navigation}) => {
         onPressLeftButton={() => navigation.goBack()}
       />
 
-      <View style={mainStyle.container}>
+      <View style={mainStyles.container}>
         {featuredImages.length > 0 ? (
           <Swiper
             loop={isImageLoop}
             paginationStyle={{bottom: -20}}
-            dot={<View style={mainStyle.inActiveDot} />}
-            activeDot={<View style={mainStyle.activeDot} />}>
+            dot={<View style={mainStyles.inActiveDot} />}
+            activeDot={<View style={mainStyles.activeDot} />}>
             {featuredImages.map(uri => (
               <Image
                 source={{uri: uri}}
-                style={mainStyle.image}
+                style={mainStyles.image}
                 resizeMode="cover"
               />
             ))}
           </Swiper>
         ) : (
-          <Image style={{...mainStyle.image, backgroundColor: COLORS.gray}} />
+          <Image style={{...mainStyles.image, backgroundColor: COLORS.gray}} />
         )}
       </View>
       <View style={{flex: 2}}>
@@ -133,7 +142,7 @@ const SalonDetail = ({navigation}) => {
   );
 };
 
-const mainStyle = StyleSheet.create({
+const mainStyles = StyleSheet.create({
   container: {
     height: '50%',
     marginBottom: SIZES.margin * 2,

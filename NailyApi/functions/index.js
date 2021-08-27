@@ -21,8 +21,10 @@ const {
 
 const {
   uploadSalonImage,
-  newSalon 
-} = require('./routes/salon/createSalon')
+  newSalon,
+  fetchMySalons
+
+} = require('./routes/salon/salonManagement')
 
 const {isSignedIn, verifyToken} = require("./middlewares/firebaseAuth");
 const runMigration = require("./migrations/runMigrations");
@@ -35,11 +37,6 @@ app.get("/seedData", (req,res)=>{
   runMigration()
   res.send('okay')
 });
-
-//Test
-app.get('/testJWT', verifyToken, (req,res)=>{
-  res.send('okay')
-})
 
 // User authentication
 app.post("/signUp", signUp);
@@ -58,5 +55,7 @@ app.get('/fetchSalons', isSignedIn, fetchSalons)
 app.get('/fetchSalonById/:id', isSignedIn, fetchSalonById)
 app.post('/createSalon',isSignedIn ,newSalon)
 app.post('/uploadSalonImage', isSignedIn, uploadSalonImage)
+app.get('/fetchMySalons', isSignedIn, fetchMySalons)
+
 
 exports.api = functions.https.onRequest(app);

@@ -1,5 +1,5 @@
 const { firebase, firestore, storage } = require("../../utils/firebase");
-const { salonCollection } = require("../../db/collections");
+const { salonCollection , salonFeaturedImages} = require("../../db/collections");
 const path = require('path');
 const BusBoy = require('busboy')
 const uuid = require('uuid')
@@ -16,8 +16,6 @@ const uploadSalonImage = (req, resolve, reject) => {
     var rootDir = null
 
     const tmpdir = 'tmp'
-
-    var imageDownloadUrl = null
 
     fs.mkdir(tmpdir, { recursive: true }, err => {
         if (err) {
@@ -45,7 +43,7 @@ const uploadSalonImage = (req, resolve, reject) => {
         } else {
             try {
                 //Check if salon id exists
-                const doc = await firestore.collection('salons').doc(salonId).get()
+                const doc = await firestore.collection(salonCollection).doc(salonId).get()
 
                 if (doc.exists) {
                     if (doc.data().featuredImages.length >= 5) {
@@ -55,7 +53,7 @@ const uploadSalonImage = (req, resolve, reject) => {
                     return reject('Salon not found')
                 }
 
-                rootDir = `salons/featuredImages/${salonId}`
+                rootDir = `${salonCollection}/${salonFeaturedImages}/${salonId}`
 
                 const metaData = { contentType: 'image/jpeg' }
                 const refPath = path.join(rootDir, uploadedFilename)
@@ -66,7 +64,7 @@ const uploadSalonImage = (req, resolve, reject) => {
 
                 var imageDownloadUrl = await imageRef.getDownloadURL()
 
-                await firestore.collection('salons').doc(salonId).update({
+                await firestore.collection(salonCollection).doc(salonId).update({
                     featuredImages: firebase.firestore.FieldValue.arrayUnion(imageDownloadUrl)
                 })
 
@@ -86,18 +84,18 @@ exports.newSalon = (req, res) => {
     console.log(req.body)
     const currentUser = req.currentUser;
 
-    if (currentUser == null) {
-        return res.status(403).json({ message: 'Sign in required' })
-    }
+    const uid = currentUser.uid
 
     const newSalon = {
         salonName: req.body.salonName,
         phoneNumber: req.body.phoneNumber,
         address: req.body.address,
-        featuredImages: []
+        featuredImages: [],
+        ownerId: uid,
+        openHours: req.body.openHours
     }
 
-    firestore.collection('salons').add(newSalon).then(doc => {
+    firestore.collection(salonCollection).add(newSalon).then(doc => {
         newSalon.id = doc.id
         return res.status(200).json({ message: 'sucesss', salon: newSalon })
     }).catch(err => {
@@ -127,6 +125,25 @@ exports.uploadSalonImage = async (req, res) => {
                 }
             })
         }
+    })
+}
+
+exports.fetchMySalons = (req,res)=>{
+    const uid = req.currentUser.uid
+    var data = []
+    firestore.collection(salonCollection).where('ownerId', '==', uid)
+    .get()
+    .then(snapShot=>{
+        if(snapShot.empty == false){
+            snapShot.forEach(doc=>{
+                var {ownerId, ...salon} = doc.data()
+                data.push({...salon, id: doc.id})
+            })
+        }
+        return res.status(200).json(data)
+    })
+    .catch(err=>{
+        return res.status(500).json({message: err})
     })
 }
 

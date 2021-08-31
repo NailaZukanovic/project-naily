@@ -42,9 +42,8 @@ const createSalonAction = data => {
   var featureImages = data.featureImages;
   return dispatch => {
     createNewSalon(data)
-      .then(async salon => {
-        var salonId = salon.id;
-
+      .then(async salonId => {
+        console.log(salonId);
         if (featureImages.length > 0) {
           for (var image of featureImages) {
             try {
@@ -65,7 +64,7 @@ const createSalonAction = data => {
 
         dispatch({
           type: CREATE_SALON_SUCCESSFUL,
-          payload: salon,
+          payload: salonId,
         });
       })
       .catch(err => {

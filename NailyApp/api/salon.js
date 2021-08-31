@@ -26,7 +26,7 @@ const createNewSalon = data => {
 
   return axios
     .post(`${apiConfig.baseUrl}/createSalon`, newSalon)
-    .then(response => response.data.salon);
+    .then(response => response.data.salonId);
 };
 
 const uploadSalonFeatureImage = (image, salonId) => {
@@ -39,8 +39,6 @@ const uploadSalonFeatureImage = (image, salonId) => {
   });
 
   formData.append('salonId', salonId);
-
-  console.log(formData);
 
   return axios
     .post(`${apiConfig.baseUrl}/uploadSalonImage`, formData)

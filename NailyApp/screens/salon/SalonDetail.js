@@ -63,13 +63,13 @@ const SalonDetail = ({navigation}) => {
 
   var openHourString = '';
   openHours.map(openHour => {
-    console.log(openHour);
     openHourString += `${openHour.title}\t\t${hourFormat(
       openHour.hours.startHour,
       openHour.hours.startMinute,
     )} - ${hourFormat(openHour.hours.closeHour, openHour.hours.closeMinute)}\n`;
   });
-  console.log(openHourString);
+
+  console.log('rendered');
 
   var contact = {
     phoneNumber: phoneNumber,

@@ -27,7 +27,8 @@ const {
 } = require('./routes/salon/salonManagement')
 
 const {
-  addNewProduct
+  addNewProduct,
+  uploadProductImage
 } = require('./routes/product/product')
 
 const {isSignedIn, verifyToken} = require("./middlewares/firebaseAuth");
@@ -62,7 +63,8 @@ app.post('/uploadSalonImage', isSignedIn, uploadSalonImage)
 app.get('/fetchMySalons', isSignedIn, fetchMySalons)
 
 //Products
-app.get('/createProduct', isSignedIn, addNewProduct)
+app.post('/createProduct', isSignedIn, addNewProduct)
+app.post('/uploadProductImage', isSignedIn, uploadProductImage)
 
 
 exports.api = functions.https.onRequest(app);

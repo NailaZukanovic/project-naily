@@ -96,8 +96,8 @@ exports.newSalon = (req, res) => {
     }
 
     firestore.collection(salonCollection).add(newSalon).then(doc => {
-        newSalon.id = doc.id
-        return res.status(200).json({ message: 'sucesss', salon: newSalon })
+        // newSalon.id = doc.id
+        return res.status(200).json({ message: 'sucesss', salonId: doc.id })
     }).catch(err => {
         return res.status(500).json({ message: err })
     })

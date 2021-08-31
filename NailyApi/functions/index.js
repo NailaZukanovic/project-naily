@@ -26,6 +26,10 @@ const {
 
 } = require('./routes/salon/salonManagement')
 
+const {
+  addNewProduct
+} = require('./routes/product/product')
+
 const {isSignedIn, verifyToken} = require("./middlewares/firebaseAuth");
 const runMigration = require("./migrations/runMigrations");
 
@@ -56,6 +60,9 @@ app.get('/fetchSalonById/:id', isSignedIn, fetchSalonById)
 app.post('/createSalon',isSignedIn ,newSalon)
 app.post('/uploadSalonImage', isSignedIn, uploadSalonImage)
 app.get('/fetchMySalons', isSignedIn, fetchMySalons)
+
+//Products
+app.get('/createProduct', isSignedIn, addNewProduct)
 
 
 exports.api = functions.https.onRequest(app);

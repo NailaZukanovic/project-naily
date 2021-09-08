@@ -3,7 +3,7 @@ import Search from './Search';
 import Appointments from './Appointments';
 import Settings from './Settings';
 import SalonDetail from './salon/SalonDetail';
-import ProductDetail from './ProductDetail';
+import ProductDetail from './products/ProductDetail';
 import DateTimePicker from './DateTimePicker';
 import Worker from './Worker';
 import AppointmentDetail from './AppointmentDetail';

@@ -1,3 +1,5 @@
+import {showImagePicker} from './imagePicker';
+
 const hourFormat = (hour, minute) => {
   var minuteString = minute.toLocaleString('en-US', {
     minimumIntegerDigits: 2,
@@ -10,4 +12,4 @@ const hourFormat = (hour, minute) => {
   }
 };
 
-export {hourFormat};
+export {hourFormat, showImagePicker};

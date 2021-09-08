@@ -10,6 +10,10 @@ import {
   UPLOAD_SALON_IMAGE_SUCCESSFUL,
   UPLOAD_SALON_IMAGE_FAILED,
   SELECTED_MY_SALON,
+  CREATE_PRODUCT_SUCCESSFUL,
+  CREATE_PRODUCT_FAILED,
+  UPLOAD_PRODUCT_IMAGE_SUCCESSFUL,
+  UPLOAD_PRODUCT_IMAGE_FAILED,
 } from '../actions/index';
 
 const initialState = {
@@ -40,6 +44,8 @@ const salonReducer = (state = initialState, action) => {
       };
     case CREATE_SALON_SUCCESSFUL:
     case UPLOAD_SALON_IMAGE_SUCCESSFUL:
+    case CREATE_PRODUCT_SUCCESSFUL:
+    case UPLOAD_PRODUCT_IMAGE_SUCCESSFUL:
       return {
         ...state,
         action: {
@@ -65,6 +71,7 @@ const salonReducer = (state = initialState, action) => {
     case FETCH_SALONS_FAILED:
     case UPLOAD_SALON_IMAGE_FAILED:
     case FETCH_MY_SALONS_FAILED:
+    case UPLOAD_PRODUCT_IMAGE_FAILED:
       return {
         ...state,
         action: {

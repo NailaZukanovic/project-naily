@@ -209,7 +209,7 @@ const SalonCreation = ({navigation}) => {
   };
 
   const options = {
-    title: 'Change avatar',
+    title: 'Add image',
   };
 
   const showImagePicker = () => {

@@ -85,7 +85,7 @@ const Settings = ({navigation}) => {
             </View>
           </View>
           <View>
-            <Text style={{...FONTS.h2}}>Actions</Text>
+            <Text style={{...FONTS.h2}}>Account</Text>
             <View style={settingsStyles.itemContainer}>
               <TouchableOpacity
                 style={settingsStyles.item}

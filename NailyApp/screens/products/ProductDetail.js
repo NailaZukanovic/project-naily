@@ -8,16 +8,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import {COLORS, SIZES, FONTS} from '../constants/index';
+import {COLORS, SIZES, FONTS} from '../../constants/index';
 import {
   ScreenHeader,
   AvailableTimePicker,
   WorkersTab,
-} from '../components/index';
+} from '../../components/index';
 import {Icon} from 'react-native-elements';
-import {styles} from '../styles/index';
+import {styles} from '../../styles/index';
 import CalendarPicker from 'react-native-calendar-picker';
-import {workers} from '../dummy/index';
+import {workers} from '../../dummy/index';
 
 const StatsGroup = props => (
   <View

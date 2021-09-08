@@ -17,7 +17,6 @@ import Swiper from 'react-native-swiper';
 import {Icon} from 'react-native-elements';
 import {styles} from '../styles/index';
 import {showImagePicker} from '../utils';
-import {SafeAreaView} from 'react-native';
 
 const ProductTab = props => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,6 +30,12 @@ const ProductTab = props => {
 
   const closeModal = () => {
     setModalVisible(false);
+    setProductName('');
+    setDescription('');
+    setDurationHour('');
+    setDurationMinute('30');
+    setSelectingImageIndex(0);
+    setImages([]);
   };
 
   const openModal = () => {
@@ -135,7 +140,6 @@ const ProductTab = props => {
                 <Swiper
                   loop={false}
                   paginationStyle={{bottom: -20}}
-                  // key={images.length}
                   style={mainStyles.imageSwiper}
                   onIndexChanged={index => setSelectingImageIndex(index)}>
                   {images.map(image => (
